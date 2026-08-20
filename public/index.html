@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Your Stories & Earn Stars ⭐</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Master Your Stories and Earn Stars ⭐</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<!-- Extreme Right Controls (Name Input & Doodle Multi-Select) -->
-<div class="top-right-bar">
+<!-- Mobile Friendly Header Bar -->
+<div class="top-header-bar">
   <input 
     type="text" 
     id="kidNameInput" 
@@ -23,35 +23,32 @@
       🎨 Doodles ▾
     </button>
     <div class="doodle-dropdown" id="doodleDropdown">
-  <!-- Animals & Creatures -->
-  <label class="doodle-option"><input type="checkbox" value="🐼" checked onchange="renderDoodles()"> 🐼 Panda</label>
-  <label class="doodle-option"><input type="checkbox" value="🦄" checked onchange="renderDoodles()"> 🦄 Unicorn</label>
-  <label class="doodle-option"><input type="checkbox" value="🐱" checked onchange="renderDoodles()"> 🐱 Kitty</label>
-  <label class="doodle-option"><input type="checkbox" value="🐶" checked onchange="renderDoodles()"> 🐶 Puppy</label>
-  <label class="doodle-option"><input type="checkbox" value="🦖" checked onchange="renderDoodles()"> 🦖 T-Rex</label>
-  <label class="doodle-option"><input type="checkbox" value="🦕" checked onchange="renderDoodles()"> 🦕 Brachio</label>
-  <label class="doodle-option"><input type="checkbox" value="🐠" checked onchange="renderDoodles()"> 🐠 Fish</label>
-  <label class="doodle-option"><input type="checkbox" value="🐊" onchange="renderDoodles()"> 🐊 Crocodile</label>
-  <label class="doodle-option"><input type="checkbox" value="🦋" checked onchange="renderDoodles()"> 🦋 Butterfly</label>
-
-  <!-- Fun & Magic Objects -->
-  <label class="doodle-option"><input type="checkbox" value="🌈" checked onchange="renderDoodles()"> 🌈 Rainbow</label>
-  <label class="doodle-option"><input type="checkbox" value="🍦" checked onchange="renderDoodles()"> 🍦 Ice Cream</label>
-  <label class="doodle-option"><input type="checkbox" value="🚀" checked onchange="renderDoodles()"> 🚀 Rocket</label>
-  <label class="doodle-option"><input type="checkbox" value="🤖" onchange="renderDoodles()"> 🤖 Robot</label>
-  <label class="doodle-option"><input type="checkbox" value="👾" onchange="renderDoodles()"> 👾 Alien</label>
-  <label class="doodle-option"><input type="checkbox" value="⚽" onchange="renderDoodles()"> ⚽ Soccer</label>
-  <label class="doodle-option"><input type="checkbox" value="🎈" checked onchange="renderDoodles()"> 🎈 Balloon</label>
-  <label class="doodle-option"><input type="checkbox" value="⭐" checked onchange="renderDoodles()"> ⭐ Star</label>
-  <label class="doodle-option"><input type="checkbox" value="🫧" checked onchange="renderDoodles()"> 🫧 Bubble</label>
-</div>
-
+      <label class="doodle-option"><input type="checkbox" value="🐼" checked onchange="renderDoodles()"> 🐼 Panda</label>
+      <label class="doodle-option"><input type="checkbox" value="🦄" checked onchange="renderDoodles()"> 🦄 Unicorn</label>
+      <label class="doodle-option"><input type="checkbox" value="🐱" checked onchange="renderDoodles()"> 🐱 Kitty</label>
+      <label class="doodle-option"><input type="checkbox" value="🐶" checked onchange="renderDoodles()"> 🐶 Puppy</label>
+      <label class="doodle-option"><input type="checkbox" value="🦖" checked onchange="renderDoodles()"> 🦖 T-Rex</label>
+      <label class="doodle-option"><input type="checkbox" value="🦕" checked onchange="renderDoodles()"> 🦕 Brachio</label>
+      <label class="doodle-option"><input type="checkbox" value="🐠" checked onchange="renderDoodles()"> 🐠 Fish</label>
+      <label class="doodle-option"><input type="checkbox" value="🐊" onchange="renderDoodles()"> 🐊 Crocodile</label>
+      <label class="doodle-option"><input type="checkbox" value="🦋" checked onchange="renderDoodles()"> 🦋 Butterfly</label>
+      <label class="doodle-option"><input type="checkbox" value="🌈" checked onchange="renderDoodles()"> 🌈 Rainbow</label>
+      <label class="doodle-option"><input type="checkbox" value="🍦" checked onchange="renderDoodles()"> 🍦 Ice Cream</label>
+      <label class="doodle-option"><input type="checkbox" value="🚀" checked onchange="renderDoodles()"> 🚀 Rocket</label>
+      <label class="doodle-option"><input type="checkbox" value="🤖" onchange="renderDoodles()"> 🤖 Robot</label>
+      <label class="doodle-option"><input type="checkbox" value="👾" onchange="renderDoodles()"> 👾 Alien</label>
+      <label class="doodle-option"><input type="checkbox" value="⚽" onchange="renderDoodles()"> ⚽ Soccer</label>
+      <label class="doodle-option"><input type="checkbox" value="🎈" checked onchange="renderDoodles()"> 🎈 Balloon</label>
+      <label class="doodle-option"><input type="checkbox" value="⭐" checked onchange="renderDoodles()"> ⭐ Star</label>
+      <label class="doodle-option"><input type="checkbox" value="🫧" checked onchange="renderDoodles()"> 🫧 Bubble</label>
+    </div>
   </div>
 </div>
 
 <!-- Floating background doodles container -->
 <div class="bg-doodles" id="doodlesContainer"></div>
 
+<!-- Main App Card -->
 <div class="container">
   <div class="top-bar">
     <div class="online-badge">
@@ -62,7 +59,7 @@
   </div>
 
   <div class="header-section">
-    <h1 id="mainTitle">🎤 Kids Talk Show</h1>
+    <h1 id="mainTitle">🎤 Kid's Talk Show!</h1>
     <p class="subtitle" id="mainSubtitle">Record your voice, practice talking, and earn stars!</p>
   </div>
 
@@ -104,12 +101,11 @@
     <button class="btn btn-timer" id="timerBtn" onclick="startChallenge()">Record 🚀</button>
     <button class="btn btn-stop" id="finishBtn" onclick="finishTalk()" style="display:none;">Done 🏁</button>
   </div>
-</div>
+    </div>
 
 <div id="modalContainer"></div>
 
 <script>
-  // Dynamic Theme Palette
   const themes = [
     "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
@@ -129,10 +125,10 @@
     const subtitle = document.getElementById("mainSubtitle");
 
     if (rawName) {
-      title.innerText = `🌟 ${rawName}'s TalkStar Show!`;
+      title.innerText = `🌟 ${rawName}'s Talk Show!`;
       subtitle.innerText = `Welcome ${rawName}! Pick a topic, hit record, and earn your stars!`;
     } else {
-      title.innerText = "🎤 Kids Talk Show!";
+      title.innerText = "🎤 Kid's Talk Show!";
       subtitle.innerText = "Record your voice, practice talking, and earn stars!";
     }
   }
@@ -160,7 +156,7 @@
     const selectedEmojis = checkedBoxes.map(cb => cb.value);
     if (selectedEmojis.length === 0) return;
 
-    const totalDoodles = 10;
+    const totalDoodles = 8;
     for (let i = 0; i < totalDoodles; i++) {
       const emoji = selectedEmojis[i % selectedEmojis.length];
       const doodleEl = document.createElement("div");
@@ -245,7 +241,6 @@
     });
   }
 
-  // --- Mobile Resilient Recording Engine ---
   let totalDuration = 60;
   let timeLeft = 60;
   let timerInterval = null;
@@ -274,12 +269,10 @@
     audioChunks = [];
 
     try {
-      // 1. Acquire clean microphone stream
       audioStream = await navigator.mediaDevices.getUserMedia({ 
         audio: { echoCancellation: true, noiseSuppression: true } 
       });
 
-      // 2. Setup recorder with widespread mobile format compatibility
       const mimeTypes = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/aac'];
       const supportedMime = mimeTypes.find(type => MediaRecorder.isTypeSupported(type)) || '';
       
@@ -294,12 +287,14 @@
         const audioBlob = new Blob(audioChunks, { type: mime });
         const audioUrl = URL.createObjectURL(audioBlob);
         const player = document.getElementById("audioPlayback");
-        if (player) player.src = audioUrl;
+        if (player) {
+          player.src = audioUrl;
+          player.load();
+        }
       };
 
       mediaRecorder.start(250);
 
-      // 3. Opportunistic Speech Recognition (safely detached so it never blocks audio)
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (SpeechRecognition) {
         try {
@@ -317,16 +312,15 @@
           };
 
           speechRecognizer.onerror = (e) => {
-            console.log("Speech recognition notice (mobile bypass active):", e.error);
+            console.log("Speech recognition notice:", e.error);
           };
 
           speechRecognizer.start();
         } catch (e) {
-          console.log("Recognition auto-bypassed on this device.");
+          console.log("Recognition bypassed on device.");
         }
       }
 
-      // UI state
       document.getElementById("recordingStatus").style.display = "flex";
       document.getElementById("timerBtn").style.display = "none";
       document.getElementById("finishBtn").style.display = "inline-block";
@@ -343,7 +337,7 @@
       }, 1000);
 
     } catch (err) {
-      alert("Please enable microphone permissions in your phone's browser to record!");
+      alert("Please allow microphone permissions to record your voice!");
     }
   }
 
@@ -384,11 +378,9 @@
     let stars = "⭐⭐⭐";
     let feedback = `Good effort ${speakerLabel}! Keep practicing to speak even longer!`;
 
-    // Calculate rating based on speaking duration and transcript availability
     const words = transcript ? transcript.split(/\s+/).filter(w => w.length > 0) : [];
     const wordCount = words.length;
 
-    // Star thresholds: Works seamlessly with spoken time even if mobile speech recognition cuts out
     if (speechSecondsSpoken >= 45 || wordCount >= 30) {
       stars = "⭐⭐⭐⭐⭐";
       feedback = `🏆 Outstanding job, ${speakerLabel}! You are a true TalkStar!`;
@@ -397,7 +389,6 @@
       feedback = `🎉 Great speech, ${speakerLabel}! Clear pacing and good volume!`;
     }
 
-    // Match bonus words if transcribed
     let bonusHitText = "Spoke with great confidence";
     if (transcript && currentExtraWords.length > 0) {
       const lower = transcript.toLowerCase();
@@ -407,13 +398,12 @@
       }
     }
 
-    // Render mobile-safe summary card
     summaryBox.innerHTML = `
-      <div style="font-size: 0.92rem; line-height: 1.6;">
+      <div style="font-size: 0.85rem; line-height: 1.5;">
         • 🎯 <strong>Topic:</strong> ${topic}<br>
-        • ⏱️ <strong>Speaking Time:</strong> ${speechSecondsSpoken} seconds recorded<br>
+        • ⏱️ <strong>Speaking Time:</strong> ${speechSecondsSpoken}s recorded<br>
         • ⭐ <strong>Bonus Words:</strong> ${bonusHitText}<br>
-        • 🎙️ <strong>Audio Playback:</strong> Ready to listen above!
+        • 🎙️ <strong>Audio:</strong> Ready to play above!
       </div>
     `;
 
