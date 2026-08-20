@@ -1,18 +1,18 @@
-<!-- Evaluation Modal Popup Partial -->
+<!-- Evaluation Modal Sheet Partial -->
 <div class="modal-overlay" id="resultModal">
-  <div class="modal-card">
+  <div class="modal-sheet">
     <h2>🎉 Fantastic Speech!</h2>
     
-    <div class="stars-box" id="starsDisplay">⭐⭐⭐</div>
-    <div class="rating-feedback" id="ratingFeedback">Good Effort!</div>
+    <div class="stars-row" id="starsDisplay">⭐⭐⭐</div>
+    <div class="feedback-badge" id="ratingFeedback">Good Effort!</div>
 
     <audio id="audioPlayback" controls playsinline></audio>
 
-    <div style="text-align: left; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px;">
+    <div style="text-align: left; font-size: 0.85rem; font-weight: 700; color: #62728f; margin-bottom: 2px;">
       📋 Speech Summary & Highlights:
     </div>
-    <div class="transcript-box" id="summaryDisplay">No speech detected.</div>
+    <div class="summary-card-inner" id="summaryDisplay">No speech detected.</div>
 
-    <button class="btn btn-close" onclick="closeModal()">Play Again 🔄</button>
+    <button class="btn-modal-close" onclick="closeModal()">Try Another Topic 🔄</button>
   </div>
 </div>

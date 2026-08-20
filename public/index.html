@@ -3,175 +3,251 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Master Your Stories and Earn Stars ⭐</title>
+  <title>TalkStars ⭐ Master Stories & Earn Stars</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<!-- Mobile Friendly Header Bar -->
-<div class="top-header-bar">
-  <input 
-    type="text" 
-    id="kidNameInput" 
-    class="name-input" 
-    placeholder="Your Name ✍️" 
-    oninput="updatePersonalization()"
-  />
-
-  <div class="doodle-menu-container">
-    <button class="doodle-menu-btn" onclick="toggleDoodleDropdown(event)">
-      🎨 Doodles ▾
-    </button>
-    <div class="doodle-dropdown" id="doodleDropdown">
-      <label class="doodle-option"><input type="checkbox" value="🐼" checked onchange="renderDoodles()"> 🐼 Panda</label>
-      <label class="doodle-option"><input type="checkbox" value="🦄" checked onchange="renderDoodles()"> 🦄 Unicorn</label>
-      <label class="doodle-option"><input type="checkbox" value="🐱" checked onchange="renderDoodles()"> 🐱 Kitty</label>
-      <label class="doodle-option"><input type="checkbox" value="🐶" checked onchange="renderDoodles()"> 🐶 Puppy</label>
-      <label class="doodle-option"><input type="checkbox" value="🦖" checked onchange="renderDoodles()"> 🦖 T-Rex</label>
-      <label class="doodle-option"><input type="checkbox" value="🦕" checked onchange="renderDoodles()"> 🦕 Brachio</label>
-      <label class="doodle-option"><input type="checkbox" value="🐠" checked onchange="renderDoodles()"> 🐠 Fish</label>
-      <label class="doodle-option"><input type="checkbox" value="🐊" onchange="renderDoodles()"> 🐊 Crocodile</label>
-      <label class="doodle-option"><input type="checkbox" value="🦋" checked onchange="renderDoodles()"> 🦋 Butterfly</label>
-      <label class="doodle-option"><input type="checkbox" value="🌈" checked onchange="renderDoodles()"> 🌈 Rainbow</label>
-      <label class="doodle-option"><input type="checkbox" value="🍦" checked onchange="renderDoodles()"> 🍦 Ice Cream</label>
-      <label class="doodle-option"><input type="checkbox" value="🚀" checked onchange="renderDoodles()"> 🚀 Rocket</label>
-      <label class="doodle-option"><input type="checkbox" value="🤖" onchange="renderDoodles()"> 🤖 Robot</label>
-      <label class="doodle-option"><input type="checkbox" value="👾" onchange="renderDoodles()"> 👾 Alien</label>
-      <label class="doodle-option"><input type="checkbox" value="⚽" onchange="renderDoodles()"> ⚽ Soccer</label>
-      <label class="doodle-option"><input type="checkbox" value="🎈" checked onchange="renderDoodles()"> 🎈 Balloon</label>
-      <label class="doodle-option"><input type="checkbox" value="⭐" checked onchange="renderDoodles()"> ⭐ Star</label>
-      <label class="doodle-option"><input type="checkbox" value="🫧" checked onchange="renderDoodles()"> 🫧 Bubble</label>
-    </div>
-  </div>
-</div>
-
-<!-- Floating background doodles container -->
 <div class="bg-doodles" id="doodlesContainer"></div>
 
-<!-- Main App Card -->
-<div class="container">
-  <div class="top-bar">
-    <div class="online-badge">
-      <span class="dot"></span>
-      <span id="onlineCount">14</span> Online
+<main class="app-screen" id="appScreen">
+  
+   <!-- Navigation Header Bar -->
+  <header class="app-nav">
+    <div class="header-top-bar">
+      <!-- Extreme Left: Live Pill (Under 20) -->
+      <div class="online-pill">
+        <span class="pulse-dot"></span>
+        <span id="onlineCount">16</span> online
+      </div>
+
+      <!-- Extreme Right: Appealing Name Input + Theme Menu -->
+      <div class="header-actions-group">
+        <input 
+          type="text" 
+          id="kidNameInput" 
+          class="name-input-appealing" 
+          placeholder="✍️ Your Name..." 
+          oninput="updatePersonalization()"
+        />
+
+        <div class="theme-menu-container">
+          <button type="button" class="nav-pill-btn" onclick="toggleThemeMenu(event)">
+            🎨 Theme ▾
+          </button>
+
+          <!-- Dropdown Menu List -->
+          <div class="theme-list-dropdown" id="themeDropdown">
+            <button class="theme-list-item" onclick="switchTheme(0)">🌳 TalkStars Treehouse</button>
+            <button class="theme-list-item" onclick="switchTheme(1)">🚀 Space Rocket Explorer</button>
+            <button class="theme-list-item" onclick="switchTheme(2)">🦖 Dino Volcano Jungle</button>
+            <button class="theme-list-item" onclick="switchTheme(3)">🏎️ Cyber Racing Grid</button>
+            <button class="theme-list-item" onclick="switchTheme(4)">⚽ Stadium Sports Arena</button>
+            <button class="theme-list-item" onclick="switchTheme(5)">🦄 Unicorn Dreamland</button>
+            <button class="theme-list-item" onclick="switchTheme(6)">🏰 Princess Fairy Garden</button>
+            <button class="theme-list-item" onclick="switchTheme(7)">🍬 Candy Bubble Carnival</button>
+            
+            <div class="theme-list-divider"></div>
+            
+            <button class="theme-list-item" onclick="document.getElementById('customUploadInput').click()">
+              📤 Upload Custom Photo...
+            </button>
+            <input type="file" id="customUploadInput" accept="image/*" style="display:none;" onchange="handleCustomUpload(event)">
+
+            <div class="theme-list-divider"></div>
+            
+            <label class="doodle-menu-toggle-row">
+              <span>✨ Floating Doodles</span>
+              <input type="checkbox" id="doodleCheckbox" onchange="toggleDoodles(this.checked)">
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
-    <button class="bg-btn" onclick="cycleTheme()">🎨 Theme</button>
-  </div>
+  </header>
 
-  <div class="header-section">
-    <h1 id="mainTitle">🎤 Kid's Talk Show!</h1>
-    <p class="subtitle" id="mainSubtitle">Record your voice, practice talking, and earn stars!</p>
-  </div>
+  <!-- Hero Headings -->
+  <section class="hero-header">
+    <h1 class="main-title" id="mainTitle">TALKSTARS</h1>
+    <p class="subtitle" id="mainSubtitle">Tell Your Story & Earn 5 Stars! ⭐</p>
+  </section>
 
-  <div class="controls-wrap">
-    <select id="ageGroup">
-      <option value="4-6 years old">🐣 Ages 4 - 6</option>
-      <option value="7-9 years old" selected>🦁 Ages 7 - 9</option>
-      <option value="10-12 years old">🚀 Ages 10 - 12</option>
-      <option value="13-15 years old">🎓 Ages 13 - 15</option>
+  <!-- Polished, Prominent Age Group Pill -->
+  <div class="age-select-wrap">
+    <select id="ageGroup" class="styled-select-prominent">
+      <option value="4-6 years old">🐣 Ages 4-6 • Junior Talkers</option>
+      <option value="7-9 years old" selected>🦁 Ages 7-9 • Star Storytellers</option>
+      <option value="10-12 years old">🚀 Ages 10-12 • Speech Champions</option>
+      <option value="13-15 years old">🎓 Ages 13-15 • Master Orators</option>
     </select>
   </div>
 
-  <div class="word-box" id="wordDisplay">
-    Tap Below to Get a Topic! 👇
+  <!-- Primary Spotlight Topic Card -->
+  <div class="prompt-card spotlight-card" id="promptCard">
+    <p class="prompt-text spotlight-text" id="wordDisplay">Tap "Get My Topic" Below! 👇</p>
   </div>
 
-  <div class="challenge-section" id="challengeBox">
-    <strong>🌟 Bonus Challenge Words:</strong>
-    <div class="challenge-tags" id="adjoiningDisplay">
-      <span class="tag">Press Get Topic</span>
+  <!-- High-Focus Big Generate Trigger Button -->
+  <button class="btn-generate btn-spotlight" id="genBtn" onclick="generateTopic()">
+    🎲 Get My Topic!
+  </button>
+
+  <!-- Bonus Challenge Words -->
+  <div class="bonus-card">
+    <div class="bonus-title">✨ Bonus Challenge Words</div>
+    <div class="bonus-chips" id="adjoiningDisplay">
+      <span class="chip">Tap Button Above</span>
     </div>
   </div>
 
-  <button class="btn btn-primary" id="genBtn" onclick="generateTopic()">🎲 Get My Topic!</button>
-
-  <div class="recording-status" id="recordingStatus">
-    <span class="rec-dot"></span> 🎙️ Listening & Recording...
+  <!-- Live Mic Bar -->
+  <div class="recording-bar" id="recordingStatus">
+    <span class="rec-pulse"></span> 🎙️ Mic Live • Speak loud and clear!
   </div>
 
-  <div class="timer-section">
-    <select id="talkDuration" onchange="changeDuration()">
-      <option value="60" selected>⏱️ 1m</option>
-      <option value="120">⏱️ 2m</option>
-      <option value="180">⏱️ 3m</option>
+  <!-- Bottom Timer & Player Dock -->
+  <footer class="timer-dock">
+    <select id="talkDuration" class="duration-select" onchange="changeDuration()">
+      <option value="60" selected>⏱️ 1 Min</option>
+      <option value="120">⏱️ 2 Min</option>
+      <option value="180">⏱️ 3 Min</option>
     </select>
 
-    <div class="timer-display" id="timer">01:00</div>
+    <div class="clock-display" id="timer">01:00</div>
 
-    <button class="btn btn-timer" id="timerBtn" onclick="startChallenge()">Record 🚀</button>
-    <button class="btn btn-stop" id="finishBtn" onclick="finishTalk()" style="display:none;">Done 🏁</button>
-  </div>
-    </div>
+    <button class="btn-record-start" id="timerBtn" onclick="startChallenge()">Record 🎙️</button>
+    <button class="btn-record-stop" id="finishBtn" onclick="finishTalk()" style="display:none;">Done 🏁</button>
+  </footer>
+
+</main>
 
 <div id="modalContainer"></div>
 
 <script>
-  const themes = [
-    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
-    "linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)",
-    "linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)",
-    "linear-gradient(135deg, #fccb90 0%, #d57eeb 100%)"
+  /* ==========================================================================
+     1. Themes & Backdrop Engine
+     ========================================================================== */
+    /* ==========================================================================
+     1. Themes & Backdrop Engine
+     ========================================================================== */
+  const backdrops = [
+    // 0. Default: TalkStars Treehouse
+    "/images/treehouse-backdrop.png",
+
+    // 1. Space Rocket Explorer (Boys Friendly)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_space" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%230f172a"/><stop offset="50%" stop-color="%231e1b4b"/><stop offset="100%" stop-color="%233b82f6"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_space)"/><polygon points="120,100 125,115 140,115 128,125 132,140 120,130 108,140 112,125 100,115 115,115" fill="%23facc15" opacity="0.85"/><polygon points="480,220 484,232 496,232 486,240 489,252 480,244 471,252 474,240 464,232 476,232" fill="%2338bdf8" opacity="0.9"/><circle cx="500" cy="650" r="50" fill="%23f97316" opacity="0.6"/><circle cx="120" cy="500" r="30" fill="%2306b6d4" opacity="0.5"/></svg>`,
+
+    // 2. Dino Volcano Jungle (Boys Friendly)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_dino" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23ea580c"/><stop offset="50%" stop-color="%23ca8a04"/><stop offset="100%" stop-color="%2315803d"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_dino)"/><polygon points="300,350 480,750 120,750" fill="%23431407" opacity="0.6"/><path d="M0,750 Q150,680 300,750 T600,750 L600,900 L0,900 Z" fill="%23166534" opacity="0.75"/><circle cx="500" cy="150" r="60" fill="%23fef08a" opacity="0.45"/></svg>`,
+
+    // 3. Cyber Racing Grid (Boys Friendly)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_race" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%2318181b"/><stop offset="50%" stop-color="%23312e81"/><stop offset="100%" stop-color="%2306b6d4"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_race)"/><line x1="50" y1="0" x2="250" y2="900" stroke="%2322d3ee" stroke-width="4" opacity="0.3"/><line x1="550" y1="0" x2="350" y2="900" stroke="%2322d3ee" stroke-width="4" opacity="0.3"/><line x1="0" y1="650" x2="600" y2="650" stroke="%23f43f5e" stroke-width="3" opacity="0.4"/><line x1="0" y1="750" x2="600" y2="750" stroke="%23f43f5e" stroke-width="5" opacity="0.4"/></svg>`,
+
+    // 4. Stadium Sports Arena (Boys Friendly)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_sport" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%231e3a8a"/><stop offset="60%" stop-color="%230284c7"/><stop offset="100%" stop-color="%2316a34a"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_sport)"/><circle cx="100" cy="180" r="70" fill="%23ffffff" opacity="0.15"/><circle cx="500" cy="180" r="70" fill="%23ffffff" opacity="0.15"/><line x1="0" y1="720" x2="600" y2="720" stroke="%23ffffff" stroke-width="6" opacity="0.5"/><circle cx="300" cy="720" r="90" stroke="%23ffffff" stroke-width="6" fill="none" opacity="0.5"/></svg>`,
+
+    // 5. Unicorn Dreamland
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_uni" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23ff9a9e"/><stop offset="50%" stop-color="%23fecfef"/><stop offset="100%" stop-color="%23a1c4fd"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_uni)"/><circle cx="500" cy="550" r="70" fill="%23ffffff" opacity="0.4"/><polygon points="150,120 156,138 175,138 160,150 165,168 150,156 135,168 140,150 125,138 144,138" fill="%23ffd166" opacity="0.85"/></svg>`,
+
+    // 6. Princess Fairy Garden
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_prin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23fad0c4"/><stop offset="50%" stop-color="%23ffd1ff"/><stop offset="100%" stop-color="%23c2e9fb"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_prin)"/><circle cx="140" cy="200" r="45" fill="%23ff85a2" opacity="0.4"/><circle cx="450" cy="350" r="55" fill="%23ff85a2" opacity="0.35"/><path d="M0,800 Q150,750 300,800 T600,800 L600,900 L0,900 Z" fill="%23bbf7d0" opacity="0.6"/></svg>`,
+
+    // 7. Candy Bubble Carnival
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23ff9ff3"/><stop offset="50%" stop-color="%23feca57"/><stop offset="100%" stop-color="%23ff6b6b"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g4)"/><circle cx="120" cy="180" r="50" fill="%23ffffff" opacity="0.4"/><circle cx="480" cy="280" r="65" fill="%23ffffff" opacity="0.35"/></svg>`
   ];
-  let themeIndex = 0;
-  function cycleTheme() {
-    themeIndex = (themeIndex + 1) % themes.length;
-    document.body.style.background = themes[themeIndex];
-  }
 
-  function updatePersonalization() {
-    const rawName = document.getElementById("kidNameInput")?.value.trim();
-    const title = document.getElementById("mainTitle");
-    const subtitle = document.getElementById("mainSubtitle");
 
-    if (rawName) {
-      title.innerText = `🌟 ${rawName}'s Talk Show!`;
-      subtitle.innerText = `Welcome ${rawName}! Pick a topic, hit record, and earn your stars!`;
-    } else {
-      title.innerText = "🎤 Kid's Talk Show!";
-      subtitle.innerText = "Record your voice, practice talking, and earn stars!";
+  function toggleThemeMenu(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
     }
-  }
-
-  function toggleDoodleDropdown(e) {
-    e.stopPropagation();
-    document.getElementById("doodleDropdown").classList.toggle("show");
+    const dropdown = document.getElementById("themeDropdown");
+    if (dropdown) dropdown.classList.toggle("show");
   }
 
   document.addEventListener("click", (e) => {
-    const dropdown = document.getElementById("doodleDropdown");
-    if (dropdown && !dropdown.contains(e.target) && !e.target.classList.contains("doodle-menu-btn")) {
+    const dropdown = document.getElementById("themeDropdown");
+    if (dropdown && !dropdown.contains(e.target) && !e.target.closest(".theme-menu-container")) {
       dropdown.classList.remove("show");
     }
   });
+
+  function switchTheme(index) {
+    const card = document.getElementById("appScreen");
+    if (card && backdrops[index]) {
+      card.style.backgroundImage = `url('${backdrops[index]}')`;
+    }
+    document.getElementById("themeDropdown").classList.remove("show");
+  }
+
+  function handleCustomUpload(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const imageUrl = e.target.result;
+      const card = document.getElementById("appScreen");
+      if (card) card.style.backgroundImage = `url('${imageUrl}')`;
+      document.getElementById("themeDropdown").classList.remove("show");
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ==========================================================================
+     2. Doodles Engine
+     ========================================================================== */
+  let doodlesActive = false;
+  const doodleEmojis = ["⭐", "🚀", "🦄", "🐼", "🌈", "🍦", "🎈", "🫧"];
+
+  function toggleDoodles(isEnabled) {
+    doodlesActive = isEnabled;
+    const container = document.getElementById("doodlesContainer");
+    if (container) {
+      container.style.display = doodlesActive ? "block" : "none";
+      if (doodlesActive) renderDoodles();
+    }
+  }
 
   function renderDoodles() {
     const container = document.getElementById("doodlesContainer");
     if (!container) return;
     container.innerHTML = "";
 
-    const checkedBoxes = Array.from(
-      document.querySelectorAll('#doodleDropdown input[type="checkbox"]:checked')
-    );
-    const selectedEmojis = checkedBoxes.map(cb => cb.value);
-    if (selectedEmojis.length === 0) return;
-
     const totalDoodles = 8;
     for (let i = 0; i < totalDoodles; i++) {
-      const emoji = selectedEmojis[i % selectedEmojis.length];
+      const emoji = doodleEmojis[i % doodleEmojis.length];
       const doodleEl = document.createElement("div");
       doodleEl.className = "doodle";
       doodleEl.innerText = emoji;
 
       const leftPos = (i * (100 / totalDoodles)) + (Math.random() * 4 - 2);
-      const duration = (8 + Math.random() * 6).toFixed(1);
-      const delay = (Math.random() * 5).toFixed(1);
+      const duration = (9 + Math.random() * 6).toFixed(1);
+      const delay = (Math.random() * 4).toFixed(1);
 
-      doodleEl.style.left = `${Math.max(2, Math.min(94, leftPos))}%`;
+      doodleEl.style.left = `${Math.max(3, Math.min(92, leftPos))}%`;
       doodleEl.style.animationDuration = `${duration}s`;
       doodleEl.style.animationDelay = `${delay}s`;
 
       container.appendChild(doodleEl);
+    }
+  }
+
+  /* ==========================================================================
+     3. Personalization & Setup
+     ========================================================================== */
+  function updatePersonalization() {
+    const rawName = document.getElementById("kidNameInput")?.value.trim();
+    const title = document.getElementById("mainTitle");
+    const subtitle = document.getElementById("mainSubtitle");
+
+    if (rawName) {
+      title.innerText = `🌟 ${rawName.toUpperCase()}`;
+      subtitle.innerText = `Master your story ${rawName}, hit record, and earn 5 stars!`;
+    } else {
+      title.innerText = "TALKSTARS";
+      subtitle.innerText = "Tell Your Story & Earn 5 Stars! ⭐";
     }
   }
 
@@ -180,16 +256,12 @@
       const response = await fetch('/modal.html');
       const html = await response.text();
       document.getElementById('modalContainer').innerHTML = html;
-    } catch (err) {
-      console.error('Failed to load modal template:', err);
-    }
+    } catch (err) {}
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    loadModalSnippet();
-    renderDoodles();
-  });
-
+  /* ==========================================================================
+     4. Topic Generator (Gemini API + Fallbacks)
+     ========================================================================== */
   let currentExtraWords = [];
   const fallbackBank = {
     "4-6 years old": { main: "My Favorite Toy", extra: ["Play", "Share", "Fun"] },
@@ -203,8 +275,8 @@
     const wordDisplay = document.getElementById("wordDisplay");
     const genBtn = document.getElementById("genBtn");
 
-    wordDisplay.innerText = "✨ Picking a fun topic...";
-    wordDisplay.classList.add("pulse");
+    wordDisplay.innerText = "✨ Finding a fun topic...";
+    wordDisplay.classList.add("pulse-anim");
     genBtn.disabled = true;
 
     try {
@@ -214,15 +286,14 @@
         body: JSON.stringify({ ageGroup: age })
       });
 
-      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+      if (!response.ok) throw new Error(`Server status: ${response.status}`);
       const data = await response.json();
       renderResult(data.main, data.extra);
     } catch (err) {
-      console.warn("Backend unavailable, using fallback:", err);
       const fallback = fallbackBank[age];
       renderResult(fallback.main, fallback.extra);
     } finally {
-      wordDisplay.classList.remove("pulse");
+      wordDisplay.classList.remove("pulse-anim");
       genBtn.disabled = false;
       resetTimer();
     }
@@ -234,13 +305,16 @@
     const adjoiningContainer = document.getElementById("adjoiningDisplay");
     adjoiningContainer.innerHTML = "";
     currentExtraWords.forEach(word => {
-      const tag = document.createElement("span");
-      tag.className = "tag";
-      tag.innerText = word;
-      adjoiningContainer.appendChild(tag);
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.innerText = word;
+      adjoiningContainer.appendChild(chip);
     });
   }
 
+  /* ==========================================================================
+     5. Recorder & Timer Control
+     ========================================================================== */
   let totalDuration = 60;
   let timeLeft = 60;
   let timerInterval = null;
@@ -311,14 +385,8 @@
             speechTextAccumulator = fullCurrent.trim();
           };
 
-          speechRecognizer.onerror = (e) => {
-            console.log("Speech recognition notice:", e.error);
-          };
-
           speechRecognizer.start();
-        } catch (e) {
-          console.log("Recognition bypassed on device.");
-        }
+        } catch (e) {}
       }
 
       document.getElementById("recordingStatus").style.display = "flex";
@@ -337,7 +405,7 @@
       }, 1000);
 
     } catch (err) {
-      alert("Please allow microphone permissions to record your voice!");
+      alert("Please allow microphone access to record your voice!");
     }
   }
 
@@ -345,14 +413,8 @@
     clearInterval(timerInterval);
     timerInterval = null;
 
-    if (mediaRecorder && mediaRecorder.state !== "inactive") {
-      mediaRecorder.stop();
-    }
-
-    if (audioStream) {
-      audioStream.getTracks().forEach(track => track.stop());
-    }
-
+    if (mediaRecorder && mediaRecorder.state !== "inactive") mediaRecorder.stop();
+    if (audioStream) audioStream.getTracks().forEach(track => track.stop());
     if (speechRecognizer) {
       try { speechRecognizer.stop(); } catch (e) {}
     }
@@ -376,7 +438,7 @@
     const topic = document.getElementById("wordDisplay")?.innerText || "Your Topic";
 
     let stars = "⭐⭐⭐";
-    let feedback = `Good effort ${speakerLabel}! Keep practicing to speak even longer!`;
+    let feedback = `Good effort ${speakerLabel}! Keep talking to share more details!`;
 
     const words = transcript ? transcript.split(/\s+/).filter(w => w.length > 0) : [];
     const wordCount = words.length;
@@ -386,7 +448,7 @@
       feedback = `🏆 Outstanding job, ${speakerLabel}! You are a true TalkStar!`;
     } else if (speechSecondsSpoken >= 15 || wordCount >= 12) {
       stars = "⭐⭐⭐⭐";
-      feedback = `🎉 Great speech, ${speakerLabel}! Clear pacing and good volume!`;
+      feedback = `🎉 Awesome talk, ${speakerLabel}! Great voice and pacing!`;
     }
 
     let bonusHitText = "Spoke with great confidence";
@@ -398,14 +460,16 @@
       }
     }
 
-    summaryBox.innerHTML = `
-      <div style="font-size: 0.85rem; line-height: 1.5;">
-        • 🎯 <strong>Topic:</strong> ${topic}<br>
-        • ⏱️ <strong>Speaking Time:</strong> ${speechSecondsSpoken}s recorded<br>
-        • ⭐ <strong>Bonus Words:</strong> ${bonusHitText}<br>
-        • 🎙️ <strong>Audio:</strong> Ready to play above!
-      </div>
-    `;
+    if (summaryBox) {
+      summaryBox.innerHTML = `
+        <div style="font-size: 0.88rem; line-height: 1.6;">
+          • 🎯 <strong>Topic:</strong> ${topic}<br>
+          • ⏱️ <strong>Speaking Time:</strong> ${speechSecondsSpoken}s recorded<br>
+          • ⭐ <strong>Bonus Words:</strong> ${bonusHitText}<br>
+          • 🎙️ <strong>Voice Playback:</strong> Ready to listen above!
+        </div>
+      `;
+    }
 
     document.getElementById("starsDisplay").innerText = stars;
     document.getElementById("ratingFeedback").innerText = feedback;
@@ -428,14 +492,22 @@
     updateTimerDisplay();
   }
 
-  let baseUsers = Math.floor(Math.random() * 6) + 12;
+  /* ==========================================================================
+     6. Live Counter Simulation & Initialization
+     ========================================================================== */
+let baseUsers = 16;
   function updateOnlineUsers() {
     baseUsers += Math.floor(Math.random() * 3) - 1;
-    if (baseUsers < 6) baseUsers = 6;
+    if (baseUsers > 19) baseUsers = 19;
+    if (baseUsers < 12) baseUsers = 12;
     const countEl = document.getElementById("onlineCount");
     if (countEl) countEl.innerText = baseUsers;
   }
-  setInterval(updateOnlineUsers, 4500);
+  setInterval(updateOnlineUsers, 4000);
+
+  window.addEventListener('DOMContentLoaded', () => {
+    loadModalSnippet();
+  });
 </script>
 
 </body>
