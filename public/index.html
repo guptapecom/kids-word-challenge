@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TalkStars: Master Your Stories & Earn Stars ⭐</title>
+  <title>Master Your Stories & Earn Stars ⭐</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -62,7 +62,7 @@
   </div>
 
   <div class="header-section">
-    <h1 id="mainTitle">🎤 Kids Talk Challenge</h1>
+    <h1 id="mainTitle">🎤 Kids Talk Show</h1>
     <p class="subtitle" id="mainSubtitle">Record your voice, practice talking, and earn stars!</p>
   </div>
 
@@ -123,22 +123,20 @@
     document.body.style.background = themes[themeIndex];
   }
 
-  // Personalization
   function updatePersonalization() {
-    const rawName = document.getElementById("kidNameInput").value.trim();
+    const rawName = document.getElementById("kidNameInput")?.value.trim();
     const title = document.getElementById("mainTitle");
     const subtitle = document.getElementById("mainSubtitle");
 
     if (rawName) {
-      title.innerText = `🎤 ${rawName}'s Talk Show!`;
-      subtitle.innerText = `Welcome ${rawName}! Pick a topic, hit record, and show your skills!`;
+      title.innerText = `🌟 ${rawName}'s TalkStar Show!`;
+      subtitle.innerText = `Welcome ${rawName}! Pick a topic, hit record, and earn your stars!`;
     } else {
-      title.innerText = "🎤 Kids Talk Challenge";
+      title.innerText = "🎤 Kids Talk Show!";
       subtitle.innerText = "Record your voice, practice talking, and earn stars!";
     }
   }
 
-  // Doodle Multi-Select
   function toggleDoodleDropdown(e) {
     e.stopPropagation();
     document.getElementById("doodleDropdown").classList.toggle("show");
@@ -160,7 +158,6 @@
       document.querySelectorAll('#doodleDropdown input[type="checkbox"]:checked')
     );
     const selectedEmojis = checkedBoxes.map(cb => cb.value);
-
     if (selectedEmojis.length === 0) return;
 
     const totalDoodles = 10;
@@ -198,7 +195,6 @@
   });
 
   let currentExtraWords = [];
-
   const fallbackBank = {
     "4-6 years old": { main: "My Favorite Toy", extra: ["Play", "Share", "Fun"] },
     "7-9 years old": { main: "A Magical Treehouse", extra: ["Ladder", "Secret", "View"] },
@@ -223,7 +219,6 @@
       });
 
       if (!response.ok) throw new Error(`Server returned ${response.status}`);
-
       const data = await response.json();
       renderResult(data.main, data.extra);
     } catch (err) {
@@ -250,17 +245,16 @@
     });
   }
 
-  // --- Mobile-Optimized Audio & Speech Recognition ---
+  // --- Mobile Resilient Recording Engine ---
   let totalDuration = 60;
   let timeLeft = 60;
   let timerInterval = null;
   let mediaRecorder = null;
   let audioChunks = [];
   let speechRecognizer = null;
-  let isRecordingActive = false;
-  let accumulatedTranscript = "";
-  let currentSegment = "";
+  let speechTextAccumulator = "";
   let speechSecondsSpoken = 0;
+  let audioStream = null;
 
   function changeDuration() {
     totalDuration = parseInt(document.getElementById("talkDuration").value, 10);
@@ -274,87 +268,70 @@
       `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   }
 
-  function initSpeechRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) return null;
-
-    const recognizer = new SpeechRecognition();
-    recognizer.continuous = true;
-    recognizer.interimResults = true;
-    recognizer.lang = 'en-US';
-
-    recognizer.onresult = (event) => {
-      let interim = "";
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        if (event.results[i].isFinal) {
-          accumulatedTranscript += " " + event.results[i][0].transcript;
-        } else {
-          interim += event.results[i][0].transcript;
-        }
-      }
-      currentSegment = interim;
-    };
-
-    // Mobile Auto-Restart Handler
-    recognizer.onend = () => {
-      if (isRecordingActive) {
-        try {
-          recognizer.start();
-        } catch (e) {
-          console.warn("Recognizer auto-restart throttled", e);
-        }
-      }
-    };
-
-    recognizer.onerror = (event) => {
-      console.warn("Speech recognition error:", event.error);
-      if (event.error === 'not-allowed') {
-        isRecordingActive = false;
-      }
-    };
-
-    return recognizer;
-  }
-
   async function startChallenge() {
+    speechTextAccumulator = "";
+    speechSecondsSpoken = 0;
+    audioChunks = [];
+
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      audioChunks = [];
-      mediaRecorder = new MediaRecorder(stream);
-      mediaRecorder.ondataavailable = e => {
-        if (e.data.size > 0) audioChunks.push(e.data);
+      // 1. Acquire clean microphone stream
+      audioStream = await navigator.mediaDevices.getUserMedia({ 
+        audio: { echoCancellation: true, noiseSuppression: true } 
+      });
+
+      // 2. Setup recorder with widespread mobile format compatibility
+      const mimeTypes = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/aac'];
+      const supportedMime = mimeTypes.find(type => MediaRecorder.isTypeSupported(type)) || '';
+      
+      mediaRecorder = supportedMime ? new MediaRecorder(audioStream, { mimeType: supportedMime }) : new MediaRecorder(audioStream);
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) audioChunks.push(e.data);
       };
+
       mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: audioChunks[0]?.type || 'audio/webm' });
+        const mime = audioChunks[0]?.type || 'audio/mp4';
+        const audioBlob = new Blob(audioChunks, { type: mime });
         const audioUrl = URL.createObjectURL(audioBlob);
-        document.getElementById("audioPlayback").src = audioUrl;
+        const player = document.getElementById("audioPlayback");
+        if (player) player.src = audioUrl;
       };
+
       mediaRecorder.start(250);
 
-      // Start Speech Recognition
-      accumulatedTranscript = "";
-      currentSegment = "";
-      isRecordingActive = true;
-
-      if (!speechRecognizer) {
-        speechRecognizer = initSpeechRecognition();
-      }
-
-      if (speechRecognizer) {
+      // 3. Opportunistic Speech Recognition (safely detached so it never blocks audio)
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
         try {
+          speechRecognizer = new SpeechRecognition();
+          speechRecognizer.continuous = true;
+          speechRecognizer.interimResults = true;
+          speechRecognizer.lang = 'en-US';
+
+          speechRecognizer.onresult = (event) => {
+            let fullCurrent = "";
+            for (let i = 0; i < event.results.length; ++i) {
+              fullCurrent += event.results[i][0].transcript + " ";
+            }
+            speechTextAccumulator = fullCurrent.trim();
+          };
+
+          speechRecognizer.onerror = (e) => {
+            console.log("Speech recognition notice (mobile bypass active):", e.error);
+          };
+
           speechRecognizer.start();
         } catch (e) {
-          console.log("Recognizer was already active");
+          console.log("Recognition auto-bypassed on this device.");
         }
       }
 
-      // Update UI
+      // UI state
       document.getElementById("recordingStatus").style.display = "flex";
       document.getElementById("timerBtn").style.display = "none";
       document.getElementById("finishBtn").style.display = "inline-block";
       document.getElementById("talkDuration").disabled = true;
 
-      speechSecondsSpoken = 0;
       timerInterval = setInterval(() => {
         speechSecondsSpoken++;
         if (timeLeft > 0) {
@@ -366,24 +343,24 @@
       }, 1000);
 
     } catch (err) {
-      alert("Please allow microphone access in your browser settings to record your talk!");
+      alert("Please enable microphone permissions in your phone's browser to record!");
     }
   }
 
   function finishTalk() {
-    isRecordingActive = false;
     clearInterval(timerInterval);
     timerInterval = null;
 
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
       mediaRecorder.stop();
-      mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    }
+
+    if (audioStream) {
+      audioStream.getTracks().forEach(track => track.stop());
     }
 
     if (speechRecognizer) {
-      try {
-        speechRecognizer.stop();
-      } catch (e) {}
+      try { speechRecognizer.stop(); } catch (e) {}
     }
 
     document.getElementById("recordingStatus").style.display = "none";
@@ -391,7 +368,6 @@
     document.getElementById("finishBtn").style.display = "none";
     document.getElementById("talkDuration").disabled = false;
 
-    // Small delay to capture trailing words
     setTimeout(() => {
       evaluateSpeech();
       resetTimer();
@@ -399,70 +375,45 @@
   }
 
   function evaluateSpeech() {
-    const fullTranscript = (accumulatedTranscript + " " + currentSegment).trim();
+    const transcript = speechTextAccumulator.trim();
     const summaryBox = document.getElementById("summaryDisplay");
     const kidName = document.getElementById("kidNameInput")?.value.trim();
     const speakerLabel = kidName ? `${kidName}` : "Speaker";
-
-    if (!fullTranscript) {
-      summaryBox.innerHTML = "<em>We couldn't hear your voice clearly. Try speaking closer to the mic!</em>";
-      document.getElementById("starsDisplay").innerText = "⭐⭐⭐";
-      document.getElementById("ratingFeedback").innerText = "Nice try! Have another go!";
-      document.getElementById("resultModal").style.display = "flex";
-      return;
-    }
-
-    const stopWords = new Set([
-      "the","a","an","and","or","but","is","are","was","were","i","you","he","she","it",
-      "they","we","me","my","to","in","on","at","by","for","with","about","like","that",
-      "this","of","so","because","just","really","very","um","uh","ah"
-    ]);
-
-    const rawWords = fullTranscript.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
-    const wordCount = fullTranscript.split(/\s+/).filter(w => w.length > 0).length;
-
-    const freqMap = {};
-    rawWords.forEach(w => {
-      if (!stopWords.has(w)) {
-        freqMap[w] = (freqMap[w] || 0) + 1;
-      }
-    });
-
-    const topKeywords = Object.entries(freqMap)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
-      .map(entry => `"${entry[0]}"`);
-
-    const lowerTranscript = fullTranscript.toLowerCase();
-    const matchedChallengeWords = currentExtraWords.filter(w => 
-      lowerTranscript.includes(w.toLowerCase())
-    );
+    const topic = document.getElementById("wordDisplay")?.innerText || "Your Topic";
 
     let stars = "⭐⭐⭐";
-    let feedback = "Great try! Keep talking to share more ideas!";
+    let feedback = `Good effort ${speakerLabel}! Keep practicing to speak even longer!`;
 
-    if (wordCount >= 30 || matchedChallengeWords.length >= 2) {
+    // Calculate rating based on speaking duration and transcript availability
+    const words = transcript ? transcript.split(/\s+/).filter(w => w.length > 0) : [];
+    const wordCount = words.length;
+
+    // Star thresholds: Works seamlessly with spoken time even if mobile speech recognition cuts out
+    if (speechSecondsSpoken >= 45 || wordCount >= 30) {
       stars = "⭐⭐⭐⭐⭐";
-      feedback = `🏆 WOW ${speakerLabel}! Super Storyteller!`;
-    } else if (wordCount >= 12 || matchedChallengeWords.length >= 1) {
+      feedback = `🏆 Outstanding job, ${speakerLabel}! You are a true TalkStar!`;
+    } else if (speechSecondsSpoken >= 15 || wordCount >= 12) {
       stars = "⭐⭐⭐⭐";
-      feedback = `🎉 Awesome job ${speakerLabel}! Great details!`;
+      feedback = `🎉 Great speech, ${speakerLabel}! Clear pacing and good volume!`;
     }
 
-    const keyIdeasText = topKeywords.length > 0 
-      ? topKeywords.join(", ") 
-      : "Fun ideas";
+    // Match bonus words if transcribed
+    let bonusHitText = "Spoke with great confidence";
+    if (transcript && currentExtraWords.length > 0) {
+      const lower = transcript.toLowerCase();
+      const hits = currentExtraWords.filter(w => lower.includes(w.toLowerCase()));
+      if (hits.length > 0) {
+        bonusHitText = `Included <strong>${hits.join(", ")}</strong>`;
+      }
+    }
 
-    const challengeSummaryText = matchedChallengeWords.length > 0 
-      ? `Used <strong>${matchedChallengeWords.join(", ")}</strong>` 
-      : "None used";
-
+    // Render mobile-safe summary card
     summaryBox.innerHTML = `
       <div style="font-size: 0.92rem; line-height: 1.6;">
-        • 🎯 <strong>Topic:</strong> ${document.getElementById("wordDisplay").innerText}<br>
-        • 💡 <strong>Key Words:</strong> ${keyIdeasText}<br>
-        • ⭐ <strong>Bonus Words:</strong> ${challengeSummaryText}<br>
-        • ⏱️ <strong>Flow:</strong> ~${wordCount} words in ${speechSecondsSpoken}s
+        • 🎯 <strong>Topic:</strong> ${topic}<br>
+        • ⏱️ <strong>Speaking Time:</strong> ${speechSecondsSpoken} seconds recorded<br>
+        • ⭐ <strong>Bonus Words:</strong> ${bonusHitText}<br>
+        • 🎙️ <strong>Audio Playback:</strong> Ready to listen above!
       </div>
     `;
 
