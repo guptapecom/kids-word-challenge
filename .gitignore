@@ -1,0 +1,14 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Vercel temporary deployment files
+.vercel
+
+# Node modules (if installed later)
+node_modules/
+
+# OS metadata files
+.DS_Store
+Thumbs.db

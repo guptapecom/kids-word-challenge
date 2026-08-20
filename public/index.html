@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kids Word Master Challenge 🚀</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Extreme Right Controls (Name Input & Doodle Multi-Select) -->
+<div class="top-right-bar">
+  <input 
+    type="text" 
+    id="kidNameInput" 
+    class="name-input" 
+    placeholder="Your Name ✍️" 
+    oninput="updatePersonalization()"
+  />
+
+  <div class="doodle-menu-container">
+    <button class="doodle-menu-btn" onclick="toggleDoodleDropdown(event)">
+      🎨 Doodles ▾
+    </button>
+    <div class="doodle-dropdown" id="doodleDropdown">
+  <!-- Animals & Creatures -->
+  <label class="doodle-option"><input type="checkbox" value="🐼" checked onchange="renderDoodles()"> 🐼 Panda</label>
+  <label class="doodle-option"><input type="checkbox" value="🦄" checked onchange="renderDoodles()"> 🦄 Unicorn</label>
+  <label class="doodle-option"><input type="checkbox" value="🐱" checked onchange="renderDoodles()"> 🐱 Kitty</label>
+  <label class="doodle-option"><input type="checkbox" value="🐶" checked onchange="renderDoodles()"> 🐶 Puppy</label>
+  <label class="doodle-option"><input type="checkbox" value="🦖" checked onchange="renderDoodles()"> 🦖 T-Rex</label>
+  <label class="doodle-option"><input type="checkbox" value="🦕" checked onchange="renderDoodles()"> 🦕 Brachio</label>
+  <label class="doodle-option"><input type="checkbox" value="🐠" checked onchange="renderDoodles()"> 🐠 Fish</label>
+  <label class="doodle-option"><input type="checkbox" value="🐊" onchange="renderDoodles()"> 🐊 Crocodile</label>
+  <label class="doodle-option"><input type="checkbox" value="🦋" checked onchange="renderDoodles()"> 🦋 Butterfly</label>
+
+  <!-- Fun & Magic Objects -->
+  <label class="doodle-option"><input type="checkbox" value="🌈" checked onchange="renderDoodles()"> 🌈 Rainbow</label>
+  <label class="doodle-option"><input type="checkbox" value="🍦" checked onchange="renderDoodles()"> 🍦 Ice Cream</label>
+  <label class="doodle-option"><input type="checkbox" value="🚀" checked onchange="renderDoodles()"> 🚀 Rocket</label>
+  <label class="doodle-option"><input type="checkbox" value="🤖" onchange="renderDoodles()"> 🤖 Robot</label>
+  <label class="doodle-option"><input type="checkbox" value="👾" onchange="renderDoodles()"> 👾 Alien</label>
+  <label class="doodle-option"><input type="checkbox" value="⚽" onchange="renderDoodles()"> ⚽ Soccer</label>
+  <label class="doodle-option"><input type="checkbox" value="🎈" checked onchange="renderDoodles()"> 🎈 Balloon</label>
+  <label class="doodle-option"><input type="checkbox" value="⭐" checked onchange="renderDoodles()"> ⭐ Star</label>
+  <label class="doodle-option"><input type="checkbox" value="🫧" checked onchange="renderDoodles()"> 🫧 Bubble</label>
+</div>
+
+  </div>
+</div>
+
+<!-- Floating background doodles container -->
+<div class="bg-doodles" id="doodlesContainer"></div>
+
+<div class="container">
+  <div class="top-bar">
+    <div class="online-badge">
+      <span class="dot"></span>
+      <span id="onlineCount">14</span> Online
+    </div>
+    <button class="bg-btn" onclick="cycleTheme()">🎨 Theme</button>
+  </div>
+
+  <div class="header-section">
+    <h1 id="mainTitle">🎤 Kids Talk Challenge</h1>
+    <p class="subtitle" id="mainSubtitle">Record your voice, practice talking, and earn stars!</p>
+  </div>
+
+  <div class="controls-wrap">
+    <select id="ageGroup">
+      <option value="4-6 years old">🐣 Ages 4 - 6</option>
+      <option value="7-9 years old" selected>🦁 Ages 7 - 9</option>
+      <option value="10-12 years old">🚀 Ages 10 - 12</option>
+      <option value="13-15 years old">🎓 Ages 13 - 15</option>
+    </select>
+  </div>
+
+  <div class="word-box" id="wordDisplay">
+    Tap Below to Get a Topic! 👇
+  </div>
+
+  <div class="challenge-section" id="challengeBox">
+    <strong>🌟 Bonus Challenge Words:</strong>
+    <div class="challenge-tags" id="adjoiningDisplay">
+      <span class="tag">Press Get Topic</span>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" id="genBtn" onclick="generateTopic()">🎲 Get My Topic!</button>
+
+  <div class="recording-status" id="recordingStatus">
+    <span class="rec-dot"></span> 🎙️ Listening & Recording...
+  </div>
+
+  <div class="timer-section">
+    <select id="talkDuration" onchange="changeDuration()">
+      <option value="60" selected>⏱️ 1m</option>
+      <option value="120">⏱️ 2m</option>
+      <option value="180">⏱️ 3m</option>
+    </select>
+
+    <div class="timer-display" id="timer">01:00</div>
+
+    <button class="btn btn-timer" id="timerBtn" onclick="startChallenge()">Start 🚀</button>
+    <button class="btn btn-stop" id="finishBtn" onclick="finishTalk()" style="display:none;">Done 🏁</button>
+  </div>
+</div>
+
+<div id="modalContainer"></div>
+
+<script>
+  // Personalization logic
+  function updatePersonalization() {
+    const rawName = document.getElementById("kidNameInput").value.trim();
+    const title = document.getElementById("mainTitle");
+    const subtitle = document.getElementById("mainSubtitle");
+
+    if (rawName) {
+      title.innerText = `🎤 ${rawName}'s Talk Show!`;
+      subtitle.innerText = `Welcome ${rawName}! Pick a topic, hit record, and show your skills!`;
+    } else {
+      title.innerText = "🎤 Kids Talk Challenge";
+      subtitle.innerText = "Record your voice, practice talking, and earn stars!";
+    }
+  }
+
+  // Doodle Multi-Select & Rendering
+  function toggleDoodleDropdown(e) {
+    e.stopPropagation();
+    document.getElementById("doodleDropdown").classList.toggle("show");
+  }
+
+  document.addEventListener("click", (e) => {
+    const dropdown = document.getElementById("doodleDropdown");
+    if (!dropdown.contains(e.target) && !e.target.classList.contains("doodle-menu-btn")) {
+      dropdown.classList.remove("show");
+    }
+  });
+
+  function renderDoodles() {
+    const container = document.getElementById("doodlesContainer");
+    container.innerHTML = "";
+
+    const checkedBoxes = Array.from(
+      document.querySelectorAll('#doodleDropdown input[type="checkbox"]:checked')
+    );
+    const selectedEmojis = checkedBoxes.map(cb => cb.value);
+
+    if (selectedEmojis.length === 0) return;
+
+    // Distribute doodles across the screen with random lanes & speed offsets
+    const totalDoodles = 10;
+    for (let i = 0; i < totalDoodles; i++) {
+      const emoji = selectedEmojis[i % selectedEmojis.length];
+      const doodleEl = document.createElement("div");
+      doodleEl.className = "doodle";
+      doodleEl.innerText = emoji;
+
+      const leftPos = (i * (100 / totalDoodles)) + (Math.random() * 4 - 2);
+      const duration = (8 + Math.random() * 6).toFixed(1);
+      const delay = (Math.random() * 5).toFixed(1);
+
+      doodleEl.style.left = `${Math.max(2, Math.min(94, leftPos))}%`;
+      doodleEl.style.animationDuration = `${duration}s`;
+      doodleEl.style.animationDelay = `${delay}s`;
+
+      container.appendChild(doodleEl);
+    }
+  }
+  renderDoodles();
+
+  // Background Theme Swapper
+  const themes = [
+    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
+    "linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)",
+    "linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)",
+    "linear-gradient(135deg, #fccb90 0%, #d57eeb 100%)"
+  ];
+  let themeIndex = 0;
+  function cycleTheme() {
+    themeIndex = (themeIndex + 1) % themes.length;
+    document.body.style.background = themes[themeIndex];
+  }
+
+  async function loadModalSnippet() {
+    try {
+      const response = await fetch('/modal.html');
+      const html = await response.text();
+      document.getElementById('modalContainer').innerHTML = html;
+    } catch (err) {
+      console.error('Failed to load modal template:', err);
+    }
+  }
+  loadModalSnippet();
+
+  let currentExtraWords = [];
+
+  const fallbackBank = {
+    "4-6 years old": { main: "My Favorite Toy", extra: ["Play", "Share", "Fun"] },
+    "7-9 years old": { main: "A Magical Treehouse", extra: ["Ladder", "Secret", "View"] },
+    "10-12 years old": { main: "Design a New Video Game", extra: ["Hero", "Level", "Powers"] },
+    "13-15 years old": { main: "The Ultimate Road Trip", extra: ["Playlist", "Map", "Adventure"] }
+  };
+
+  async function generateTopic() {
+    const age = document.getElementById("ageGroup").value;
+    const wordDisplay = document.getElementById("wordDisplay");
+    const genBtn = document.getElementById("genBtn");
+
+    wordDisplay.innerText = "✨ Picking a fun topic...";
+    wordDisplay.classList.add("pulse");
+    genBtn.disabled = true;
+
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ageGroup: age })
+      });
+
+      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+
+      const data = await response.json();
+      renderResult(data.main, data.extra);
+    } catch (err) {
+      console.warn("Backend unavailable, using fallback:", err);
+      const fallback = fallbackBank[age];
+      renderResult(fallback.main, fallback.extra);
+    } finally {
+      wordDisplay.classList.remove("pulse");
+      genBtn.disabled = false;
+      resetTimer();
+    }
+  }
+
+  function renderResult(mainWord, extraWords) {
+    document.getElementById("wordDisplay").innerText = mainWord;
+    currentExtraWords = extraWords || [];
+    const adjoiningContainer = document.getElementById("adjoiningDisplay");
+    adjoiningContainer.innerHTML = "";
+    currentExtraWords.forEach(word => {
+      const tag = document.createElement("span");
+      tag.className = "tag";
+      tag.innerText = word;
+      adjoiningContainer.appendChild(tag);
+    });
+  }
+
+  let totalDuration = 60;
+  let timeLeft = 60;
+  let timerInterval = null;
+  let mediaRecorder = null;
+  let audioChunks = [];
+  let speechRecognizer = null;
+  let spokenTranscript = "";
+  let speechSecondsSpoken = 0;
+
+  function changeDuration() {
+    totalDuration = parseInt(document.getElementById("talkDuration").value, 10);
+    resetTimer();
+  }
+
+  function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById("timer").innerText = 
+      `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
+
+  async function startChallenge() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioChunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = e => {
+        if (e.data.size > 0) audioChunks.push(e.data);
+      };
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        document.getElementById("audioPlayback").src = audioUrl;
+      };
+      mediaRecorder.start();
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        speechRecognizer = new SpeechRecognition();
+        speechRecognizer.continuous = true;
+        speechRecognizer.interimResults = true;
+        spokenTranscript = "";
+        
+        speechRecognizer.onresult = event => {
+          let currentText = "";
+          for (let i = 0; i < event.results.length; ++i) {
+            currentText += event.results[i][0].transcript + " ";
+          }
+          spokenTranscript = currentText.trim();
+        };
+        speechRecognizer.start();
+      }
+
+      document.getElementById("recordingStatus").style.display = "flex";
+      document.getElementById("timerBtn").style.display = "none";
+      document.getElementById("finishBtn").style.display = "inline-block";
+      document.getElementById("talkDuration").disabled = true;
+
+      speechSecondsSpoken = 0;
+      timerInterval = setInterval(() => {
+        speechSecondsSpoken++;
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateTimerDisplay();
+        } else {
+          finishTalk();
+        }
+      }, 1000);
+
+    } catch (err) {
+      alert("Microphone permission is required to record your speech!");
+    }
+  }
+
+  function finishTalk() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+
+    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+      mediaRecorder.stop();
+      mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    }
+    if (speechRecognizer) {
+      speechRecognizer.stop();
+    }
+
+    document.getElementById("recordingStatus").style.display = "none";
+    document.getElementById("timerBtn").style.display = "inline-block";
+    document.getElementById("finishBtn").style.display = "none";
+    document.getElementById("talkDuration").disabled = false;
+
+    setTimeout(() => {
+      evaluateSpeech();
+      resetTimer();
+    }, 600);
+  }
+
+  function evaluateSpeech() {
+    const transcript = (spokenTranscript || "").trim();
+    const summaryBox = document.getElementById("summaryDisplay");
+    const kidName = document.getElementById("kidNameInput").value.trim();
+    const speakerLabel = kidName ? `${kidName}` : "Speaker";
+
+    if (!transcript) {
+      summaryBox.innerHTML = "<em>We couldn't hear your voice clearly. Try speaking closer to the mic!</em>";
+      document.getElementById("starsDisplay").innerText = "⭐⭐⭐";
+      document.getElementById("ratingFeedback").innerText = "Nice try! Have another go!";
+      document.getElementById("resultModal").style.display = "flex";
+      return;
+    }
+
+    const stopWords = new Set([
+      "the","a","an","and","or","but","is","are","was","were","i","you","he","she","it",
+      "they","we","me","my","to","in","on","at","by","for","with","about","like","that",
+      "this","of","so","because","just","really","very","um","uh","ah"
+    ]);
+
+    const rawWords = transcript.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
+    const wordCount = transcript.split(/\s+/).filter(w => w.length > 0).length;
+
+    const freqMap = {};
+    rawWords.forEach(w => {
+      if (!stopWords.has(w)) {
+        freqMap[w] = (freqMap[w] || 0) + 1;
+      }
+    });
+
+    const topKeywords = Object.entries(freqMap)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(entry => `"${entry[0]}"`);
+
+    const lowerTranscript = transcript.toLowerCase();
+    const matchedChallengeWords = currentExtraWords.filter(w => 
+      lowerTranscript.includes(w.toLowerCase())
+    );
+
+    let stars = "⭐⭐⭐";
+    let feedback = "Great try! Keep talking to share more ideas!";
+
+    if (wordCount >= 35 || matchedChallengeWords.length >= 2) {
+      stars = "⭐⭐⭐⭐⭐";
+      feedback = `🏆 WOW ${speakerLabel}! Super Storyteller!`;
+    } else if (wordCount >= 18 || matchedChallengeWords.length >= 1) {
+      stars = "⭐⭐⭐⭐";
+      feedback = `🎉 Awesome job ${speakerLabel}! Great details!`;
+    }
+
+    const keyIdeasText = topKeywords.length > 0 
+      ? topKeywords.join(", ") 
+      : "Fun ideas";
+
+    const challengeSummaryText = matchedChallengeWords.length > 0 
+      ? `Used <strong>${matchedChallengeWords.join(", ")}</strong>` 
+      : "None used";
+
+    summaryBox.innerHTML = `
+      <div style="font-size: 0.92rem; line-height: 1.6;">
+        • 🎯 <strong>Topic:</strong> ${document.getElementById("wordDisplay").innerText}<br>
+        • 💡 <strong>Key Words:</strong> ${keyIdeasText}<br>
+        • ⭐ <strong>Bonus Words:</strong> ${challengeSummaryText}<br>
+        • ⏱️ <strong>Flow:</strong> ~${wordCount} words in ${speechSecondsSpoken}s
+      </div>
+    `;
+
+    document.getElementById("starsDisplay").innerText = stars;
+    document.getElementById("ratingFeedback").innerText = feedback;
+    document.getElementById("resultModal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("resultModal").style.display = "none";
+    const audio = document.getElementById("audioPlayback");
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timeLeft = totalDuration;
+    updateTimerDisplay();
+  }
+
+  let baseUsers = Math.floor(Math.random() * 6) + 12;
+  function updateOnlineUsers() {
+    baseUsers += Math.floor(Math.random() * 3) - 1;
+    if (baseUsers < 6) baseUsers = 6;
+    document.getElementById("onlineCount").innerText = baseUsers;
+  }
+  setInterval(updateOnlineUsers, 4500);
+</script>
+
+</body>
+</html>
