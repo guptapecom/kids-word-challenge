@@ -189,6 +189,11 @@
       </button>
     </div>
 
+    <!-- Thematic AI Banner Slot -->
+<div class="theme-banner-container" id="themeBannerWrap">
+  <img id="themeBannerImg" src="/images/banners/treehouse.webp" alt="Theme Banner" class="theme-banner-img" />
+</div>
+
     <!-- Revealed Only After Topic Request -->
     <div class="prompt-card spotlight-card" id="promptCard" style="display: none;">
       <p class="prompt-text spotlight-text" id="wordDisplay"></p>
@@ -261,7 +266,22 @@
     /* ==========================================================================
      1. Themes & Backdrop Engine (With Persistence)
      ========================================================================== */
+  const themeBanners = [
+  "/images/banners/space.webp",
+  "/images/banners/treehouse.webp",
+  "/images/banners/dino.webp",
+  "/images/banners/racing.webp",
+  "/images/banners/sports.webp",
+  "/images/banners/unicorn.webp",
+  "/images/banners/fairy.webp",
+  "/images/banners/candy.webp"
+];
+
   function switchTheme(index) {
+      const banner = document.getElementById("themeBannerImg");
+  if (banner && themeBanners[index]) {
+    banner.src = themeBanners[index];
+  }
     const themeNames = [
       "Space Rocket Explorer", "TalkStars Treehouse", "Dino Volcano Jungle",
       "Cyber Racing Grid", "Stadium Sports Arena", "Unicorn Dreamland",

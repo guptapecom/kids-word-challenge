@@ -1004,4 +1004,25 @@ body {
   100% { width: 100%; }
 }
 
+.theme-banner-container {
+  width: 100%;
+  height: 110px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1.5px solid var(--glass-border);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.theme-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+@media (min-width: 600px) {
+  .theme-banner-container {
+    height: 140px;
+  }
+}
 }
