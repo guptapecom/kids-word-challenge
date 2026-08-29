@@ -191,13 +191,14 @@
     </button>
   </div>
 
-  <!-- Bonus Challenge Words -->
-  <div class="bonus-card">
+  <!-- Bonus Challenge Words (Hidden on load to keep screen clean) -->
+  <div class="bonus-card" id="bonusCard" style="display: none;">
     <div class="bonus-title">✨ Bonus Challenge Words</div>
     <div class="bonus-chips" id="adjoiningDisplay">
       <span class="chip">Tap Button Above</span>
     </div>
   </div>
+
 
   <!-- Live Mic Bar -->
   <div class="recording-bar" id="recordingStatus">
@@ -332,20 +333,25 @@
   /* ==========================================================================
      3. Personalization & Setup
      ========================================================================== */
-  let nameDebounceTimer = null;
+    let nameDebounceTimer = null;
   function updatePersonalization() {
-    const rawName = document.getElementById("kidNameInput")?.value.trim();
+    const nameInput = document.getElementById("kidNameInput");
+    const rawName = nameInput?.value.trim() || "";
     const title = document.getElementById("mainTitle");
     const subtitle = document.getElementById("mainSubtitle");
 
+    // 1. Update UI Headings
     if (rawName) {
-      title.innerText = `🌟 ${rawName.toUpperCase()}`;
-      subtitle.innerText = `Master your story ${rawName}, hit record, and earn 5 stars!`;
+      title.innerText = `${rawName.toUpperCase()}`;
+      subtitle.innerText = `Tell Your Story & Earn 5 Stars! ⭐`;
+      localStorage.setItem("talkstars_saved_name", rawName); // 💾 Save name for future visits
     } else {
       title.innerText = "TALK STARS";
       subtitle.innerText = "Tell Your Story & Earn 5 Stars! ⭐";
+      localStorage.removeItem("talkstars_saved_name"); // Clear if the input is deleted
     }
 
+    // 2. Debounce PostHog analytics update (500ms)
     clearTimeout(nameDebounceTimer);
     nameDebounceTimer = setTimeout(() => {
       if (rawName && typeof window.posthog?.capture === 'function') {
@@ -353,6 +359,16 @@
         posthog.capture('Name Added', { kid_name: rawName });
       }
     }, 500);
+  }
+
+  function restoreSavedName() {
+    const savedName = localStorage.getItem("talkstars_saved_name");
+    const nameInput = document.getElementById("kidNameInput");
+
+    if (savedName && nameInput) {
+      nameInput.value = savedName;
+      updatePersonalization(); // Refreshes hero title, subtitle & PostHog
+    }
   }
 
   async function loadModalSnippet() {
@@ -470,17 +486,26 @@
     }
   }
 
-  function renderResult(mainWord, extraWords) {
+   function renderResult(mainWord, extraWords) {
     document.getElementById("wordDisplay").innerText = mainWord;
     currentExtraWords = extraWords || [];
+    
+    const bonusCard = document.getElementById("bonusCard");
     const adjoiningContainer = document.getElementById("adjoiningDisplay");
     adjoiningContainer.innerHTML = "";
-    currentExtraWords.forEach(word => {
-      const chip = document.createElement("span");
-      chip.className = "chip";
-      chip.innerText = word;
-      adjoiningContainer.appendChild(chip);
-    });
+
+    // Only display the card if bonus words are actually present
+    if (currentExtraWords.length > 0) {
+      currentExtraWords.forEach(word => {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.innerText = word;
+        adjoiningContainer.appendChild(chip);
+      });
+      if (bonusCard) bonusCard.style.display = "block";
+    } else {
+      if (bonusCard) bonusCard.style.display = "none";
+    }
   }
 
   /* ==========================================================================
@@ -786,31 +811,10 @@
   }
   setInterval(updateOnlineUsers, 4000);
 
-    /* ==========================================================================
-     Reliable Splash / Hook Dismissal Engine
-     ========================================================================== 
-  function dismissSplashScreen() {
-    const splash = document.getElementById("splashScreen");
-    if (!splash) return;
-
-    splash.classList.add("fade-out");
-    
-    // Fallback: force complete removal from DOM after transition
-    setTimeout(() => {
-      splash.style.display = "none";
-      if (splash.parentNode) {
-        splash.parentNode.removeChild(splash);
-      }
-      initOnboardingGuide();
-    }, 450);
-  }
-
-  // Trigger dismissal after exactly 2 seconds
-  setTimeout(dismissSplashScreen, 2000);*/
-
   // Initialize background data without blocking the timer
   window.addEventListener('DOMContentLoaded', () => {
     loadModalSnippet();
+    restoreSavedName(); // 🌟 Restores previously saved name
   });
 
 </script>
