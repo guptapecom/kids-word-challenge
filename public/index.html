@@ -17,7 +17,8 @@
         if (config.posthogKey) {
           posthog.init(config.posthogKey, {
             api_host: config.posthogHost,
-            person_profiles: 'always'
+            person_profiles: 'always',
+            autocapture: false // 🚫 Disables automatic element clicks/form tracking
           });
         }
       })
@@ -200,7 +201,7 @@
     const card = document.getElementById("appScreen");
      
     if (window.posthog) {
-      posthog.capture('theme_changed', {
+      posthog.capture('Theme Changed', {
         theme_index: index,
         theme_name: themeNames[index] || "Unknown"
       });
@@ -289,7 +290,7 @@
         // Sets person profile name in PostHog
         posthog.people.set({ name: rawName });
         
-        posthog.capture('name_updated', {
+        posthog.capture('Name Added', {
           kid_name: rawName
         });
       }
@@ -307,7 +308,7 @@
       if (player) {
         player.addEventListener('play', () => {
           if (window.posthog) {
-            posthog.capture('audio_played', {
+            posthog.capture('Recording Played', {
               duration_seconds: speechSecondsSpoken,
               topic: document.getElementById("wordDisplay")?.innerText
             });
@@ -335,7 +336,7 @@
 
      // Track topic request
     if (window.posthog) {
-      posthog.capture('topic_requested', {
+      posthog.capture('Topic Requested', {
         age_group: age
       });
     }
@@ -409,7 +410,7 @@
 
     // Track when a kid starts recording
     if (window.posthog) {
-      posthog.capture('recording_started', {
+      posthog.capture('Recording Started', {
         duration_setting: document.getElementById("talkDuration").value,
         age_group: document.getElementById("ageGroup").value,
         topic: document.getElementById("wordDisplay")?.innerText
@@ -521,7 +522,7 @@
 
     // Track download in PostHog
     if (window.posthog) {
-      posthog.capture('audio_downloaded', {
+      posthog.capture('Recording Downloaded', {
         speaker_name: kidName,
         speaking_time_seconds: speechSecondsSpoken,
         topic: document.getElementById("wordDisplay")?.innerText
@@ -539,7 +540,7 @@
     
     // Track completed speech and performance metrics
     if (window.posthog) {
-      posthog.capture('speech_evaluated', {
+      posthog.capture('Speech Evaluated', {
         topic: topic,
         duration_spoken_seconds: speechSecondsSpoken,
         word_count: transcript ? transcript.split(/\s+/).filter(w => w.length > 0).length : 0,
