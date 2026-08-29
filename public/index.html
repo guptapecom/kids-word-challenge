@@ -49,6 +49,48 @@
   </script>
 </head>
 <body>
+<!-- 🚀 Direct Inline-Styled Hook Screen (Desktop & Mobile Centered) -->
+<div id="splashScreen" style="position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; background: radial-gradient(circle at center, #1e1b4b 0%, #0f1016 85%); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; padding: 0; box-sizing: border-box; transition: opacity 0.4s ease, visibility 0.4s ease;">
+  
+  <div style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 480px; margin: 0 auto; gap: 12px;">
+    <div style="font-size: 3.2rem; letter-spacing: 8px; filter: drop-shadow(0 0 20px rgba(255, 107, 129, 0.6));">🎙️ ⭐ 🚀</div>
+    <h1 style="margin: 0; font-size: 2.4rem; font-weight: 900; letter-spacing: 1px; color: #ffffff; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 16px rgba(255, 51, 102, 0.8); font-family: 'Fredoka', sans-serif;">TALK STARS</h1>
+    <p style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #feca57; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8); font-family: 'Fredoka', sans-serif;">Speak • Shine • Earn 5 Stars!</p>
+    
+    <!-- Animated Progress Bar -->
+    <div style="margin-top: 14px; width: 140px; height: 6px; background: rgba(255, 255, 255, 0.15); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);">
+      <div id="splashProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff3366, #feca57, #0be881); border-radius: 10px; transition: width 2s cubic-bezier(0.2, 0.8, 0.2, 1);"></div>
+    </div>
+  </div>
+
+  <script>
+    // Animate progress bar immediately
+    setTimeout(function() {
+      var bar = document.getElementById('splashProgressBar');
+      if (bar) bar.style.width = '100%';
+    }, 50);
+
+    // Dismiss hook screen after 2 seconds
+    setTimeout(function() {
+      var splash = document.getElementById('splashScreen');
+      if (splash) {
+        splash.style.opacity = '0';
+        splash.style.visibility = 'hidden';
+        splash.style.pointerEvents = 'none';
+
+        setTimeout(function() {
+          if (splash.parentNode) {
+            splash.parentNode.removeChild(splash);
+          }
+          if (typeof initOnboardingGuide === 'function') {
+            initOnboardingGuide();
+          }
+        }, 400);
+      }
+    }, 2000);
+  </script>
+</div>
+
 
 <div class="bg-doodles" id="doodlesContainer"></div>
 
@@ -129,7 +171,7 @@
   <!-- High-Focus Big Generate Trigger Button with Relative Anchor -->
   <div style="position: relative; width: 100%;">
     <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
-      <span id="guideText">1️⃣ Tap here to get a topic!</span>
+      <span id="guideText">👇 Tap here to get a topic!</span>
     </div>
     <button class="btn-generate btn-spotlight" id="genBtn" onclick="generateTopic()">
       🎲 Get My Topic!
@@ -701,7 +743,7 @@
     if (completedStep === 1 && currentGuideStep === 1) {
       currentGuideStep = 2;
       setTimeout(() => {
-        showGuideForElement('timerBtn', '2️⃣ Now tap Record & speak!');
+        showGuideForElement('timerBtn', '👇 Now tap Record & speak!');
       }, 300);
     }
   }
@@ -731,10 +773,33 @@
   }
   setInterval(updateOnlineUsers, 4000);
 
+    /* ==========================================================================
+     Reliable Splash / Hook Dismissal Engine
+     ========================================================================== 
+  function dismissSplashScreen() {
+    const splash = document.getElementById("splashScreen");
+    if (!splash) return;
+
+    splash.classList.add("fade-out");
+    
+    // Fallback: force complete removal from DOM after transition
+    setTimeout(() => {
+      splash.style.display = "none";
+      if (splash.parentNode) {
+        splash.parentNode.removeChild(splash);
+      }
+      initOnboardingGuide();
+    }, 450);
+  }
+
+  // Trigger dismissal after exactly 2 seconds
+  setTimeout(dismissSplashScreen, 2000);*/
+
+  // Initialize background data without blocking the timer
   window.addEventListener('DOMContentLoaded', () => {
     loadModalSnippet();
-    setTimeout(initOnboardingGuide, 400);
   });
+
 </script>
 
 </body>
