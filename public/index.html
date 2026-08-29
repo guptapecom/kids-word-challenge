@@ -322,14 +322,27 @@
      4. Topic Generator (Gemini API + Fallbacks)
      ========================================================================== */
   let currentExtraWords = [];
-  const fallbackBank = {
-    "4-6 years old": { main: "My Favorite Toy", extra: ["Play", "Share", "Fun"] },
-    "7-9 years old": { main: "A Magical Treehouse", extra: ["Ladder", "Secret", "View"] },
-    "10-12 years old": { main: "Design a New Video Game", extra: ["Hero", "Level", "Powers"] },
-    "13-15 years old": { main: "The Ultimate Road Trip", extra: ["Playlist", "Map", "Adventure"] }
+   const fallbackBank = {
+    "4-6 years old": { 
+      main: "The Secret Life of My Favorite Toy: What does it do when I am asleep?", 
+      extra: ["Playful", "Magic", "Adventure"] 
+    },
+    "7-9 years old": { 
+      main: "The Secret Mission of the Apartment Slide: What happens when the playground closes and toys come alive?", 
+      extra: ["Magic Whistle", "Stray Puppy", "Golden Pebble"] 
+    },
+    "10-12 years old": { 
+      main: "Design a New School Subject: What would students learn, and who would teach it?", 
+      extra: ["Creativity", "Invention", "Future"] 
+    },
+    "13-15 years old": { 
+      main: "If Social Media Disappeared for One Year: How would our daily lives change?", 
+      extra: ["Connection", "Habits", "Discovery"] 
+    }
   };
 
-  async function generateTopic() {
+
+  /*async function generateTopic() {
     const age = document.getElementById("ageGroup").value;
     const wordDisplay = document.getElementById("wordDisplay");
     const genBtn = document.getElementById("genBtn");
@@ -363,7 +376,63 @@
       genBtn.disabled = false;
       resetTimer();
     }
+  } */
+
+    async function generateTopic() {
+    const age = document.getElementById("ageGroup").value;
+    const wordDisplay = document.getElementById("wordDisplay");
+    const genBtn = document.getElementById("genBtn");
+
+    // Track button click
+    if (window.posthog) {
+      window.posthog.capture('Topic Requested', {
+        age_group: age,
+        kid_name: document.getElementById("kidNameInput")?.value.trim() || "Anonymous"
+      });
+    }
+
+    wordDisplay.innerText = "✨ Finding a fun topic...";
+    wordDisplay.classList.add("pulse-anim");
+    genBtn.disabled = true;
+
+    // Set a 4-second timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ageGroup: age }),
+        signal: controller.signal // Attaches timeout signal
+      });
+
+      clearTimeout(timeoutId); // Cancel timeout if response arrives in time
+
+      if (!response.ok) throw new Error(`Server status: ${response.status}`);
+      const data = await response.json();
+      renderResult(data.main, data.extra);
+    } catch (err) {
+      clearTimeout(timeoutId);
+
+      // Log timeout / fallback usage in PostHog
+      if (window.posthog) {
+        window.posthog.capture('Topic Fallback Used', {
+          age_group: age,
+          reason: err.name === 'AbortError' ? 'Request Timed Out (4s)' : err.message
+        });
+      }
+
+      // Pick a random fallback from your bank
+      const fallback = fallbackBank[age] || fallbackBank["7-9 years old"];
+      renderResult(fallback.main, fallback.extra);
+    } finally {
+      wordDisplay.classList.remove("pulse-anim");
+      genBtn.disabled = false;
+      resetTimer();
+    }
   }
+
 
   function renderResult(mainWord, extraWords) {
     document.getElementById("wordDisplay").innerText = mainWord;
