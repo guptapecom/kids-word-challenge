@@ -50,27 +50,41 @@
 </head>
 <body>
 <!-- 🚀 Direct Inline-Styled Hook Screen (Desktop & Mobile Centered) -->
-<div id="splashScreen" style="position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; background: radial-gradient(circle at center, #1e1b4b 0%, #0f1016 85%); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; padding: 0; box-sizing: border-box; transition: opacity 0.4s ease, visibility 0.4s ease;">
+<!-- 🚀 Responsive Opening Hook Screen -->
+<!-- 🚀 High-Impact Hook Screen (Desktop Expanded & Mobile Optimized) -->
+<div id="splashScreen" style="position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; background: radial-gradient(circle at center, #1e1b4b 0%, #0f1016 85%); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; padding: 20px; box-sizing: border-box; transition: opacity 0.4s ease, visibility 0.4s ease;">
   
-  <div style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 480px; margin: 0 auto; gap: 12px;">
-    <div style="font-size: 3.2rem; letter-spacing: 8px; filter: drop-shadow(0 0 20px rgba(255, 107, 129, 0.6));">🎙️ ⭐ 🚀</div>
-    <h1 style="margin: 0; font-size: 2.4rem; font-weight: 900; letter-spacing: 1px; color: #ffffff; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 16px rgba(255, 51, 102, 0.8); font-family: 'Fredoka', sans-serif;">TALK STARS</h1>
-    <p style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #feca57; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8); font-family: 'Fredoka', sans-serif;">Speak • Shine • Earn 5 Stars!</p>
+  <div class="splash-box" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 680px; margin: 0 auto; gap: 16px;">
     
-    <!-- Animated Progress Bar -->
-    <div style="margin-top: 14px; width: 140px; height: 6px; background: rgba(255, 255, 255, 0.15); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);">
-      <div id="splashProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff3366, #feca57, #0be881); border-radius: 10px; transition: width 2s cubic-bezier(0.2, 0.8, 0.2, 1);"></div>
+    <div class="splash-mascot-txt" style="font-size: clamp(3.2rem, 6vw, 4.6rem); letter-spacing: 10px; filter: drop-shadow(0 0 24px rgba(255, 107, 129, 0.7)); user-select: none;">
+      🎙️ ⭐ 🚀
     </div>
+    
+    <h1 class="splash-title-txt" style="margin: 0; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 900; letter-spacing: 2px; color: #ffffff; text-shadow: 0 4px 24px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 51, 102, 0.85); font-family: 'Fredoka', sans-serif;">
+      TALK STARS
+    </h1>
+    
+    <p class="splash-tagline-txt" style="margin: 0; font-size: clamp(1.1rem, 2.4vw, 1.55rem); font-weight: 800; color: #feca57; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85); font-family: 'Fredoka', sans-serif;">
+      Speak • Shine • Earn 5 Stars!
+    </p>
+    
+    <!-- 2-Second Progress Bar Container -->
+    <div style="margin-top: 16px; width: min(260px, 75vw); height: 8px; background: rgba(255, 255, 255, 0.18); border-radius: 20px; overflow: hidden; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); position: relative;">
+      <div id="splashProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff3366, #feca57, #0be881); border-radius: 20px; transition: width 2s cubic-bezier(0.1, 0.7, 0.1, 1);"></div>
+    </div>
+
   </div>
 
   <script>
-    // Animate progress bar immediately
-    setTimeout(function() {
-      var bar = document.getElementById('splashProgressBar');
-      if (bar) bar.style.width = '100%';
-    }, 50);
+    // 1. Kick off progress animation immediately
+    requestAnimationFrame(function() {
+      setTimeout(function() {
+        var bar = document.getElementById('splashProgressBar');
+        if (bar) bar.style.width = '100%';
+      }, 50);
+    });
 
-    // Dismiss hook screen after 2 seconds
+    // 2. Dismiss after 2 seconds
     setTimeout(function() {
       var splash = document.getElementById('splashScreen');
       if (splash) {
@@ -90,7 +104,6 @@
     }, 2000);
   </script>
 </div>
-
 
 <div class="bg-doodles" id="doodlesContainer"></div>
 

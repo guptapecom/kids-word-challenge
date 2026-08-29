@@ -821,18 +821,36 @@ body {
    ========================================================================== */
 @media (min-width: 600px) {
   body {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     align-items: center;
   }
 
+  /* Desktop card size */
   .app-screen {
-    min-height: 840px;
-    height: 880px;
+    max-width: 580px; /* Increased from 480px for a more spacious desktop view */
+    min-height: 860px;
+    height: 90vh;
+    max-height: 920px;
+    padding: 1.5rem 1.6rem 2rem 1.6rem;
     border-radius: 36px;
     border: 2px solid rgba(255, 255, 255, 0.15);
   }
 
+  .main-title {
+    font-size: 2.3rem;
+  }
+
+  .prompt-card {
+    min-height: 140px;
+    padding: 1.6rem 1.4rem;
+  }
+
+  .prompt-text {
+    font-size: 1.8rem;
+  }
+
   .modal-sheet {
+    max-width: 440px;
     margin-bottom: 0;
   }
 }
