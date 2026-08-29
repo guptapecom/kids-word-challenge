@@ -31,6 +31,12 @@
 
 <main class="app-screen" id="appScreen">
   
+  <!-- 🟢 PASTE ONBOARDING TOOLTIP HERE -->
+  <div id="onboardingTooltip" class="onboarding-guide-badge" style="display:none;">
+    <span class="guide-arrow">👉</span>
+    <span id="guideText">1️⃣ Tap here to get a topic!</span>
+  </div>
+
    <!-- Navigation Header Bar -->
   <header class="app-nav">
     <div class="header-top-bar">
@@ -363,7 +369,7 @@
     if (thanksMsg) thanksMsg.style.display = "block";
   }
 
-    async function generateTopic() {
+  async function generateTopic() {
     const age = document.getElementById("ageGroup").value;
     const wordDisplay = document.getElementById("wordDisplay");
     const genBtn = document.getElementById("genBtn");
@@ -415,6 +421,7 @@
       wordDisplay.classList.remove("pulse-anim");
       genBtn.disabled = false;
       resetTimer();
+      advanceGuideStep(1); // Advances to step 2 after getting a topic
     }
   }
 
@@ -536,6 +543,7 @@
     } catch (err) {
       alert("Please allow microphone access to record your voice!");
     }
+    advanceGuideStep(2); // Finishes and dismisses the guide when recording starts
   }
 
   function finishTalk() {
@@ -639,6 +647,8 @@
     document.getElementById("starsDisplay").innerText = stars;
     document.getElementById("ratingFeedback").innerText = feedback;
     document.getElementById("resultModal").style.display = "flex";
+
+    completeOnboardingPermanently();
   } 
 
 
@@ -664,6 +674,86 @@
     updateTimerDisplay();
   }
 
+     /* ==========================================================================
+     Reliable First-Time Onboarding Guide Engine
+     ========================================================================== */
+  let currentGuideStep = 0;
+
+  function initOnboardingGuide() {
+    // Only proceed if user has NEVER finished a recording
+    const hasRecorded = localStorage.getItem('talkstars_first_speech_recorded');
+    if (hasRecorded === 'true') {
+      const tooltip = document.getElementById('onboardingTooltip');
+      if (tooltip) tooltip.style.display = 'none';
+      return;
+    }
+
+    // Start at Step 1 (Get Topic)
+    currentGuideStep = 1;
+    positionGuideOnElement('genBtn', '1️⃣ Tap here to get a topic!');
+
+    if (window.posthog) {
+      window.posthog.capture('Onboarding Started', {
+        step: currentGuideStep
+      });
+    }
+  }
+
+  function positionGuideOnElement(elementId, text) {
+    const target = document.getElementById(elementId);
+    const tooltip = document.getElementById('onboardingTooltip');
+    const guideText = document.getElementById('guideText');
+    const parentContainer = document.getElementById('appScreen');
+
+    if (!target || !tooltip || !parentContainer) return;
+
+    guideText.innerText = text;
+    tooltip.style.display = 'flex';
+
+    // Calculate exact center alignment relative to the app container
+    const rect = target.getBoundingClientRect();
+    const parentRect = parentContainer.getBoundingClientRect();
+
+    const topOffset = (rect.top - parentRect.top) - 46;
+    const leftOffset = (rect.left - parentRect.left) + (rect.width / 2) - (tooltip.offsetWidth / 2 || 100);
+
+    tooltip.style.top = `${topOffset}px`;
+    tooltip.style.left = `${Math.max(10, leftOffset)}px`;
+  }
+
+  function advanceGuideStep(completedStep) {
+    const hasRecorded = localStorage.getItem('talkstars_first_speech_recorded');
+    if (hasRecorded === 'true') return;
+
+    if (completedStep === 1 && currentGuideStep === 1) {
+      currentGuideStep = 2;
+      setTimeout(() => {
+        positionGuideOnElement('timerBtn', '2️⃣ Now tap Record & speak!');
+      }, 350);
+    }
+  }
+
+  function completeOnboardingPermanently() {
+    currentGuideStep = 0;
+    const tooltip = document.getElementById('onboardingTooltip');
+    if (tooltip) tooltip.style.display = 'none';
+
+    // Mark permanently finished ONLY after speech evaluation
+    localStorage.setItem('talkstars_first_speech_recorded', 'true');
+
+    if (window.posthog) {
+      window.posthog.capture('Onboarding Completed', {
+        step: 2
+      });
+    }
+  }
+
+  // Auto reposition on window resize/orientation changes
+  window.addEventListener('resize', () => {
+    if (currentGuideStep === 1) positionGuideOnElement('genBtn', '1️⃣ Tap here to get a topic!');
+    if (currentGuideStep === 2) positionGuideOnElement('timerBtn', '2️⃣ Now tap Record & speak!');
+  });
+
   /* ==========================================================================
      6. Live Counter Simulation & Initialization
      ========================================================================== */
@@ -679,6 +769,7 @@ let baseUsers = 16;
 
   window.addEventListener('DOMContentLoaded', () => {
     loadModalSnippet();
+    setTimeout(initOnboardingGuide, 400); // Trigger onboarding for first-time visitors
   });
 </script>
 

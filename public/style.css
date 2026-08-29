@@ -887,4 +887,34 @@ body {
   border-color: #0fbcf9;
 }
 .reaction-weird.selected .reaction-text { color: #0fbcf9; }
+
+/* ==========================================================================
+   Interactive First-Time Guide Tooltip
+   ========================================================================== */
+.onboarding-guide-badge {
+  position: absolute;
+  z-index: 1500;
+  background: linear-gradient(135deg, #feca57, #ff9f43);
+  color: #1e1b2e;
+  padding: 8px 14px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 900;
+  box-shadow: 0 8px 24px rgba(254, 202, 87, 0.6), 0 0 0 3px rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: guideFloat 1.2s infinite ease-in-out;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.guide-arrow {
+  font-size: 1.1rem;
+}
+
+@keyframes guideFloat {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-6px) scale(1.04); }
+}
 }
