@@ -4,7 +4,6 @@ export default async function handler(req, res) {
   }
 
   const { ageGroup } = req.body || {};
-  console.log("Received ageGroup:", ageGroup);
   const age = ageGroup || "7-9 years old";
   const apiKey = process.env.GEMINI_API_KEY;
 
@@ -82,13 +81,12 @@ export default async function handler(req, res) {
     "Travel Diaries: Exploring a New City or State"
   ]
 };
-console.log("Categories available:", categories[ageGroup]);
-  const chosenCategory = categories[ageGroup][Math.floor(Math.random() * categories[ageGroup].length)];
-  const randomSeed = Math.floor(Math.random() * 10);
 
+  const chosenCategory = categories[ageGroup][Math.floor(Math.random() * categories[ageGroup].length)];
+  //const randomSeed = Math.floor(Math.random() * 10);
+console.log(`Chosen Category for age group ${ageGroup}:`, chosenCategory);
   const prompt = `You are a lively, creative game host for children's extempore speaking. Generate a 1-minute speech challenge tailored for a child aged ${age}.
 
-Random Seed: ${randomSeed}
 Theme Inspiration: Focus specifically around ${chosenCategory}.
 
 Age-Specific Adaptation Rules:
@@ -109,7 +107,6 @@ Return the response STRICTLY as valid JSON:
   "extra": ["word1", "word2", "word3"]
 }`;
 
-console.log("Prompt sent to Gemini API:", prompt);
   try {
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${apiKey}`,
