@@ -108,7 +108,7 @@
 <div class="bg-doodles" id="doodlesContainer"></div>
 
 <main class="app-screen" id="appScreen">
-  
+
   <!-- Navigation Header Bar -->
   <header class="app-nav">
     <div class="header-top-bar">
@@ -160,47 +160,49 @@
     </div>
   </header>
 
-  <!-- Hero Headings -->
-  <section class="hero-header">
-    <h1 class="main-title" id="mainTitle">TALK STARS</h1>
-    <p class="subtitle" id="mainSubtitle">Tell Your Story & Earn 5 Stars! ⭐</p>
+  <!-- Central Dynamic Interactive Stage -->
+  <section class="main-stage-container" id="mainStage">
+    
+    <!-- Hero Headings -->
+    <div class="hero-header">
+      <h1 class="main-title" id="mainTitle">TALK STARS</h1>
+      <p class="subtitle" id="mainSubtitle">Tell Your Story & Earn 5 Stars! ⭐</p>
+    </div>
+
+    <!-- Prominent Age Group Pill -->
+    <div class="age-select-wrap">
+      <select id="ageGroup" class="styled-select-prominent">
+        <option value="4-6 years old">🐣 Ages 4-6 • Junior Talkers</option>
+        <option value="7-9 years old" selected>🦁 Ages 7-9 • Star Storytellers</option>
+        <option value="10-12 years old">🚀 Ages 10-12 • Speech Champions</option>
+        <option value="13-15 years old">🎓 Ages 13-15 • Master Orators</option>
+      </select>
+    </div>
+
+    <!-- High-Impact Primary Action Button -->
+    <div class="action-btn-anchor">
+      <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
+        <span id="guideText">1️⃣ Tap here to get a topic!</span>
+      </div>
+      <button class="btn-generate btn-spotlight" id="genBtn" onclick="generateTopic()">
+        🎲 Get My Topic!
+      </button>
+    </div>
+
+    <!-- Revealed Only After Topic Request -->
+    <div class="prompt-card spotlight-card" id="promptCard" style="display: none;">
+      <p class="prompt-text spotlight-text" id="wordDisplay"></p>
+    </div>
+
+    <!-- Revealed Only When Bonus Words Exist -->
+    <div class="bonus-card" id="bonusCard" style="display: none;">
+      <div class="bonus-title">✨ Bonus Challenge Words</div>
+      <div class="bonus-chips" id="adjoiningDisplay"></div>
+    </div>
+
   </section>
 
-  <!-- Age Group Pill -->
-  <div class="age-select-wrap">
-    <select id="ageGroup" class="styled-select-prominent">
-      <option value="4-6 years old">🐣 Ages 4-6 • Junior Talkers</option>
-      <option value="7-9 years old" selected>🦁 Ages 7-9 • Star Storytellers</option>
-      <option value="10-12 years old">🚀 Ages 10-12 • Speech Champions</option>
-      <option value="13-15 years old">🎓 Ages 13-15 • Master Orators</option>
-    </select>
-  </div>
-
-  <!-- Primary Spotlight Topic Card -->
-  <div class="prompt-card spotlight-card" id="promptCard">
-    <p class="prompt-text spotlight-text" id="wordDisplay">Tap "Get My Topic" Below! 👇</p>
-  </div>
-
-  <!-- High-Focus Big Generate Trigger Button with Relative Anchor -->
-  <div style="position: relative; width: 100%;">
-    <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
-      <span id="guideText">👇 Tap here to get a topic!</span>
-    </div>
-    <button class="btn-generate btn-spotlight" id="genBtn" onclick="generateTopic()">
-      🎲 Get My Topic!
-    </button>
-  </div>
-
-  <!-- Bonus Challenge Words (Hidden on load to keep screen clean) -->
-  <div class="bonus-card" id="bonusCard" style="display: none;">
-    <div class="bonus-title">✨ Bonus Challenge Words</div>
-    <div class="bonus-chips" id="adjoiningDisplay">
-      <span class="chip">Tap Button Above</span>
-    </div>
-  </div>
-
-
-  <!-- Live Mic Bar -->
+  <!-- Live Mic Status Bar -->
   <div class="recording-bar" id="recordingStatus">
     <span class="rec-pulse"></span> 🎙️ Mic Live • Speak loud and clear!
   </div>
@@ -256,6 +258,9 @@
     }
   });
 
+    /* ==========================================================================
+     1. Themes & Backdrop Engine (With Persistence)
+     ========================================================================== */
   function switchTheme(index) {
     const themeNames = [
       "Space Rocket Explorer", "TalkStars Treehouse", "Dino Volcano Jungle",
@@ -273,26 +278,57 @@
 
     if (card && backdrops[index]) {
       card.style.backgroundImage = `url('${backdrops[index]}')`;
+      // 💾 Save selected preset theme index
+      localStorage.setItem('talkstars_saved_theme_type', 'preset');
+      localStorage.setItem('talkstars_saved_theme_index', index.toString());
     }
     document.getElementById("themeDropdown").classList.remove("show");
   }
 
   function handleCustomUpload(event) {
-    const file = event.target.files && event.target.files[0];
-    if (!file) return;
+  const file = event.target.files?.[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const imageUrl = e.target.result;
-      const card = document.getElementById("appScreen");
-      if (card) card.style.backgroundImage = `url('${imageUrl}')`;
-      document.getElementById("themeDropdown").classList.remove("show");
-    };
-    reader.readAsDataURL(file);
-  }
+  const img = new Image();
+  img.onload = function () {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Downscale for performance
+    const maxDimension = 1200;
+    let { width, height } = img;
+    if (width > height && width > maxDimension) {
+      height = Math.round((height * maxDimension) / width);
+      width = maxDimension;
+    } else if (height > maxDimension) {
+      width = Math.round((width * maxDimension) / height);
+      height = maxDimension;
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+
+    // Compress as JPEG at 75% quality (~100-200 KB)
+    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+
+    const card = document.getElementById("appScreen");
+    if (card) card.style.backgroundImage = `url('${compressedDataUrl}')`;
+
+    try {
+      localStorage.setItem('talkstars_saved_theme_type', 'custom');
+      localStorage.setItem('talkstars_saved_custom_bg', compressedDataUrl);
+    } catch (err) {
+      console.warn("Storage quota exceeded", err);
+    }
+  };
+
+  img.src = URL.createObjectURL(file);
+  document.getElementById("themeDropdown")?.classList.remove("show");
+}
 
   /* ==========================================================================
-     2. Doodles Engine
+     2. Doodles Engine (With Persistence)
      ========================================================================== */
   let doodlesActive = false;
   const doodleEmojis = ["⭐", "🚀", "🦄", "🐼", "🌈", "🍦", "🎈", "🫧"];
@@ -300,10 +336,17 @@
   function toggleDoodles(isEnabled) {
     doodlesActive = isEnabled;
     const container = document.getElementById("doodlesContainer");
+    const checkbox = document.getElementById("doodleCheckbox");
+
+    if (checkbox) checkbox.checked = doodlesActive;
+
     if (container) {
       container.style.display = doodlesActive ? "block" : "none";
       if (doodlesActive) renderDoodles();
     }
+
+    // 💾 Save doodle checkbox state
+    localStorage.setItem('talkstars_doodles_active', doodlesActive ? 'true' : 'false');
   }
 
   function renderDoodles() {
@@ -486,15 +529,20 @@
     }
   }
 
-   function renderResult(mainWord, extraWords) {
-    document.getElementById("wordDisplay").innerText = mainWord;
-    currentExtraWords = extraWords || [];
-    
+    function renderResult(mainWord, extraWords) {
+    const promptCard = document.getElementById("promptCard");
+    const wordDisplay = document.getElementById("wordDisplay");
     const bonusCard = document.getElementById("bonusCard");
     const adjoiningContainer = document.getElementById("adjoiningDisplay");
+    const genBtn = document.getElementById("genBtn");
+
+    if (wordDisplay) wordDisplay.innerText = mainWord;
+    if (promptCard) promptCard.style.display = "flex";
+    if (genBtn) genBtn.innerText = "🎲 Pick Another Topic!";
+
+    currentExtraWords = extraWords || [];
     adjoiningContainer.innerHTML = "";
 
-    // Only display the card if bonus words are actually present
     if (currentExtraWords.length > 0) {
       currentExtraWords.forEach(word => {
         const chip = document.createElement("span");
@@ -811,10 +859,38 @@
   }
   setInterval(updateOnlineUsers, 4000);
 
+    /* ==========================================================================
+     Restore Preferences on Page Load
+     ========================================================================== */
+  function restoreSavedPreferences() {
+    // 1. Restore Theme
+    const themeType = localStorage.getItem('talkstars_saved_theme_type');
+    const card = document.getElementById("appScreen");
+
+    if (themeType === 'preset') {
+      const savedIndex = localStorage.getItem('talkstars_saved_theme_index');
+      if (savedIndex !== null && backdrops[savedIndex] && card) {
+        card.style.backgroundImage = `url('${backdrops[savedIndex]}')`;
+      }
+    } else if (themeType === 'custom') {
+      const customBg = localStorage.getItem('talkstars_saved_custom_bg');
+      if (customBg && card) {
+        card.style.backgroundImage = `url('${customBg}')`;
+      }
+    }
+
+    // 2. Restore Doodles Toggle
+    const savedDoodles = localStorage.getItem('talkstars_doodles_active');
+    if (savedDoodles === 'true') {
+      toggleDoodles(true);
+    }
+  }
+
   // Initialize background data without blocking the timer
   window.addEventListener('DOMContentLoaded', () => {
     loadModalSnippet();
     restoreSavedName(); // 🌟 Restores previously saved name
+    restoreSavedPreferences(); // 🌟 Restores theme and doodles toggle
   });
 
 </script>
