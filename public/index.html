@@ -160,6 +160,17 @@
     </div>
   </header>
 
+  <!-- 🎨 Big Top Theme Banner -->
+  <div class="theme-banner-container" id="themeBannerWrap">
+    <img 
+      id="themeBannerImg" 
+      src="/images/banners/treehouse.webp" 
+      alt="Theme Banner" 
+      class="theme-banner-img"
+    />
+    <div class="banner-gradient-overlay"></div>
+  </div>
+
   <!-- Central Dynamic Interactive Stage -->
   <section class="main-stage-container" id="mainStage">
     
@@ -188,11 +199,6 @@
         🎲 Get My Topic!
       </button>
     </div>
-
-    <!-- Thematic AI Banner Slot -->
-<div class="theme-banner-container" id="themeBannerWrap">
-  <img id="themeBannerImg" src="/images/banners/treehouse.webp" alt="Theme Banner" class="theme-banner-img" />
-</div>
 
     <!-- Revealed Only After Topic Request -->
     <div class="prompt-card spotlight-card" id="promptCard" style="display: none;">
@@ -266,29 +272,31 @@
     /* ==========================================================================
      1. Themes & Backdrop Engine (With Persistence)
      ========================================================================== */
-  const themeBanners = [
-  "/images/banners/space.webp",
-  "/images/banners/treehouse.webp",
-  "/images/banners/dino.webp",
-  "/images/banners/racing.webp",
-  "/images/banners/sports.webp",
-  "/images/banners/unicorn.webp",
-  "/images/banners/fairy.webp",
-  "/images/banners/candy.webp"
-];
+    const themeBanners = [
+    "/images/banners/space.webp",
+    "/images/banners/treehouse.webp",
+    "/images/banners/dino.webp",
+    "/images/banners/racing.webp",
+    "/images/banners/sports.webp",
+    "/images/banners/unicorn.webp",
+    "/images/banners/fairy.webp",
+    "/images/banners/candy.webp"
+  ];
 
   function switchTheme(index) {
-      const banner = document.getElementById("themeBannerImg");
-  if (banner && themeBanners[index]) {
-    banner.src = themeBanners[index];
-  }
+    const bannerImg = document.getElementById("themeBannerImg");
     const themeNames = [
       "Space Rocket Explorer", "TalkStars Treehouse", "Dino Volcano Jungle",
       "Cyber Racing Grid", "Stadium Sports Arena", "Unicorn Dreamland",
       "Princess Fairy Garden", "Candy Bubble Carnival"
     ];
-    const card = document.getElementById("appScreen");
-     
+
+    if (bannerImg && themeBanners[index]) {
+      bannerImg.src = themeBanners[index];
+      localStorage.setItem('talkstars_saved_theme_type', 'preset');
+      localStorage.setItem('talkstars_saved_theme_index', index.toString());
+    }
+
     if (typeof window.posthog?.capture === 'function') {
       posthog.capture('Theme Changed', {
         theme_index: index,
@@ -296,56 +304,31 @@
       });
     }
 
-    if (card && backdrops[index]) {
-      card.style.backgroundImage = `url('${backdrops[index]}')`;
-      // 💾 Save selected preset theme index
-      localStorage.setItem('talkstars_saved_theme_type', 'preset');
-      localStorage.setItem('talkstars_saved_theme_index', index.toString());
-    }
     document.getElementById("themeDropdown").classList.remove("show");
   }
 
   function handleCustomUpload(event) {
-  const file = event.target.files?.[0];
-  if (!file) return;
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
 
-  const img = new Image();
-  img.onload = function () {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Downscale for performance
-    const maxDimension = 1200;
-    let { width, height } = img;
-    if (width > height && width > maxDimension) {
-      height = Math.round((height * maxDimension) / width);
-      width = maxDimension;
-    } else if (height > maxDimension) {
-      width = Math.round((width * maxDimension) / height);
-      height = maxDimension;
-    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const imageUrl = e.target.result;
+      const bannerImg = document.getElementById("themeBannerImg");
+      if (bannerImg) bannerImg.src = imageUrl;
 
-    canvas.width = width;
-    canvas.height = height;
-    ctx.drawImage(img, 0, 0, width, height);
+      try {
+        localStorage.setItem('talkstars_saved_theme_type', 'custom');
+        localStorage.setItem('talkstars_saved_custom_bg', imageUrl);
+      } catch (err) {
+        console.warn("Storage quota exceeded", err);
+      }
 
-    // Compress as JPEG at 75% quality (~100-200 KB)
-    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+      document.getElementById("themeDropdown").classList.remove("show");
+    };
+    reader.readAsDataURL(file);
+  }
 
-    const card = document.getElementById("appScreen");
-    if (card) card.style.backgroundImage = `url('${compressedDataUrl}')`;
-
-    try {
-      localStorage.setItem('talkstars_saved_theme_type', 'custom');
-      localStorage.setItem('talkstars_saved_custom_bg', compressedDataUrl);
-    } catch (err) {
-      console.warn("Storage quota exceeded", err);
-    }
-  };
-
-  img.src = URL.createObjectURL(file);
-  document.getElementById("themeDropdown")?.classList.remove("show");
-}
 
   /* ==========================================================================
      2. Doodles Engine (With Persistence)
