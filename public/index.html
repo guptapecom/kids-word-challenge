@@ -8,7 +8,6 @@
   <meta name="title" content="TalkStars ⭐ Fun Extempore & Speech Practice for Kids" />
   <meta name="description" content="Instant fun topics, speech timer, and voice recording to make storytelling easy for kids!" />
 
-  
   <!-- Open Graph (WhatsApp, Teams, LinkedIn, Facebook) -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="TalkStars" />
@@ -31,11 +30,10 @@
 
   <link rel="stylesheet" href="/style.css">
 
-   <!-- PostHog Analytics Integration -->
+  <!-- PostHog Analytics Integration -->
   <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys renderSurvey".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
 
-    // Fetch credentials from the serverless backend and initialize
     fetch('/api/config')
       .then(res => res.json())
       .then(config => {
@@ -43,7 +41,7 @@
           posthog.init(config.posthogKey, {
             api_host: config.posthogHost,
             person_profiles: 'always',
-            autocapture: false // 🚫 Disables automatic element clicks/form tracking
+            autocapture: false
           });
         }
       })
@@ -56,22 +54,14 @@
 
 <main class="app-screen" id="appScreen">
   
-  <!-- 🟢 PASTE ONBOARDING TOOLTIP HERE -->
-  <div id="onboardingTooltip" class="onboarding-guide-badge" style="display:none;">
-    <span class="guide-arrow">👇</span>
-    <span id="guideText">1️⃣ Tap here to get a topic!</span>
-  </div>
-
-   <!-- Navigation Header Bar -->
+  <!-- Navigation Header Bar -->
   <header class="app-nav">
     <div class="header-top-bar">
-      <!-- Extreme Left: Live Pill (Under 20) -->
       <div class="online-pill">
         <span class="pulse-dot"></span>
         <span id="onlineCount">16</span> online
       </div>
 
-      <!-- Extreme Right: Appealing Name Input + Theme Menu -->
       <div class="header-actions-group">
         <input 
           type="text" 
@@ -86,7 +76,6 @@
             🎨 Theme ▾
           </button>
 
-          <!-- Dropdown Menu List -->
           <div class="theme-list-dropdown" id="themeDropdown">
             <button class="theme-list-item" onclick="switchTheme(0)">🚀 Space Rocket Explorer</button>
             <button class="theme-list-item" onclick="switchTheme(1)">🌳 TalkStars Treehouse</button>
@@ -122,7 +111,7 @@
     <p class="subtitle" id="mainSubtitle">Tell Your Story & Earn 5 Stars! ⭐</p>
   </section>
 
-  <!-- Polished, Prominent Age Group Pill -->
+  <!-- Age Group Pill -->
   <div class="age-select-wrap">
     <select id="ageGroup" class="styled-select-prominent">
       <option value="4-6 years old">🐣 Ages 4-6 • Junior Talkers</option>
@@ -137,10 +126,15 @@
     <p class="prompt-text spotlight-text" id="wordDisplay">Tap "Get My Topic" Below! 👇</p>
   </div>
 
-  <!-- High-Focus Big Generate Trigger Button -->
-  <button class="btn-generate btn-spotlight" id="genBtn" onclick="generateTopic()">
-    🎲 Get My Topic!
-  </button>
+  <!-- High-Focus Big Generate Trigger Button with Relative Anchor -->
+  <div style="position: relative; width: 100%;">
+    <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
+      <span id="guideText">1️⃣ Tap here to get a topic!</span>
+    </div>
+    <button class="btn-generate btn-spotlight" id="genBtn" onclick="generateTopic()">
+      🎲 Get My Topic!
+    </button>
+  </div>
 
   <!-- Bonus Challenge Words -->
   <div class="bonus-card">
@@ -165,8 +159,10 @@
 
     <div class="clock-display" id="timer">01:00</div>
 
-    <button class="btn-record-start" id="timerBtn" onclick="startChallenge()">Record 🎙️</button>
-    <button class="btn-record-stop" id="finishBtn" onclick="finishTalk()" style="display:none;">Done 🏁</button>
+    <div style="position: relative; display: inline-flex;">
+      <button class="btn-record-start" id="timerBtn" onclick="startChallenge()">Record 🎙️</button>
+      <button class="btn-record-stop" id="finishBtn" onclick="finishTalk()" style="display:none;">Done 🏁</button>
+    </div>
   </footer>
 
 </main>
@@ -177,35 +173,16 @@
   /* ==========================================================================
      1. Themes & Backdrop Engine
      ========================================================================== */
-    /* ==========================================================================
-     1. Themes & Backdrop Engine
-     ========================================================================== */
   const backdrops = [
-    // 1. Space Rocket Explorer (Boys Friendly)
     `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_space" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%230f172a"/><stop offset="50%" stop-color="%231e1b4b"/><stop offset="100%" stop-color="%233b82f6"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_space)"/><polygon points="120,100 125,115 140,115 128,125 132,140 120,130 108,140 112,125 100,115 115,115" fill="%23facc15" opacity="0.85"/><polygon points="480,220 484,232 496,232 486,240 489,252 480,244 471,252 474,240 464,232 476,232" fill="%2338bdf8" opacity="0.9"/><circle cx="500" cy="650" r="50" fill="%23f97316" opacity="0.6"/><circle cx="120" cy="500" r="30" fill="%2306b6d4" opacity="0.5"/></svg>`,
-
-    // 0. Default: TalkStars Treehouse
     "/images/treehouse-backdrop.png",
-
-    // 2. Dino Volcano Jungle (Boys Friendly)
     `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_dino" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23ea580c"/><stop offset="50%" stop-color="%23ca8a04"/><stop offset="100%" stop-color="%2315803d"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_dino)"/><polygon points="300,350 480,750 120,750" fill="%23431407" opacity="0.6"/><path d="M0,750 Q150,680 300,750 T600,750 L600,900 L0,900 Z" fill="%23166534" opacity="0.75"/><circle cx="500" cy="150" r="60" fill="%23fef08a" opacity="0.45"/></svg>`,
-
-    // 3. Cyber Racing Grid (Boys Friendly)
     `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_race" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%2318181b"/><stop offset="50%" stop-color="%23312e81"/><stop offset="100%" stop-color="%2306b6d4"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_race)"/><line x1="50" y1="0" x2="250" y2="900" stroke="%2322d3ee" stroke-width="4" opacity="0.3"/><line x1="550" y1="0" x2="350" y2="900" stroke="%2322d3ee" stroke-width="4" opacity="0.3"/><line x1="0" y1="650" x2="600" y2="650" stroke="%23f43f5e" stroke-width="3" opacity="0.4"/><line x1="0" y1="750" x2="600" y2="750" stroke="%23f43f5e" stroke-width="5" opacity="0.4"/></svg>`,
-
-    // 4. Stadium Sports Arena (Boys Friendly)
     `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_sport" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%231e3a8a"/><stop offset="60%" stop-color="%230284c7"/><stop offset="100%" stop-color="%2316a34a"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_sport)"/><circle cx="100" cy="180" r="70" fill="%23ffffff" opacity="0.15"/><circle cx="500" cy="180" r="70" fill="%23ffffff" opacity="0.15"/><line x1="0" y1="720" x2="600" y2="720" stroke="%23ffffff" stroke-width="6" opacity="0.5"/><circle cx="300" cy="720" r="90" stroke="%23ffffff" stroke-width="6" fill="none" opacity="0.5"/></svg>`,
-
-    // 5. Unicorn Dreamland
     `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_uni" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23ff9a9e"/><stop offset="50%" stop-color="%23fecfef"/><stop offset="100%" stop-color="%23a1c4fd"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_uni)"/><circle cx="500" cy="550" r="70" fill="%23ffffff" opacity="0.4"/><polygon points="150,120 156,138 175,138 160,150 165,168 150,156 135,168 140,150 125,138 144,138" fill="%23ffd166" opacity="0.85"/></svg>`,
-
-    // 6. Princess Fairy Garden
     `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_prin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23fad0c4"/><stop offset="50%" stop-color="%23ffd1ff"/><stop offset="100%" stop-color="%23c2e9fb"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_prin)"/><circle cx="140" cy="200" r="45" fill="%23ff85a2" opacity="0.4"/><circle cx="450" cy="350" r="55" fill="%23ff85a2" opacity="0.35"/><path d="M0,800 Q150,750 300,800 T600,800 L600,900 L0,900 Z" fill="%23bbf7d0" opacity="0.6"/></svg>`,
-
-    // 7. Candy Bubble Carnival
     `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23ff9ff3"/><stop offset="50%" stop-color="%23feca57"/><stop offset="100%" stop-color="%23ff6b6b"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g4)"/><circle cx="120" cy="180" r="50" fill="%23ffffff" opacity="0.4"/><circle cx="480" cy="280" r="65" fill="%23ffffff" opacity="0.35"/></svg>`
   ];
-
 
   function toggleThemeMenu(e) {
     if (e) {
@@ -224,14 +201,14 @@
   });
 
   function switchTheme(index) {
-     const themeNames = [
+    const themeNames = [
       "Space Rocket Explorer", "TalkStars Treehouse", "Dino Volcano Jungle",
       "Cyber Racing Grid", "Stadium Sports Arena", "Unicorn Dreamland",
       "Princess Fairy Garden", "Candy Bubble Carnival"
     ];
     const card = document.getElementById("appScreen");
      
-    if (window.posthog) {
+    if (typeof window.posthog?.capture === 'function') {
       posthog.capture('Theme Changed', {
         theme_index: index,
         theme_name: themeNames[index] || "Unknown"
@@ -310,20 +287,15 @@
       title.innerText = `🌟 ${rawName.toUpperCase()}`;
       subtitle.innerText = `Master your story ${rawName}, hit record, and earn 5 stars!`;
     } else {
-      title.innerText = "TALKSTARS";
+      title.innerText = "TALK STARS";
       subtitle.innerText = "Tell Your Story & Earn 5 Stars! ⭐";
     }
 
-    // Debounce to track after the user pauses typing (500ms)
     clearTimeout(nameDebounceTimer);
     nameDebounceTimer = setTimeout(() => {
-      if (rawName && window.posthog) {
-        // Sets person profile name in PostHog
+      if (rawName && typeof window.posthog?.capture === 'function') {
         posthog.people.set({ name: rawName });
-        
-        posthog.capture('Name Added', {
-          kid_name: rawName
-        });
+        posthog.capture('Name Added', { kid_name: rawName });
       }
     }, 500);
   }
@@ -334,11 +306,10 @@
       const html = await response.text();
       document.getElementById('modalContainer').innerHTML = html;
 
-      // Attach play listener to modal audio player
       const player = document.getElementById('audioPlayback');
       if (player) {
         player.addEventListener('play', () => {
-          if (window.posthog) {
+          if (typeof window.posthog?.capture === 'function') {
             posthog.capture('Recording Played', {
               duration_seconds: speechSecondsSpoken,
               topic: document.getElementById("wordDisplay")?.innerText
@@ -353,7 +324,7 @@
      4. Topic Generator (Gemini API + Fallbacks)
      ========================================================================== */
   let currentExtraWords = [];
-   const fallbackBank = {
+  const fallbackBank = {
     "4-6 years old": { 
       main: "The Secret Life of My Favorite Toy: What does it do when I am asleep?", 
       extra: ["Playful", "Magic", "Adventure"] 
@@ -377,8 +348,7 @@
     const currentAge = document.getElementById("ageGroup")?.value || "Unknown";
     const speakerName = document.getElementById("kidNameInput")?.value.trim() || "Anonymous";
 
-    // 1. Send event directly to PostHog
-    if (window.posthog) {
+    if (typeof window.posthog?.capture === 'function') {
       window.posthog.capture('Topic Feedback Submitted', {
         feedback_rating: rating,
         topic: currentTopic,
@@ -387,7 +357,6 @@
       });
     }
 
-    // 2. Hide buttons & show quick thank you note
     const optionsRow = document.querySelector(".feedback-options-row");
     const thanksMsg = document.getElementById("feedbackThanks");
     if (optionsRow) optionsRow.style.display = "none";
@@ -399,8 +368,7 @@
     const wordDisplay = document.getElementById("wordDisplay");
     const genBtn = document.getElementById("genBtn");
 
-    // Track button click
-    if (window.posthog) {
+    if (typeof window.posthog?.capture === 'function') {
       window.posthog.capture('Topic Requested', {
         age_group: age,
         kid_name: document.getElementById("kidNameInput")?.value.trim() || "Anonymous"
@@ -411,7 +379,6 @@
     wordDisplay.classList.add("pulse-anim");
     genBtn.disabled = true;
 
-    // Set a 4-second timeout controller
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 4000);
 
@@ -420,10 +387,10 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ageGroup: age }),
-        signal: controller.signal // Attaches timeout signal
+        signal: controller.signal
       });
 
-      clearTimeout(timeoutId); // Cancel timeout if response arrives in time
+      clearTimeout(timeoutId);
 
       if (!response.ok) throw new Error(`Server status: ${response.status}`);
       const data = await response.json();
@@ -431,25 +398,22 @@
     } catch (err) {
       clearTimeout(timeoutId);
 
-      // Log timeout / fallback usage in PostHog
-      if (window.posthog) {
+      if (typeof window.posthog?.capture === 'function') {
         window.posthog.capture('Topic Fallback Used', {
           age_group: age,
           reason: err.name === 'AbortError' ? 'Request Timed Out (4s)' : err.message
         });
       }
 
-      // Pick a random fallback from your bank
       const fallback = fallbackBank[age] || fallbackBank["7-9 years old"];
       renderResult(fallback.main, fallback.extra);
     } finally {
       wordDisplay.classList.remove("pulse-anim");
       genBtn.disabled = false;
       resetTimer();
-      advanceGuideStep(1); // Advances to step 2 after getting a topic
+      advanceGuideStep(1);
     }
   }
-
 
   function renderResult(mainWord, extraWords) {
     document.getElementById("wordDisplay").innerText = mainWord;
@@ -494,8 +458,7 @@
     speechSecondsSpoken = 0;
     audioChunks = [];
 
-    // Track when a kid starts recording
-    if (window.posthog) {
+    if (typeof window.posthog?.capture === 'function') {
       posthog.capture('Recording Started', {
         duration_setting: document.getElementById("talkDuration").value,
         age_group: document.getElementById("ageGroup").value,
@@ -568,7 +531,7 @@
     } catch (err) {
       alert("Please allow microphone access to record your voice!");
     }
-    advanceGuideStep(2); // Finishes and dismisses the guide when recording starts
+    completeOnboardingPermanently();
   }
 
   function finishTalk() {
@@ -599,7 +562,6 @@
     const kidName = document.getElementById("kidNameInput")?.value.trim() || "TalkStar";
     const fileName = `${kidName}-speech.mp4`;
 
-    // Trigger download
     const a = document.createElement("a");
     a.href = player.src;
     a.download = fileName;
@@ -607,8 +569,7 @@
     a.click();
     document.body.removeChild(a);
 
-    // Track download in PostHog
-    if (window.posthog) {
+    if (typeof window.posthog?.capture === 'function') {
       posthog.capture('Recording Downloaded', {
         speaker_name: kidName,
         speaking_time_seconds: speechSecondsSpoken,
@@ -624,9 +585,7 @@
     const speakerLabel = kidName ? `${kidName}` : "Speaker";
     const topic = document.getElementById("wordDisplay")?.innerText || "Your Topic";
 
-    
-    // Track completed speech and performance metrics
-    if (window.posthog) {
+    if (typeof window.posthog?.capture === 'function') {
       posthog.capture('Speech Evaluated', {
         topic: topic,
         duration_spoken_seconds: speechSecondsSpoken,
@@ -676,7 +635,6 @@
     completeOnboardingPermanently();
   } 
 
-
   function closeModal() {
     document.getElementById("resultModal").style.display = "none";
     const audio = document.getElementById("audioPlayback");
@@ -685,7 +643,6 @@
       audio.currentTime = 0;
     }
 
-    // Reset feedback UI
     const optionsRow = document.querySelector(".feedback-options-row");
     const thanksMsg = document.getElementById("feedbackThanks");
     if (optionsRow) optionsRow.style.display = "flex";
@@ -699,51 +656,42 @@
     updateTimerDisplay();
   }
 
-     /* ==========================================================================
-     Reliable First-Time Onboarding Guide Engine
+  /* ==========================================================================
+     6. DOM-Anchored Onboarding Engine
      ========================================================================== */
   let currentGuideStep = 0;
 
   function initOnboardingGuide() {
-    // Only proceed if user has NEVER finished a recording
     const hasRecorded = localStorage.getItem('talkstars_first_speech_recorded');
     if (hasRecorded === 'true') {
       const tooltip = document.getElementById('onboardingTooltip');
-      if (tooltip) tooltip.style.display = 'none';
+      if (tooltip) tooltip.remove();
       return;
     }
 
-    // Start at Step 1 (Get Topic)
     currentGuideStep = 1;
-    positionGuideOnElement('genBtn', '1️⃣ Tap here to get a topic!');
+    showGuideForElement('genBtn', '1️⃣ Tap here to get a topic!');
 
-    if (window.posthog) {
-      window.posthog.capture('Onboarding Started', {
-        step: currentGuideStep
-      });
+    if (typeof window.posthog?.capture === 'function') {
+      window.posthog.capture('onboarding_started');
     }
   }
 
-  function positionGuideOnElement(elementId, text) {
+  function showGuideForElement(elementId, text) {
     const target = document.getElementById(elementId);
     const tooltip = document.getElementById('onboardingTooltip');
     const guideText = document.getElementById('guideText');
-    const parentContainer = document.getElementById('appScreen');
 
-    if (!target || !tooltip || !parentContainer) return;
+    if (!target || !tooltip) return;
 
     guideText.innerText = text;
-    tooltip.style.display = 'flex';
+    
+    // Anchor tooltip directly into the target button's parent container
+    if (target.parentElement) {
+      target.parentElement.appendChild(tooltip);
+    }
 
-    // Calculate exact center alignment relative to the app container
-    const rect = target.getBoundingClientRect();
-    const parentRect = parentContainer.getBoundingClientRect();
-
-    const topOffset = (rect.top - parentRect.top) - 46;
-    const leftOffset = (rect.left - parentRect.left) + (rect.width / 2) - (tooltip.offsetWidth / 2 || 100);
-
-    tooltip.style.top = `${topOffset}px`;
-    tooltip.style.left = `${Math.max(10, leftOffset)}px`;
+    tooltip.style.display = 'inline-flex';
   }
 
   function advanceGuideStep(completedStep) {
@@ -753,36 +701,27 @@
     if (completedStep === 1 && currentGuideStep === 1) {
       currentGuideStep = 2;
       setTimeout(() => {
-        positionGuideOnElement('timerBtn', '2️⃣ Now tap Record & speak!');
-      }, 350);
+        showGuideForElement('timerBtn', '2️⃣ Now tap Record & speak!');
+      }, 300);
     }
   }
 
   function completeOnboardingPermanently() {
     currentGuideStep = 0;
     const tooltip = document.getElementById('onboardingTooltip');
-    if (tooltip) tooltip.style.display = 'none';
+    if (tooltip) tooltip.remove();
 
-    // Mark permanently finished ONLY after speech evaluation
     localStorage.setItem('talkstars_first_speech_recorded', 'true');
 
-    if (window.posthog) {
-      window.posthog.capture('Onboarding Completed', {
-        step: 2
-      });
+    if (typeof window.posthog?.capture === 'function') {
+      window.posthog.capture('onboarding_completed');
     }
   }
 
-  // Auto reposition on window resize/orientation changes
-  window.addEventListener('resize', () => {
-    if (currentGuideStep === 1) positionGuideOnElement('genBtn', '1️⃣ Tap here to get a topic!');
-    if (currentGuideStep === 2) positionGuideOnElement('timerBtn', '2️⃣ Now tap Record & speak!');
-  });
-
   /* ==========================================================================
-     6. Live Counter Simulation & Initialization
+     7. Live Counter Simulation & Init
      ========================================================================== */
-let baseUsers = 16;
+  let baseUsers = 16;
   function updateOnlineUsers() {
     baseUsers += Math.floor(Math.random() * 3) - 1;
     if (baseUsers > 19) baseUsers = 19;
@@ -794,7 +733,7 @@ let baseUsers = 16;
 
   window.addEventListener('DOMContentLoaded', () => {
     loadModalSnippet();
-    setTimeout(initOnboardingGuide, 400); // Trigger onboarding for first-time visitors
+    setTimeout(initOnboardingGuide, 400);
   });
 </script>
 
