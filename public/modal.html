@@ -1,26 +1,54 @@
 <!-- Evaluation Modal Sheet Partial -->
 <div class="modal-overlay" id="resultModal">
   <div class="modal-sheet">
-    <h2>🎉 Fantastic Speech!</h2>
-    
-    <div class="stars-row" id="starsDisplay">⭐⭐⭐</div>
-    <div class="feedback-badge" id="ratingFeedback">Good Effort!</div>
+    <div class="modal-header-block">
+      <h2>🎉 Fantastic Speech!</h2>
+      <div class="stars-row" id="starsDisplay">⭐⭐⭐</div>
+      <div class="feedback-badge" id="ratingFeedback">Good Effort!</div>
+    </div>
 
-    <audio id="audioPlayback" controls playsinline></audio>
+    <!-- Audio Player + Save Combo -->
+    <div class="audio-action-card">
+      <audio id="audioPlayback" controls playsinline></audio>
+      <button type="button" class="btn-audio-download" onclick="downloadRecording()" title="Download Audio">
+        ⬇️ Save
+      </button>
+    </div>
 
-    <!-- Download Button -->
-    <button 
-      type="button" 
-      id="downloadBtn" 
-      onclick="downloadRecording()" 
-      style="margin: 8px 0; padding: 8px 14px; background: #22c55e; color: #fff; border: none; border-radius: 20px; font-weight: bold; cursor: pointer;">
-      ⬇️ Download Recording
-    </button>
-
-    <div style="text-align: left; font-size: 0.85rem; font-weight: 700; color: #62728f; margin-bottom: 2px;">
+    <!-- Detailed Speech Highlights -->
+    <div style="text-align: left; font-size: 0.82rem; font-weight: 800; color: #a29bfe; margin-bottom: -4px;">
       📋 Speech Summary & Highlights:
     </div>
-    <div class="summary-card-inner" id="summaryDisplay">No speech detected.</div>
+    <div class="summary-card-inner" id="summaryDisplay">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <!-- Dark Frosted Feedback Reaction Bar -->
+    <div class="topic-feedback-section" id="feedbackSection">
+      <div class="feedback-header-row">
+        <span class="feedback-label">How was this topic?</span>
+        <span id="feedbackThanks" class="feedback-thanks-msg" style="display:none;">✨ Thanks!</span>
+      </div>
+
+      <div class="feedback-reactions-grid">
+        <button type="button" class="reaction-pill reaction-easy" onclick="submitTopicFeedback('Easy 😄', this)">
+          <span class="reaction-emoji">😄</span>
+          <span class="reaction-text">Easy</span>
+        </button>
+        <button type="button" class="reaction-pill reaction-fun" onclick="submitTopicFeedback('Loved It ⭐', this)">
+          <span class="reaction-emoji">⭐</span>
+          <span class="reaction-text">Fun</span>
+        </button>
+        <button type="button" class="reaction-pill reaction-tough" onclick="submitTopicFeedback('Tough 🤯', this)">
+          <span class="reaction-emoji">🤯</span>
+          <span class="reaction-text">Tough</span>
+        </button>
+        <button type="button" class="reaction-pill reaction-weird" onclick="submitTopicFeedback('Irrelevant 🤔', this)">
+          <span class="reaction-emoji">🤔</span>
+          <span class="reaction-text">Weird</span>
+        </button>
+      </div>
+    </div>
 
     <button class="btn-modal-close" onclick="closeModal()">Try Another Topic 🔄</button>
   </div>

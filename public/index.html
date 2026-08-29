@@ -341,42 +341,27 @@
     }
   };
 
+  function submitTopicFeedback(rating) {
+    const currentTopic = document.getElementById("wordDisplay")?.innerText || "Unknown";
+    const currentAge = document.getElementById("ageGroup")?.value || "Unknown";
+    const speakerName = document.getElementById("kidNameInput")?.value.trim() || "Anonymous";
 
-  /*async function generateTopic() {
-    const age = document.getElementById("ageGroup").value;
-    const wordDisplay = document.getElementById("wordDisplay");
-    const genBtn = document.getElementById("genBtn");
-
-     // Track topic request
+    // 1. Send event directly to PostHog
     if (window.posthog) {
-      posthog.capture('Topic Requested', {
-        age_group: age
+      window.posthog.capture('Topic Feedback Submitted', {
+        feedback_rating: rating,
+        topic: currentTopic,
+        age_group: currentAge,
+        speaker_name: speakerName
       });
     }
 
-    wordDisplay.innerText = "✨ Finding a fun topic...";
-    wordDisplay.classList.add("pulse-anim");
-    genBtn.disabled = true;
-
-    try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ageGroup: age })
-      });
-
-      if (!response.ok) throw new Error(`Server status: ${response.status}`);
-      const data = await response.json();
-      renderResult(data.main, data.extra);
-    } catch (err) {
-      const fallback = fallbackBank[age];
-      renderResult(fallback.main, fallback.extra);
-    } finally {
-      wordDisplay.classList.remove("pulse-anim");
-      genBtn.disabled = false;
-      resetTimer();
-    }
-  } */
+    // 2. Hide buttons & show quick thank you note
+    const optionsRow = document.querySelector(".feedback-options-row");
+    const thanksMsg = document.getElementById("feedbackThanks");
+    if (optionsRow) optionsRow.style.display = "none";
+    if (thanksMsg) thanksMsg.style.display = "block";
+  }
 
     async function generateTopic() {
     const age = document.getElementById("ageGroup").value;
@@ -654,7 +639,8 @@
     document.getElementById("starsDisplay").innerText = stars;
     document.getElementById("ratingFeedback").innerText = feedback;
     document.getElementById("resultModal").style.display = "flex";
-  }
+  } 
+
 
   function closeModal() {
     document.getElementById("resultModal").style.display = "none";
@@ -663,6 +649,12 @@
       audio.pause();
       audio.currentTime = 0;
     }
+
+    // Reset feedback UI
+    const optionsRow = document.querySelector(".feedback-options-row");
+    const thanksMsg = document.getElementById("feedbackThanks");
+    if (optionsRow) optionsRow.style.display = "flex";
+    if (thanksMsg) thanksMsg.style.display = "none";
   }
 
   function resetTimer() {
