@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>TalkStars ⭐ Master Stories & Earn Stars</title>
   <link rel="stylesheet" href="/style.css">
+
+  <!-- PostHog Analytics Integration -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys renderSurvey".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+    // Initialize PostHog
+    posthog.init('phc_unwpCD7DLNGKYY9deK5s8Bpbd4DykxiTkFpCj6WX7yNJ', {
+      api_host: 'https://us.i.posthog.com', // Replace with 'https://eu.i.posthog.com' if using EU cloud
+      person_profiles: 'always'            // CRUCIAL: Saves persistent timelines for anonymous visitors without logins
+    });
+  </script>
 </head>
 <body>
 
@@ -174,7 +185,20 @@
   });
 
   function switchTheme(index) {
+     const themeNames = [
+      "Space Rocket Explorer", "TalkStars Treehouse", "Dino Volcano Jungle",
+      "Cyber Racing Grid", "Stadium Sports Arena", "Unicorn Dreamland",
+      "Princess Fairy Garden", "Candy Bubble Carnival"
+    ];
     const card = document.getElementById("appScreen");
+     
+    if (window.posthog) {
+      posthog.capture('theme_changed', {
+        theme_index: index,
+        theme_name: themeNames[index] || "Unknown"
+      });
+    }
+
     if (card && backdrops[index]) {
       card.style.backgroundImage = `url('${backdrops[index]}')`;
     }
@@ -237,6 +261,7 @@
   /* ==========================================================================
      3. Personalization & Setup
      ========================================================================== */
+  let nameDebounceTimer = null;
   function updatePersonalization() {
     const rawName = document.getElementById("kidNameInput")?.value.trim();
     const title = document.getElementById("mainTitle");
@@ -249,6 +274,19 @@
       title.innerText = "TALKSTARS";
       subtitle.innerText = "Tell Your Story & Earn 5 Stars! ⭐";
     }
+
+    // Debounce to track after the user pauses typing (500ms)
+    clearTimeout(nameDebounceTimer);
+    nameDebounceTimer = setTimeout(() => {
+      if (rawName && window.posthog) {
+        // Sets person profile name in PostHog
+        posthog.people.set({ name: rawName });
+        
+        posthog.capture('name_updated', {
+          kid_name: rawName
+        });
+      }
+    }, 500);
   }
 
   async function loadModalSnippet() {
@@ -256,6 +294,19 @@
       const response = await fetch('/modal.html');
       const html = await response.text();
       document.getElementById('modalContainer').innerHTML = html;
+
+      // Attach play listener to modal audio player
+      const player = document.getElementById('audioPlayback');
+      if (player) {
+        player.addEventListener('play', () => {
+          if (window.posthog) {
+            posthog.capture('audio_played', {
+              duration_seconds: speechSecondsSpoken,
+              topic: document.getElementById("wordDisplay")?.innerText
+            });
+          }
+        });
+      }
     } catch (err) {}
   }
 
@@ -274,6 +325,13 @@
     const age = document.getElementById("ageGroup").value;
     const wordDisplay = document.getElementById("wordDisplay");
     const genBtn = document.getElementById("genBtn");
+
+     // Track topic request
+    if (window.posthog) {
+      posthog.capture('topic_requested', {
+        age_group: age
+      });
+    }
 
     wordDisplay.innerText = "✨ Finding a fun topic...";
     wordDisplay.classList.add("pulse-anim");
@@ -341,6 +399,15 @@
     speechTextAccumulator = "";
     speechSecondsSpoken = 0;
     audioChunks = [];
+
+    // Track when a kid starts recording
+    if (window.posthog) {
+      posthog.capture('recording_started', {
+        duration_setting: document.getElementById("talkDuration").value,
+        age_group: document.getElementById("ageGroup").value,
+        topic: document.getElementById("wordDisplay")?.innerText
+      });
+    }
 
     try {
       audioStream = await navigator.mediaDevices.getUserMedia({ 
@@ -430,6 +497,31 @@
     }, 400);
   }
 
+  function downloadRecording() {
+    const player = document.getElementById("audioPlayback");
+    if (!player || !player.src) return;
+
+    const kidName = document.getElementById("kidNameInput")?.value.trim() || "TalkStar";
+    const fileName = `${kidName}-speech.mp4`;
+
+    // Trigger download
+    const a = document.createElement("a");
+    a.href = player.src;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // Track download in PostHog
+    if (window.posthog) {
+      posthog.capture('audio_downloaded', {
+        speaker_name: kidName,
+        speaking_time_seconds: speechSecondsSpoken,
+        topic: document.getElementById("wordDisplay")?.innerText
+      });
+    }
+  }
+
   function evaluateSpeech() {
     const transcript = speechTextAccumulator.trim();
     const summaryBox = document.getElementById("summaryDisplay");
@@ -437,6 +529,17 @@
     const speakerLabel = kidName ? `${kidName}` : "Speaker";
     const topic = document.getElementById("wordDisplay")?.innerText || "Your Topic";
 
+    
+    // Track completed speech and performance metrics
+    if (window.posthog) {
+      posthog.capture('speech_evaluated', {
+        topic: topic,
+        duration_spoken_seconds: speechSecondsSpoken,
+        word_count: transcript ? transcript.split(/\s+/).filter(w => w.length > 0).length : 0,
+        stars_awarded: (speechSecondsSpoken >= 45) ? 5 : (speechSecondsSpoken >= 15) ? 4 : 3
+      });
+    }
+    
     let stars = "⭐⭐⭐";
     let feedback = `Good effort ${speakerLabel}! Keep talking to share more details!`;
 

@@ -4,6 +4,7 @@ export default async function handler(req, res) {
   }
 
   const { ageGroup } = req.body || {};
+  console.log("Received ageGroup:", ageGroup);
   const age = ageGroup || "7-9 years old";
   const apiKey = process.env.GEMINI_API_KEY;
 
@@ -12,40 +13,103 @@ export default async function handler(req, res) {
   }
 
   // Random theme sparks to force topic divergence
-  const categories = [
-    "Wild animals or funny pets",
-    "Outer space or alien planets",
-    "Secret superhero powers or gadgets",
-    "Fun inventions or wacky machines",
-    "Under the ocean adventures",
-    "School recess games or playground fun",
-    "Time travel or dinosaur encounters",
-    "A magical store or enchanted forest",
-    "Cooking a weird or delicious recipe",
-    "Sports, hobbies, or circus stunts",
-    "Building a fort or secret treehouse",
-    "A day when gravity stopped working",
-    "A world where everyone can talk to animals",
-    "A day in the life of a tiny insect or bug",
-    "A magical backpack that can take you anywhere",
-    "Family and Friends",
-    "My favorite holiday or festival"
-  ];
-  const chosenCategory = categories[Math.floor(Math.random() * categories.length)];
-  const randomSeed = Math.floor(Math.random() * 10000);
+  const categories = {
+  "4-6 years old": [
+    "My Favorite Things & Animals",
+    "Fun at Home and School",
+    "Pretend Play & Magical Friends",
+    "Food, Festivals & Celebrations",
+    "My Favorite Toys and Bedtime Stories",
+    "Cute Pets and Friendly Animals",
+    "Yummy Treats, Ice Creams, and Fruits",
+    "Fun in the Park and Playground",
+    "Rainy Days, Puddles, and Rainbows",
+    "Pretending to Be a Bird, Fish, or Cat",
+    "Colors, Cartoons, and Drawing Fun",
+    "My Grandparents, Cousins, and Best Friends",
+    "Festivals, Sweets, and Birthday Parties"
+  ],
+  "7-9 years old": [
+    "Wacky Science & Funny Inventions",
+    "Animals, Nature & Outdoor Adventures",
+    "School Mischief & Playground Games",
+    "Superheroes, Gadgets & Magic Quests",
+    "School Bus Rides and Van Commutes",
+    "Lunch Break and Lunchbox Sharing",
+    "Morning Rush to Get Ready for School",
+    "Playing in the Colony or Apartment Park",
+    "Rainy Days and Getting Soaked on the Way Home",
+    "Weekend Shopping and Grocery Trips with Parents",
+    "Visiting Grandparents during Holidays",
+    "Learning a New Skill (Cycling, Swimming, or Skating)",
+    "Watching Cartoons and TV Shows with Siblings",
+    "Birthday Parties and Return Gifts",
+    "A Funny Moment in the Classroom",
+    "Losing an Eraser, Pencil, or Water Bottle at School"
+  ],
+  "10-12 years old": [
+    "Time Travel & Historical Mysteries",
+    "Space, Oceans & Extreme Survival",
+    "Sports, Hobbies & Hidden Talents",
+    "Funny 'What If' Dilemmas & Inventions",
+    "Annual Day, Sports Day, or School Competitions",
+    "Preparing for Exams vs. Last-Minute Panic",
+    "Street Food Treats (Chaat, Maggie, Momos, Ice Gola)",
+    "Playing Evening Games (Cricket, Football, Badminton, Hide & Seek)",
+    "Power Cuts and Summer Evenings on the Balcony",
+    "Dealing with Sibling Fights and Room Sharing",
+    "Going on a Family Road Trip or Train Journey",
+    "Packing My School Bag According to the Timetable",
+    "Trying to Wake Up on a Cold Winter Morning",
+    "Pocket Money and Saving for Something You Want",
+    "Helping Parents with Daily Kitchen or House Chores",
+    "The Excitement of Summer Vacation Starting"
+  ],
+  "13-15 years old": [
+    "Tech, AI & Social Media Dilemmas",
+    "School Rules, Society & Youth Trends",
+    "Global Travel, Street Culture & Food",
+    "Debatable 'What Ifs' & Ethical Choices",
+    "Smartphones, Gaming, and Screen-Time Debates",
+    "Should School Start 2 Hours Later?",
+    "Street Food Culture vs. Fast Food Chains",
+    "Social Media Trends: Fun or Distraction?",
+    "If You Could Erase One Daily Chore Forever",
+    "Dealing with Peer Pressure and Making Real Friends",
+    "The Best and Worst Parts of Family Functions",
+    "AI, Robots, and the Future of Jobs",
+    "Is Homework Really Necessary?",
+    "Travel Diaries: Exploring a New City or State"
+  ]
+};
+console.log("Categories available:", categories[ageGroup]);
+  const chosenCategory = categories[ageGroup][Math.floor(Math.random() * categories[ageGroup].length)];
+  const randomSeed = Math.floor(Math.random() * 10);
 
-  const prompt = `You are a creative, fun game host for kids. Generate a 1-minute speaking topic for a child aged ${age}.
+  const prompt = `You are a lively, creative game host for children's extempore speaking. Generate a 1-minute speech challenge tailored for a child aged ${age}.
 
 Random Seed: ${randomSeed}
-Theme Inspiration: Focus specifically around "${chosenCategory}".
+Theme Inspiration: Focus specifically around ${chosenCategory}.
 
-Rules:
-1. Pick an easy, imaginative, and fresh topic that is very quick for a child to picture and talk about.
-3. Provide 3 easy, concrete adjoining challenge words that fit the story naturally.
+Age-Specific Adaptation Rules:
+- Ages 4-6: Keep topics sensory, visual, and personal (favorite animals, toys, simple "pretend play"). Words must be simple everyday objects.
+- Ages 7-9: Focus on whimsical "what-if" stories, magical gadgets, and school adventures. Words should spark action.
+- Ages 10-12: Focus on creative problem-solving, quirky inventions, or funny dilemmas. Words should add a plot twist.
+- Ages 13-15: Focus on relatable opinions, tech/gaming culture, school life, or moral dilemmas. Words should be thematic concepts or objects.
 
-Return the response STRICTLY as JSON:
-{"main": "Vibrant Topic Title", "extra": ["word1", "word2", "word3"]}`;
+General Rules:
+1. Make the topic instantly relatable to Indian and global kids (e.g., school life, street food, festivals, family, modern hobbies).
+2. Avoid generic academic essay prompts; make it fun, conversational, and easy to start speaking within 10 seconds.
+3. Provide 3 concrete challenge words that the child must naturally include while speaking.
+4. Fix grammar/quotes strictly in JSON.
 
+Return the response STRICTLY as valid JSON:
+{
+  "main": "Engaging Topic Title",
+  "extra": ["word1", "word2", "word3"]
+}`;
+
+console.log("Prompt sent to Gemini API:", prompt);
   try {
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${apiKey}`,
@@ -56,7 +120,7 @@ Return the response STRICTLY as JSON:
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
             responseMimeType: "application/json",
-            temperature: 1.2,
+            temperature: 0.8,
             topP: 0.95
           }
         })
