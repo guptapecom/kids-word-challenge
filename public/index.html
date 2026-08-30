@@ -414,7 +414,7 @@
     }
   }
 
-  async function loadModalSnippet() {
+    async function loadModalSnippet() {
     try {
       const response = await fetch('/modal.html');
       const html = await response.text();
@@ -431,8 +431,19 @@
           }
         });
       }
+
+      // Attach direct event listener for share to guarantee trusted user gesture
+      const shareBtn = document.getElementById('shareBtn');
+      if (shareBtn) {
+        shareBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          shareRecording();
+        });
+      }
+
     } catch (err) {}
   }
+
 
   /* ==========================================================================
      4. Topic Generator (Gemini API + Fallbacks)
@@ -582,7 +593,7 @@
   }
 // Global audio storage
 let audioBlob = null;
-  async function startChallenge() {
+    async function startChallenge() {
     speechTextAccumulator = "";
     speechSecondsSpoken = 0;
     audioChunks = [];
@@ -600,7 +611,15 @@ let audioBlob = null;
         audio: { echoCancellation: true, noiseSuppression: true } 
       });
 
-      const mimeTypes = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/aac'];
+      // Updated: Prioritize WhatsApp-compatible audio types (MP4/AAC/OGG) over WebM
+      const mimeTypes = [
+        'audio/mp4;codecs=mp4a.40.2',
+        'audio/mp4',
+        'audio/aac',
+        'audio/ogg;codecs=opus',
+        'audio/webm;codecs=opus',
+        'audio/webm'
+      ];
       const supportedMime = mimeTypes.find(type => MediaRecorder.isTypeSupported(type)) || '';
       
       mediaRecorder = supportedMime ? new MediaRecorder(audioStream, { mimeType: supportedMime }) : new MediaRecorder(audioStream);
@@ -609,17 +628,17 @@ let audioBlob = null;
         if (e.data && e.data.size > 0) audioChunks.push(e.data);
       };
       
-
-mediaRecorder.onstop = () => {
-  const mime = audioChunks[0]?.type || 'audio/mp4';
-  audioBlob = new Blob(audioChunks, { type: mime }); // 👈 Removed 'const' to assign globally
-  const audioUrl = URL.createObjectURL(audioBlob);
-  const player = document.getElementById("audioPlayback");
-  if (player) {
-    player.src = audioUrl;
-    player.load();
-  }
-};
+      mediaRecorder.onstop = () => {
+        // Updated: Ensure exact MIME type detection from recorder or blob chunks
+        const mime = mediaRecorder.mimeType || audioChunks[0]?.type || 'audio/mp4';
+        audioBlob = new Blob(audioChunks, { type: mime });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const player = document.getElementById("audioPlayback");
+        if (player) {
+          player.src = audioUrl;
+          player.load();
+        }
+      };
 
       mediaRecorder.start(250);
 
@@ -663,6 +682,7 @@ mediaRecorder.onstop = () => {
     }
     completeOnboardingPermanently();
   }
+
 
   function finishTalk() {
     clearInterval(timerInterval);
@@ -712,7 +732,13 @@ mediaRecorder.onstop = () => {
      Share Recording Handler (Web Share API + WhatsApp Fallback)
      ========================================================================== */
 
+// 2. Updated Share Function: Avoid sending unsupported WebM blobs to WhatsApp
+let isSharing = false;
+
 async function shareRecording() {
+  if (isSharing) return; // Prevent "An earlier share has not yet completed"
+  isSharing = true;
+
   const savedName = (localStorage.getItem("talkstars_saved_name") || "TalkStars").trim();
   const topicElem = document.getElementById("wordDisplay");
   const currentTopic = topicElem ? topicElem.innerText : "a fun topic";
@@ -722,50 +748,28 @@ async function shareRecording() {
     posthog.capture('Recording Share Clicked', { speaker: savedName });
   }
 
-  // 1. Attempt Native Audio File Share (Mobile OS)
-  if (audioBlob && navigator.canShare) {
-    try {
-      // Determine clean extension based on actual blob type
-      const isMp4 = audioBlob.type.includes('mp4') || audioBlob.type.includes('m4a');
-      const ext = isMp4 ? 'm4a' : 'webm';
-      const cleanMime = isMp4 ? 'audio/mp4' : 'audio/webm';
-      const fileName = `${savedName.replace(/[^a-zA-Z0-9]/g, '_')}_speech.${ext}`;
-
-      const audioFile = new File([audioBlob], fileName, { type: cleanMime });
-
-      // Check if the OS specifically accepts this audio file
-      if (navigator.canShare({ files: [audioFile] })) {
-        // IMPORTANT: Send ONLY the file (do not mix text/url in the same call)
-        await navigator.share({
-          files: [audioFile],
-          title: `${savedName}'s Speech`
-        });
-        return;
-      }
-    } catch (err) {
-      if (err.name === 'AbortError') return; // User simply closed the share sheet
-      console.warn('File share not permitted by browser, falling back to text share...', err);
-    }
-  }
-
-  // 2. Fallback: Native Text/Link Share
+  // 1. Mobile Native Share (Text & Link - 100% WhatsApp & OS compatible)
   if (navigator.share) {
     try {
       await navigator.share({
-        title: 'TalkStars Speech Recording',
+        title: `${savedName}'s Speech on TalkStars`,
         text: shareText
       });
+      isSharing = false;
       return;
     } catch (err) {
-      if (err.name === 'AbortError') return;
-      console.warn('Native text share failed, falling back to direct link...', err);
+      isSharing = false;
+      if (err.name === 'AbortError') return; // User closed sheet without picking an app
+      console.warn('Native share dismissed or unavailable, opening WhatsApp Web...', err);
     }
   }
 
-  // 3. Desktop / Non-Supported Fallback: Direct WhatsApp Web
+  // 2. Fallback for Desktop / Unsupported browsers
+  isSharing = false;
   const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
   window.open(whatsappUrl, '_blank');
 }
+
 
   function evaluateSpeech() {
     const transcript = speechTextAccumulator.trim();
