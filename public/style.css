@@ -349,6 +349,7 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 0 24px rgba(254, 202, 87, 0.35), 0 10px 30px rgba(0, 0, 0, 0.6);
+  animation: cardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .prompt-text {
@@ -369,6 +370,7 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  animation: cardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .bonus-title {
@@ -421,46 +423,61 @@ body {
   justify-content: center;
 }
 
-.prompt-card {
-  animation: cardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.bonus-card {
-  animation: cardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
 @keyframes cardFadeIn {
   0% { opacity: 0; transform: translateY(8px) scale(0.96); }
   100% { opacity: 1; transform: translateY(0px) scale(1); }
 }
 
 /* ==========================================================================
-   7. Primary Action Button & Status Bar
+   7. Primary Action Button Row & Status Bar
    ========================================================================== */
-.btn-generate {
-  background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-glow));
-  color: #ffffff;
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
-  padding: 15px 20px;
-  font-family: inherit;
-  font-size: 1.2rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  border-radius: 20px;
-  cursor: pointer;
-  width: 100%;
-  box-shadow: 0 10px 30px rgba(255, 51, 102, 0.7), 0 4px 12px rgba(0, 0, 0, 0.5);
-  animation: pulseGlow 2.5s infinite ease-in-out;
-  transition: transform 0.1s;
+.action-buttons-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
-.btn-generate:active {
-  transform: scale(0.97);
+.action-buttons-row .btn-generate {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  padding: 14px 10px !important;
+  font-family: inherit !important;
+  font-size: 1.05rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.3px !important;
+  border-radius: 20px !important;
+  cursor: pointer !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  transition: transform 0.1s ease, filter 0.15s ease !important;
 }
 
-@keyframes pulseGlow {
-  0%, 100% { transform: scale(1); box-shadow: 0 8px 25px rgba(255, 51, 102, 0.6); }
-  50% { transform: scale(1.02); box-shadow: 0 12px 35px rgba(255, 51, 102, 0.9); }
+.action-buttons-row .btn-generate:active {
+  transform: scale(0.96) !important;
+}
+
+.action-buttons-row .btn-generate:disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
+
+/* 1. Topic Button (Coral / Pink) */
+.action-buttons-row .btn-spotlight {
+  background: linear-gradient(135deg, #ff3366, #ff6b8b) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(255, 51, 102, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 2. Quick Word Button (Vibrant Amber / Gold) */
+.action-buttons-row .btn-quick-word {
+  background: linear-gradient(135deg, #feca57, #ff9f43) !important;
+  color: #1e1430 !important;
+  box-shadow: 0 8px 24px rgba(254, 202, 87, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
 
 .pulse-anim {
@@ -860,9 +877,8 @@ body {
     align-items: center;
   }
 
-  /* Desktop card size */
   .app-screen {
-    max-width: 580px; /* Increased from 480px for a more spacious desktop view */
+    max-width: 580px;
     min-height: 860px;
     height: 90vh;
     max-height: 920px;
@@ -911,9 +927,10 @@ body {
   .prompt-text {
     font-size: 1.4rem;
   }
+}
 
-  /* ==========================================================================
-   Opening Hook Screen (Splash / Welcome Overlay)
+/* ==========================================================================
+   13. Opening Hook Screen (Splash / Welcome Overlay)
    ========================================================================== */
 .splash-screen {
   position: fixed;
@@ -980,7 +997,6 @@ body {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-/* Playful 2-Second Progress Bar */
 .splash-loader {
   margin-top: 14px;
   width: 140px;
@@ -1005,7 +1021,7 @@ body {
 }
 
 /* ==========================================================================
-   Modal Audio Player & Action Icons (Desktop & Mobile Unified)
+   14. Modal Audio Player & Action Icons
    ========================================================================== */
 .modal-actions-row {
   display: flex !important;
@@ -1020,7 +1036,7 @@ body {
 
 .modal-audio-player {
   flex: 1 1 auto !important;
-  min-width: 0 !important; /* Prevents audio element from overflowing container */
+  min-width: 0 !important;
   height: 44px !important;
   border-radius: 25px !important;
   outline: none !important;
@@ -1030,14 +1046,14 @@ body {
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
-  flex-shrink: 0 !important; /* Guarantees icons stay on the same row */
+  flex-shrink: 0 !important;
 }
 
 .icon-action-btn {
   width: 44px !important;
   height: 44px !important;
   border-radius: 50% !important;
-  background: rgba(255, 255, 255, 0.12) !important; /* Clean translucent glass, no white block */
+  background: rgba(255, 255, 255, 0.12) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
   color: #ffffff !important;
   display: inline-flex !important;
@@ -1061,7 +1077,7 @@ body {
 }
 
 .icon-action-btn:hover {
-  background: #ff3366 !important; /* TalkStars Vibrant Coral accent */
+  background: #ff3366 !important;
   border-color: #ff3366 !important;
   transform: translateY(-2px) scale(1.06) !important;
   box-shadow: 0 6px 18px rgba(255, 51, 102, 0.45) !important;
@@ -1069,5 +1085,4 @@ body {
 
 .icon-action-btn:active {
   transform: scale(0.95) !important;
-}
 }

@@ -180,13 +180,18 @@
     </div>
 
     <!-- High-Impact Primary Action Button -->
-    <div class="action-btn-anchor">
+    <div class="action-btn-anchor" id="actionBtnRow">
       <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
-        <span id="guideText">1️⃣ Tap here to get a topic!</span>
+        <span id="guideText">1️⃣ Tap a topic or word to start!</span>
       </div>
-      <button class="btn-generate btn-spotlight" id="genBtn" onclick="generateTopic()">
-        🎲 Get My Topic!
-      </button>
+      <div class="action-buttons-row">
+        <button class="btn-generate btn-spotlight" id="genBtn" onclick="generatePrompt('topic')">
+          🎲 Get Topic
+        </button>
+        <button class="btn-generate btn-quick-word" id="wordBtn" onclick="generatePrompt('word')">
+          ⚡ Quick Word
+        </button>
+      </div>
     </div>
 
     <!-- Revealed Only After Topic Request -->
@@ -437,23 +442,19 @@
   /* ==========================================================================
      4. Topic Generator (Gemini API + Fallbacks)
      ========================================================================== */
-  let currentExtraWords = [];
+   let currentExtraWords = [];
   const fallbackBank = {
-    "4-6 years old": { 
-      main: "The Secret Life of My Favorite Toy: What does it do when I am asleep?", 
-      extra: ["Playful", "Magic", "Adventure"] 
+    topic: {
+      "4-6 years old": { main: "The Secret Life of My Favorite Toy: What does it do when I am asleep?", extra: ["Playful", "Magic", "Adventure"] },
+      "7-9 years old": { main: "The Secret Mission of the Apartment Slide: What happens when the playground closes and toys come alive?", extra: ["Magic Whistle", "Stray Puppy", "Golden Pebble"] },
+      "10-12 years old": { main: "Design a New School Subject: What would students learn, and who would teach it?", extra: ["Creativity", "Invention", "Future"] },
+      "13-15 years old": { main: "If Social Media Disappeared for One Year: How would our daily lives change?", extra: ["Connection", "Habits", "Discovery"] }
     },
-    "7-9 years old": { 
-      main: "The Secret Mission of the Apartment Slide: What happens when the playground closes and toys come alive?", 
-      extra: ["Magic Whistle", "Stray Puppy", "Golden Pebble"] 
-    },
-    "10-12 years old": { 
-      main: "Design a New School Subject: What would students learn, and who would teach it?", 
-      extra: ["Creativity", "Invention", "Future"] 
-    },
-    "13-15 years old": { 
-      main: "If Social Media Disappeared for One Year: How would our daily lives change?", 
-      extra: ["Connection", "Habits", "Discovery"] 
+    word: {
+      "4-6 years old": { main: "Teddy Bear 🧸", extra: ["Cuddle", "Soft", "Bedtime"] },
+      "7-9 years old": { main: "Magic Treehouse 🌳", extra: ["Secret", "Climb", "Adventure"] },
+      "10-12 years old": { main: "Time Capsule ⏳", extra: ["Memory", "Future", "Treasure"] },
+      "13-15 years old": { main: "Artificial Intelligence 🤖", extra: ["Future", "Creativity", "Robots"] }
     }
   };
 
@@ -477,21 +478,23 @@
     if (thanksMsg) thanksMsg.style.display = "block";
   }
 
-  async function generateTopic() {
+  async function generatePrompt(mode = 'topic') {
     const age = document.getElementById("ageGroup").value;
     const wordDisplay = document.getElementById("wordDisplay");
     const genBtn = document.getElementById("genBtn");
+    const wordBtn = document.getElementById("wordBtn");
 
     if (typeof window.posthog?.capture === 'function') {
-      window.posthog.capture('Topic Requested', {
+      window.posthog.capture(mode === 'word' ? 'Word Requested' : 'Topic Requested', {
         age_group: age,
         kid_name: document.getElementById("kidNameInput")?.value.trim() || "Anonymous"
       });
     }
 
-    wordDisplay.innerText = "✨ Finding a fun topic...";
+    wordDisplay.innerText = mode === 'word' ? "⚡ Picking a cool word..." : "✨ Finding a fun topic...";
     wordDisplay.classList.add("pulse-anim");
-    genBtn.disabled = true;
+    if (genBtn) genBtn.disabled = true;
+    if (wordBtn) wordBtn.disabled = true;
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 4000);
@@ -500,7 +503,7 @@
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ageGroup: age }),
+        body: JSON.stringify({ ageGroup: age, mode }),
         signal: controller.signal
       });
 
@@ -508,37 +511,42 @@
 
       if (!response.ok) throw new Error(`Server status: ${response.status}`);
       const data = await response.json();
-      renderResult(data.main, data.extra);
+      renderResult(data.main, data.extra, mode);
     } catch (err) {
       clearTimeout(timeoutId);
 
       if (typeof window.posthog?.capture === 'function') {
-        window.posthog.capture('Topic Fallback Used', {
+        window.posthog.capture('Prompt Fallback Used', {
+          mode: mode,
           age_group: age,
           reason: err.name === 'AbortError' ? 'Request Timed Out (4s)' : err.message
         });
       }
 
-      const fallback = fallbackBank[age] || fallbackBank["7-9 years old"];
-      renderResult(fallback.main, fallback.extra);
+      const fallbacks = fallbackBank[mode] || fallbackBank.topic;
+      const fallback = fallbacks[age] || fallbacks["7-9 years old"];
+      renderResult(fallback.main, fallback.extra, mode);
     } finally {
       wordDisplay.classList.remove("pulse-anim");
-      genBtn.disabled = false;
+      if (genBtn) genBtn.disabled = false;
+      if (wordBtn) wordBtn.disabled = false;
       resetTimer();
       advanceGuideStep(1);
     }
   }
 
-    function renderResult(mainWord, extraWords) {
+    function renderResult(mainWord, extraWords, mode = 'topic') {
     const promptCard = document.getElementById("promptCard");
     const wordDisplay = document.getElementById("wordDisplay");
     const bonusCard = document.getElementById("bonusCard");
     const adjoiningContainer = document.getElementById("adjoiningDisplay");
     const genBtn = document.getElementById("genBtn");
+    const wordBtn = document.getElementById("wordBtn");
 
     if (wordDisplay) wordDisplay.innerText = mainWord;
     if (promptCard) promptCard.style.display = "flex";
-    if (genBtn) genBtn.innerText = "🎲 Pick Another Topic!";
+    if (genBtn) genBtn.innerText = "🎲 Next Topic";
+    if (wordBtn) wordBtn.innerText = "⚡ Next Word";
 
     currentExtraWords = extraWords || [];
     adjoiningContainer.innerHTML = "";
@@ -859,7 +867,7 @@ async function shareRecording() {
     }
 
     currentGuideStep = 1;
-    showGuideForElement('genBtn', '👇 Tap here to get a topic!');
+    showGuideForElement('actionBtnRow', '👇 Pick a topic or word to speak!');
 
     if (typeof window.posthog?.capture === 'function') {
       window.posthog.capture('onboarding_started');
