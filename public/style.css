@@ -473,15 +473,15 @@ body {
   box-shadow: 0 8px 24px rgba(255, 51, 102, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* 2. Quick Word Button (Electric Lime / Neon Green) */
+/* 2. Quick Word Button (Electric Violet Pop) */
 .action-buttons-row .btn-quick-word {
-  background: linear-gradient(135deg, #0be881, #05c46b) !important;
-  color: #032b16 !important; /* Deep forest green text for high readability */
-  box-shadow: 0 8px 24px rgba(11, 232, 129, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  background: linear-gradient(135deg, #a55eea, #8854d0) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(165, 94, 234, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
 
 .action-buttons-row .btn-quick-word:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.1);
 }
 
 .pulse-anim {
