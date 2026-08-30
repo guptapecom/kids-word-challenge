@@ -179,15 +179,16 @@
       </select>
     </div>
 
-    <!-- High-Impact Primary Action Button -->
-    <div class="action-btn-anchor">
-      <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
-        <span id="guideText">1️⃣ Tap here to get a topic!</span>
-      </div>
-      <button class="btn-generate btn-spotlight" id="genBtn" onclick="generateTopic()">
-        🎲 Get My Topic!
+    <!-- Dual Action Buttons Container -->
+    <div class="action-btn-row">
+      <button class="btn-generate btn-spotlight" id="genBtn" onclick="generateTopic('topic')">
+        🎲 Get My Topic
+      </button>
+      <button class="btn-generate btn-word-spotlight" id="wordBtn" onclick="generateTopic('word')">
+        🎯 Quick Word
       </button>
     </div>
+
 
     <!-- Revealed Only After Topic Request -->
     <div class="prompt-card spotlight-card" id="promptCard" style="display: none;">
@@ -477,55 +478,41 @@
     if (thanksMsg) thanksMsg.style.display = "block";
   }
 
-  async function generateTopic() {
-    const age = document.getElementById("ageGroup").value;
-    const wordDisplay = document.getElementById("wordDisplay");
+  async function generateTopic(mode = 'topic') {
+    const ageGroup = document.getElementById("ageGroup").value;
     const genBtn = document.getElementById("genBtn");
-
-    if (typeof window.posthog?.capture === 'function') {
-      window.posthog.capture('Topic Requested', {
-        age_group: age,
-        kid_name: document.getElementById("kidNameInput")?.value.trim() || "Anonymous"
-      });
-    }
-
-    wordDisplay.innerText = "✨ Finding a fun topic...";
-    wordDisplay.classList.add("pulse-anim");
-    genBtn.disabled = true;
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const wordBtn = document.getElementById("wordBtn");
+    const wordDisplay = document.getElementById("wordDisplay");
+    
+    // UI Loading state
+    if (genBtn) genBtn.innerText = "⏳ Mixing Ideas...";
+    if (wordBtn) wordBtn.disabled = true;
 
     try {
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ageGroup: age }),
-        signal: controller.signal
+        body: JSON.stringify({ ageGroup, mode })
       });
 
-      clearTimeout(timeoutId);
+      if (!response.ok) throw new Error("API limit or failure");
 
-      if (!response.ok) throw new Error(`Server status: ${response.status}`);
       const data = await response.json();
       renderResult(data.main, data.extra);
-    } catch (err) {
-      clearTimeout(timeoutId);
 
       if (typeof window.posthog?.capture === 'function') {
-        window.posthog.capture('Topic Fallback Used', {
-          age_group: age,
-          reason: err.name === 'AbortError' ? 'Request Timed Out (4s)' : err.message
-        });
+        posthog.capture('Prompt Generated', { mode, ageGroup });
       }
-
-      const fallback = fallbackBank[age] || fallbackBank["7-9 years old"];
-      renderResult(fallback.main, fallback.extra);
+    } catch (err) {
+      // Fallback offline banks if API is busy
+      const fallbackTopics = mode === 'word' 
+        ? { main: "Rocket", extra: ["Space", "Stars"] }
+        : { main: "My Favorite Adventure in the Park", extra: ["Slide", "Puppy", "Tree"] };
+      
+      renderResult(fallbackTopics.main, fallbackTopics.extra);
     } finally {
-      wordDisplay.classList.remove("pulse-anim");
-      genBtn.disabled = false;
-      resetTimer();
-      advanceGuideStep(1);
+      if (genBtn) genBtn.innerText = "🎲 Pick Another Topic";
+      if (wordBtn) wordBtn.disabled = false;
     }
   }
 

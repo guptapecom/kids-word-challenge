@@ -267,7 +267,7 @@ body {
 
 /* ==========================================================================
    5. Hero Section & Age Group Selector
-   ========================================================================= */
+   ========================================================================== */
 .hero-header {
   text-align: center;
   display: flex;
@@ -349,6 +349,7 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 0 24px rgba(254, 202, 87, 0.35), 0 10px 30px rgba(0, 0, 0, 0.6);
+  animation: cardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .prompt-text {
@@ -369,6 +370,7 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  animation: cardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .bonus-title {
@@ -399,6 +401,11 @@ body {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
 }
 
+@keyframes cardFadeIn {
+  0% { opacity: 0; transform: translateY(8px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0px) scale(1); }
+}
+
 /* ==========================================================================
    Central Stage Layout (Balanced On-Load & Post-Reveal)
    ========================================================================== */
@@ -419,19 +426,6 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-}
-
-.prompt-card {
-  animation: cardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.bonus-card {
-  animation: cardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes cardFadeIn {
-  0% { opacity: 0; transform: translateY(8px) scale(0.96); }
-  100% { opacity: 1; transform: translateY(0px) scale(1); }
 }
 
 /* ==========================================================================
@@ -852,68 +846,7 @@ body {
 }
 
 /* ==========================================================================
-   12. Responsive Media Queries
-   ========================================================================== */
-@media (min-width: 600px) {
-  body {
-    padding: 1.5rem 0;
-    align-items: center;
-  }
-
-  /* Desktop card size */
-  .app-screen {
-    max-width: 580px; /* Increased from 480px for a more spacious desktop view */
-    min-height: 860px;
-    height: 90vh;
-    max-height: 920px;
-    padding: 1.5rem 1.6rem 2rem 1.6rem;
-    border-radius: 36px;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-  }
-
-  .main-title {
-    font-size: 2.3rem;
-  }
-
-  .prompt-card {
-    min-height: 140px;
-    padding: 1.6rem 1.4rem;
-  }
-
-  .prompt-text {
-    font-size: 1.8rem;
-  }
-
-  .modal-sheet {
-    max-width: 440px;
-    margin-bottom: 0;
-  }
-}
-
-@media (max-height: 700px) {
-  .modal-sheet {
-    padding: 1rem 1rem;
-    gap: 0.65rem;
-    max-height: 88vh;
-    margin-bottom: 5vh;
-  }
-
-  .summary-card-inner {
-    padding: 8px 10px;
-    font-size: 0.8rem;
-  }
-
-  .prompt-card {
-    min-height: 100px;
-    padding: 1rem;
-  }
-
-  .prompt-text {
-    font-size: 1.4rem;
-  }
-
-  /* ==========================================================================
-   Opening Hook Screen (Splash / Welcome Overlay)
+   12. Opening Hook Screen (Splash / Welcome Overlay)
    ========================================================================== */
 .splash-screen {
   position: fixed;
@@ -1005,7 +938,7 @@ body {
 }
 
 /* ==========================================================================
-   Modal Audio Player & Action Icons (Desktop & Mobile Unified)
+   13. Modal Audio Player & Action Icons (Desktop & Mobile Unified)
    ========================================================================== */
 .modal-actions-row {
   display: flex !important;
@@ -1020,7 +953,7 @@ body {
 
 .modal-audio-player {
   flex: 1 1 auto !important;
-  min-width: 0 !important; /* Prevents audio element from overflowing container */
+  min-width: 0 !important;
   height: 44px !important;
   border-radius: 25px !important;
   outline: none !important;
@@ -1030,14 +963,14 @@ body {
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
-  flex-shrink: 0 !important; /* Guarantees icons stay on the same row */
+  flex-shrink: 0 !important;
 }
 
 .icon-action-btn {
   width: 44px !important;
   height: 44px !important;
   border-radius: 50% !important;
-  background: rgba(255, 255, 255, 0.12) !important; /* Clean translucent glass, no white block */
+  background: rgba(255, 255, 255, 0.12) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
   color: #ffffff !important;
   display: inline-flex !important;
@@ -1061,7 +994,7 @@ body {
 }
 
 .icon-action-btn:hover {
-  background: #ff3366 !important; /* TalkStars Vibrant Coral accent */
+  background: #ff3366 !important;
   border-color: #ff3366 !important;
   transform: translateY(-2px) scale(1.06) !important;
   box-shadow: 0 6px 18px rgba(255, 51, 102, 0.45) !important;
@@ -1070,4 +1003,113 @@ body {
 .icon-action-btn:active {
   transform: scale(0.95) !important;
 }
+
+/* ==========================================================================
+   14. Dual Action Buttons Row & Onboarding Alignment
+   ========================================================================== */
+.action-btn-row {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: 480px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 12px 0 !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+.action-btn-row button {
+  flex: 1 !important;
+  padding: 14px 18px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border-radius: 18px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.btn-spotlight {
+  background: linear-gradient(135deg, #ff3366 0%, #ff6b6b 100%) !important;
+  color: #ffffff !important;
+}
+
+.btn-word-spotlight {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+  color: #ffffff !important;
+}
+
+.action-btn-row button:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  filter: brightness(1.1) !important;
+}
+
+.action-btn-row button:active {
+  transform: scale(0.98) !important;
+}
+
+/* ==========================================================================
+   15. Responsive Media Queries
+   ========================================================================== */
+@media (min-width: 600px) {
+  body {
+    padding: 1.5rem 0;
+    align-items: center;
+  }
+
+  .app-screen {
+    max-width: 580px;
+    min-height: 860px;
+    height: 90vh;
+    max-height: 920px;
+    padding: 1.5rem 1.6rem 2rem 1.6rem;
+    border-radius: 36px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .main-title {
+    font-size: 2.3rem;
+  }
+
+  .prompt-card {
+    min-height: 140px;
+    padding: 1.6rem 1.4rem;
+  }
+
+  .prompt-text {
+    font-size: 1.8rem;
+  }
+
+  .modal-sheet {
+    max-width: 440px;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-height: 700px) {
+  .modal-sheet {
+    padding: 1rem 1rem;
+    gap: 0.65rem;
+    max-height: 88vh;
+    margin-bottom: 5vh;
+  }
+
+  .summary-card-inner {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .prompt-card {
+    min-height: 100px;
+    padding: 1rem;
+  }
+
+  .prompt-text {
+    font-size: 1.4rem;
+  }
 }
