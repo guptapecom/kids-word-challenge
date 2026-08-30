@@ -179,20 +179,21 @@
       </select>
     </div>
 
-    <!-- High-Impact Primary Action Button -->
-    <div class="action-btn-anchor" id="actionBtnRow">
-      <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
-        <span id="guideText">1️⃣ Tap a topic or word to start!</span>
-      </div>
-      <div class="action-buttons-row">
-        <button class="btn-generate btn-spotlight" id="genBtn" onclick="generatePrompt('topic')">
-          🎲 Get Topic
-        </button>
-        <button class="btn-generate btn-quick-word" id="wordBtn" onclick="generatePrompt('word')">
-          ⚡ Quick Word
-        </button>
-      </div>
-    </div>
+    <!-- High-Impact Action Button Row -->
+<div class="action-btn-anchor" id="actionBtnRow" style="position: relative;">
+  <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
+    <span id="guideText">1️⃣ Tap a topic or word to start!</span>
+  </div>
+  <div class="action-buttons-row">
+    <button class="btn-generate btn-spotlight" id="genBtn" onclick="generatePrompt('topic')">
+      🎲 Get Topic
+    </button>
+    <button class="btn-generate btn-quick-word" id="wordBtn" onclick="generatePrompt('word')">
+      ⚡ Quick Word
+    </button>
+  </div>
+</div>
+
 
     <!-- Revealed Only After Topic Request -->
     <div class="prompt-card spotlight-card" id="promptCard" style="display: none;">
@@ -875,21 +876,19 @@ async function shareRecording() {
   }
 
   function showGuideForElement(elementId, text) {
-    const target = document.getElementById(elementId);
-    const tooltip = document.getElementById('onboardingTooltip');
-    const guideText = document.getElementById('guideText');
+  const target = document.getElementById(elementId);
+  const tooltip = document.getElementById('onboardingTooltip');
+  const guideText = document.getElementById('guideText');
 
-    if (!target || !tooltip) return;
+  if (!target || !tooltip) return;
 
-    guideText.innerText = text;
-    
-    // Anchor tooltip directly into the target button's parent container
-    if (target.parentElement) {
-      target.parentElement.appendChild(tooltip);
-    }
+  guideText.innerText = text;
+  
+  // Anchor tooltip directly inside the target element so relative positioning works
+  target.appendChild(tooltip);
 
-    tooltip.style.display = 'inline-flex';
-  }
+  tooltip.style.display = 'inline-flex';
+}
 
   function advanceGuideStep(completedStep) {
     const hasRecorded = localStorage.getItem('talkstars_first_speech_recorded');

@@ -835,7 +835,7 @@ body {
    ========================================================================== */
 .onboarding-guide-badge {
   position: absolute;
-  top: -46px;
+  top: -46px; /* Sits right above the button row */
   left: 50%;
   transform: translateX(-50%);
   z-index: 1500;
