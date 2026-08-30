@@ -1004,4 +1004,53 @@ body {
   100% { width: 100%; }
 }
 
+/* ==========================================================================
+   Modal Audio & Icon Action Bar
+   ========================================================================== */
+.modal-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.modal-audio-player {
+  flex: 1;
+  height: 44px;
+  border-radius: 25px;
+}
+
+.icon-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-action-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.icon-action-btn:hover {
+  background: var(--coral, #ff3366);
+  border-color: var(--coral, #ff3366);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.icon-action-btn:active {
+  transform: scale(0.95);
+}
 }

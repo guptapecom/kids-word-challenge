@@ -706,6 +706,54 @@
     }
   }
 
+    /* ==========================================================================
+     Share Recording Handler (Web Share API + WhatsApp Fallback)
+     ========================================================================== */
+  async function shareRecording() {
+    const savedName = localStorage.getItem("talkstars_saved_name") || "A young star";
+    const currentTopic = document.getElementById("wordDisplay")?.innerText || "a mystery topic";
+    const shareText = `🎙️ Listen to ${savedName}'s speech on "${currentTopic}" on TalkStars! ⭐\n\nTry it here: https://talkstars.vercel.app/`;
+
+    if (typeof window.posthog?.capture === 'function') {
+      posthog.capture('Recording Shared', { speaker: savedName });
+    }
+
+    // 1. Try sharing the actual audio file natively if supported
+    if (navigator.canShare && audioBlob) {
+      const audioFile = new File([audioBlob], `${savedName.replace(/\s+/g, '_')}_speech.webm`, {
+        type: audioBlob.type || 'audio/webm'
+      });
+
+      if (navigator.canShare({ files: [audioFile] })) {
+        try {
+          await navigator.share({
+            title: 'TalkStars Speech Recording',
+            text: shareText,
+            files: [audioFile]
+          });
+          return;
+        } catch (err) {
+          if (err.name !== 'AbortError') console.warn('File share failed, falling back', err);
+        }
+      }
+    }
+
+    // 2. Fallback: Share text & link via Native Share or WhatsApp
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'TalkStars Speech Recording',
+          text: shareText,
+          url: 'https://talkstars.vercel.app/'
+        });
+      } catch (err) {
+        if (err.name !== 'AbortError') window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+      }
+    } else {
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+    }
+  }
+
   function evaluateSpeech() {
     const transcript = speechTextAccumulator.trim();
     const summaryBox = document.getElementById("summaryDisplay");
