@@ -1005,52 +1005,69 @@ body {
 }
 
 /* ==========================================================================
-   Modal Audio & Icon Action Bar
+   Modal Audio Player & Action Icons (Desktop & Mobile Unified)
    ========================================================================== */
 .modal-actions-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  margin-top: 12px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  width: 100% !important;
+  margin-top: 14px !important;
+  box-sizing: border-box !important;
 }
 
 .modal-audio-player {
-  flex: 1;
-  height: 44px;
-  border-radius: 25px;
+  flex: 1 1 auto !important;
+  min-width: 0 !important; /* Prevents audio element from overflowing container */
+  height: 44px !important;
+  border-radius: 25px !important;
+  outline: none !important;
 }
 
 .icon-actions-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-shrink: 0 !important; /* Guarantees icons stay on the same row */
 }
 
 .icon-action-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  padding: 0;
-  flex-shrink: 0;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.12) !important; /* Clean translucent glass, no white block */
+  border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+  padding: 0 !important;
+  outline: none !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.icon-action-btn svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+  display: block !important;
 }
 
 .icon-action-btn:hover {
-  background: var(--coral, #ff3366);
-  border-color: var(--coral, #ff3366);
-  transform: translateY(-2px) scale(1.05);
+  background: #ff3366 !important; /* TalkStars Vibrant Coral accent */
+  border-color: #ff3366 !important;
+  transform: translateY(-2px) scale(1.06) !important;
+  box-shadow: 0 6px 18px rgba(255, 51, 102, 0.45) !important;
 }
 
 .icon-action-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.95) !important;
 }
 }
