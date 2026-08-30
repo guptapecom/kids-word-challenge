@@ -474,10 +474,15 @@ body {
 }
 
 /* 2. Quick Word Button (Vibrant Amber / Gold) */
+/* 2. Quick Word Button (Vibrant Electric / Sky Blue) */
 .action-buttons-row .btn-quick-word {
-  background: linear-gradient(135deg, #feca57, #ff9f43) !important;
-  color: #1e1430 !important;
-  box-shadow: 0 8px 24px rgba(254, 202, 87, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  background: linear-gradient(135deg, #0fbcf9, #4bcffa) !important;
+  color: #041c32 !important; /* Deep navy text for crisp contrast */
+  box-shadow: 0 8px 24px rgba(15, 188, 249, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+.action-buttons-row .btn-quick-word:hover {
+  filter: brightness(1.08);
 }
 
 .pulse-anim {
