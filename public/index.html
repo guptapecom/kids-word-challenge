@@ -2,22 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+  <title>TalkStars ⭐ Fun Extempore & Speech Practice App for Kids</title>
+  <meta name="title" content="TalkStars ⭐ Fun Extempore & Speech Practice for Kids" />
+  <meta name="description" content="Boost your child's speaking confidence with TalkStars! Free web app featuring instant fun topics, quick speech timers, and voice recording for kids." />
+
+  <!-- Canonical Tag -->
+  <link rel="canonical" href="https://talkstars.vercel.app/" />
 
   <!-- Google Site Verification Tag -->
   <meta name="google-site-verification" content="yOVDQ_jToO7CXc-g6H2GBMZ_MnVbq-gBJKG1ioBZRYA" />
-  
-  <title>TalkStars ⭐ Master Stories & Earn Stars</title>
-
-  <meta name="title" content="TalkStars ⭐ Fun Extempore & Speech Practice for Kids" />
-  <meta name="description" content="Instant fun topics, speech timer, and voice recording to make storytelling easy for kids!" />
 
   <!-- Open Graph (WhatsApp, Teams, LinkedIn, Facebook) -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="TalkStars" />
   <meta property="og:url" content="https://talkstars.vercel.app/" />
   <meta property="og:title" content="TalkStars ⭐ Fun Extempore & Speech Practice for Kids" />
-  <meta property="og:description" content="Instant fun topics, speech timer, and voice recording to make storytelling easy for kids!" />
+  <meta property="og:description" content="Boost your child's speaking confidence with TalkStars! Free web app featuring instant fun topics, quick speech timers, and voice recording for kids." />
   <meta property="og:image" content="https://talkstars.vercel.app/images/og-image.jpg" />
   <meta property="og:image:secure_url" content="https://talkstars.vercel.app/images/og-image.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
@@ -29,7 +31,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://talkstars.vercel.app/" />
   <meta name="twitter:title" content="TalkStars ⭐ Fun Extempore & Speech Practice for Kids" />
-  <meta name="twitter:description" content="Instant fun topics, speech timer, and voice recording to make storytelling easy for kids!" />
+  <meta name="twitter:description" content="Boost your child's speaking confidence with TalkStars! Free web app featuring instant fun topics, quick speech timers, and voice recording for kids." />
   <meta name="twitter:image" content="https://talkstars.vercel.app/images/preview-banner.png" />
 
   <link rel="stylesheet" href="/style.css">
@@ -51,6 +53,24 @@
       })
       .catch(err => console.error("PostHog config load failed", err));
   </script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TalkStars",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Free tier with core topics, timers, and voice recording features."
+  },
+  "description": "Boost your child's speaking confidence with TalkStars! Interactive web app featuring instant fun topics, speech timers, and voice recording for kids.",
+  "url": "https://talkstars.vercel.app/"
+}
+</script>
 </head>
 <body>
 <!-- 🚀 Direct Inline-Styled Hook Screen (Desktop & Mobile Centered) -->
@@ -184,20 +204,19 @@
     </div>
 
     <!-- High-Impact Action Button Row -->
-<div class="action-btn-anchor" id="actionBtnRow" style="position: relative;">
-  <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
-    <span id="guideText">1️⃣ Tap a topic or word to start!</span>
-  </div>
-  <div class="action-buttons-row">
-    <button class="btn-generate btn-spotlight" id="genBtn" onclick="generatePrompt('topic')">
-      🎲 Get Topic
-    </button>
-    <button class="btn-generate btn-quick-word" id="wordBtn" onclick="generatePrompt('word')">
-      ⚡ Quick Word
-    </button>
-  </div>
-</div>
-
+    <div class="action-btn-anchor" id="actionBtnRow" style="position: relative;">
+      <div id="onboardingTooltip" class="onboarding-guide-badge" style="display: none;">
+        <span id="guideText">1️⃣ Tap a topic or word to start!</span>
+      </div>
+      <div class="action-buttons-row">
+        <button class="btn-generate btn-spotlight" id="genBtn" onclick="generatePrompt('topic')">
+          🎲 Get Topic
+        </button>
+        <button class="btn-generate btn-quick-word" id="wordBtn" onclick="generatePrompt('word')">
+          ⚡ Quick Word
+        </button>
+      </div>
+    </div>
 
     <!-- Revealed Only After Topic Request -->
     <div class="prompt-card spotlight-card" id="promptCard" style="display: none;">
@@ -211,6 +230,26 @@
     </div>
 
   </section>
+
+    <!-- Semantic Crawlable Content (Hidden Visually, Indexed by Search Engines) -->
+  <section class="sr-only">
+    <h2>Why Parents & Kids Love TalkStars</h2>
+    
+    <article>
+      <h3>Instant Story Prompts & Quick Words</h3>
+      <p>
+        Dynamic AI-generated topics tailored for ages 4–15. If a child gets overwhelmed, they can tap Quick Word to speak instantly on single objects.
+      </p>
+    </article>
+
+    <article>
+      <h3>Voice Recording & Easy Sharing</h3>
+      <p>
+        Kids record their voice, listen back to build pacing confidence, and share audio clips with family and friends.
+      </p>
+    </article>
+  </section>
+
 
   <!-- Live Mic Status Bar -->
   <div class="recording-bar" id="recordingStatus">

@@ -1090,3 +1090,97 @@ body {
 .icon-action-btn:active {
   transform: scale(0.95) !important;
 }
+
+/* Accessible Off-Screen Container for Search Crawlers & Screen Readers */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ==========================================================================
+   Mobile-First Layout & Responsive Adaptations
+   ========================================================================== */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  background-color: #0b0c10;
+}
+
+.app-screen {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: env(safe-area-inset-top, 1rem) 1rem env(safe-area-inset-bottom, 1.5rem) 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.8rem;
+  box-sizing: border-box;
+}
+
+/* Dual Action Buttons Responsive Grid */
+.action-buttons-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.action-buttons-row button {
+  flex: 1;
+  min-width: 0; /* Prevents text overflow */
+  padding: 12px 8px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+/* Tablet & Desktop Upgrades */
+@media (min-width: 600px) {
+  body {
+    padding: 2rem 0;
+    background: radial-gradient(circle at center, #1e1b4b 0%, #050508 90%);
+  }
+
+  .app-screen {
+    max-width: 520px;
+    height: 88vh;
+    max-height: 900px;
+    border-radius: 32px;
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+    padding: 1.5rem;
+  }
+}
+
+/* Small Height Mobile Devices (e.g., iPhone SE) */
+@media (max-height: 700px) {
+  .app-screen {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  .prompt-card {
+    min-height: 90px !important;
+    padding: 0.8rem !important;
+  }
+
+  .main-title {
+    font-size: 1.7rem !important;
+  }
+}
