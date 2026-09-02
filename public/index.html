@@ -169,7 +169,7 @@
     <div class="header-top-bar">
       <div class="online-pill">
         <span class="pulse-dot"></span>
-        <span id="onlineCount">16</span> online
+        <span id="onlineCount">136</span> online
       </div>
 
       <div class="header-actions-group">
@@ -593,7 +593,7 @@
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ageGroup: age, mode }),
+        body: JSON.stringify({ ageGroup: age, mode, subscriptionType: 'Guest' }),
         signal: controller.signal
       });
 
@@ -995,11 +995,11 @@
   /* ==========================================================================
      7. Live Counter Simulation & Init
      ========================================================================== */
-  let baseUsers = 16;
+    let baseUsers = 136;
   function updateOnlineUsers() {
-    baseUsers += Math.floor(Math.random() * 3) - 1;
-    if (baseUsers > 19) baseUsers = 19;
-    if (baseUsers < 12) baseUsers = 12;
+    baseUsers += Math.floor(Math.random() * 5) - 2; // Gently fluctuates by -2, -1, 0, +1, or +2
+    if (baseUsers > 150) baseUsers = 150;
+    if (baseUsers < 120) baseUsers = 120;
     const countEl = document.getElementById("onlineCount");
     if (countEl) countEl.innerText = baseUsers;
   }

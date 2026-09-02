@@ -1,13 +1,28 @@
+import fallbackTopics from './fallbackTopics.js';
+import fallbackWords from './fallbackWords.js';
+
+function getFallbackItem(isWordMode, ageGroup) {
+  const dataset = isWordMode ? fallbackWords : fallbackTopics;
+  const list = dataset[ageGroup] || dataset["7-9 years old"] || [];
+  return list[Math.floor(Math.random() * list.length)];
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { ageGroup, mode } = req.body || {};
+  const { ageGroup, mode, subscriptionType } = req.body || {};
   const isWordMode = mode === 'word';
   const age = ageGroup || "7-9 years old";
-  const apiKey = process.env.GEMINI_API_KEY;
 
+  // Non-subscribed users get random fallback data without calling LLM
+  if (subscriptionType !== 'Subscribed') {
+    const fallbackItem = getFallbackItem(isWordMode, age);
+    return res.status(200).json(fallbackItem);
+  }
+
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: 'Missing API Key in environment variables' });
   }
@@ -104,8 +119,8 @@ Return the response STRICTLY as valid JSON:
     );
 
     if (!response.ok) {
-      const errorText = await response.text();
-      return res.status(response.status).json({ error: errorText });
+      // Fallback if the external API request fails
+      return res.status(200).json(getFallbackItem(isWordMode, age));
     }
 
     const data = await response.json();
@@ -114,6 +129,7 @@ Return the response STRICTLY as valid JSON:
 
     return res.status(200).json(parsed);
   } catch (err) {
-    return res.status(500).json({ error: 'Failed to generate prompt', details: err.message });
+    // Gracefully serve fallback data if parsing or execution throws an error
+    return res.status(200).json(getFallbackItem(isWordMode, age));
   }
 }
