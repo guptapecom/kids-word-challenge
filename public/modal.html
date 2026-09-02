@@ -8,52 +8,51 @@
     </div>
 
     <!-- Compact Action Bar (Playback + Icon Actions) -->
-<!-- Single-Row Audio + Icon Actions (Direct Inline Styles) -->
-<div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; width: 100%; margin-top: 14px; box-sizing: border-box;">
-  
-  <!-- Audio Player (min-width: 0 prevents wrapping) -->
-  <audio id="audioPlayback" controls style="flex: 1 1 auto; min-width: 0; height: 42px; border-radius: 25px; outline: none; background: transparent;"></audio>
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; width: 100%; margin-top: 14px; box-sizing: border-box;">
+      
+      <!-- Audio Player -->
+      <audio id="audioPlayback" controls style="flex: 1 1 auto; min-width: 0; height: 42px; border-radius: 25px; outline: none; background: transparent;"></audio>
 
-  <!-- Icons Group (flex-shrink: 0 keeps them on the same line) -->
-  <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; flex-shrink: 0;">
-    
-    <!-- Download Icon Button -->
-    <button 
-      type="button" 
-      id="downloadBtn" 
-      title="Download Audio" 
-      onclick="downloadRecording()"
-      style="width: 42px; height: 42px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); border: 1.5px solid rgba(255, 255, 255, 0.22); color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; outline: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-        <polyline points="7 10 12 15 17 10"></polyline>
-        <line x1="12" y1="15" x2="12" y2="3"></line>
-      </svg>
-    </button>
+      <!-- Icons Group -->
+      <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; flex-shrink: 0;">
+        
+        <!-- Download Icon Button -->
+        <button 
+          type="button" 
+          id="downloadBtn" 
+          title="Download Audio" 
+          onclick="downloadRecording()"
+          style="width: 42px; height: 42px; border-radius: 50%; background: rgba(0, 229, 255, 0.18); border: 1.5px solid #00e5ff; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; outline: none; box-shadow: 0 4px 14px rgba(0, 229, 255, 0.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
 
-    <!-- Share Icon Button -->
-    <button 
-      type="button" 
-      id="shareBtn" 
-      title="Share Recording" 
-      onclick="shareRecording()"
-      style="width: 42px; height: 42px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); border: 1.5px solid rgba(255, 255, 255, 0.22); color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; outline: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display:none;"
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
-        <circle cx="18" cy="5" r="3"></circle>
-        <circle cx="6" cy="12" r="3"></circle>
-        <circle cx="18" cy="19" r="3"></circle>
-        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-      </svg>
-    </button>
+        <!-- Share Icon Button -->
+        <button 
+          type="button" 
+          id="shareBtn" 
+          title="Share Recording" 
+          onclick="shareRecording()"
+          style="width: 42px; height: 42px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); border: 1.5px solid rgba(255, 255, 255, 0.22); color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; outline: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display:none;"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+        </button>
 
-  </div>
-</div>
+      </div>
+    </div>
 
     <!-- Detailed Speech Highlights -->
-    <div style="text-align: left; font-size: 0.82rem; font-weight: 800; color: #a29bfe; margin-bottom: -4px;">
+    <div style="text-align: left; font-size: 0.82rem; font-weight: 800; color: #00e5ff; margin-bottom: -4px;">
       📋 Speech Summary & Highlights:
     </div>
     <div class="summary-card-inner" id="summaryDisplay">

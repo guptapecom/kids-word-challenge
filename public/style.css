@@ -74,7 +74,6 @@ body {
   min-height: 100dvh;
   margin: 0 auto;
   padding: 1.1rem 1.1rem 1.75rem 1.1rem;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='900' viewBox='0 0 600 900'><defs><linearGradient id='g_space' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%230f172a'/><stop offset='50%25' stop-color='%231e1b4b'/><stop offset='100%25' stop-color='%233b82f6'/></linearGradient></defs><rect width='600' height='900' fill='url(%23g_space)'/><polygon points='120,100 125,115 140,115 128,125 132,140 120,130 108,140 112,125 100,115 115,115' fill='%23facc15' opacity='0.85'/><polygon points='480,220 484,232 496,232 486,240 489,252 480,244 471,252 474,240 464,232 476,232' fill='%2338bdf8' opacity='0.9'/><circle cx='500' cy='650' r='50' fill='%23f97316' opacity='0.6'/><circle cx='120' cy='500' r='30' fill='%2306b6d4' opacity='0.5'/></svg>");
   background-size: cover !important;
   background-position: center top !important;
   background-repeat: no-repeat !important;
@@ -171,8 +170,8 @@ body {
 }
 
 .nav-pill-btn {
-  background: rgba(18, 16, 26, 0.78);
-  border: 1.5px solid var(--glass-border);
+  background: rgba(17, 20, 37, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
   color: #ffffff;
   border-radius: 50px;
   padding: 6px 12px;
@@ -186,7 +185,12 @@ body {
   align-items: center;
   gap: 5px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  transition: transform 0.1s ease;
+  transition: all 0.2s ease;
+}
+
+.nav-pill-btn:hover {
+  border-color: #00e5ff;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
 }
 
 .nav-pill-btn:active {
@@ -209,7 +213,7 @@ body {
   display: none;
   flex-direction: column;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
-  width: 200px;
+  width: 215px;
   z-index: 1000;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -267,7 +271,7 @@ body {
 
 /* ==========================================================================
    5. Hero Section & Age Group Selector
-   ========================================================================= */
+   ========================================================================== */
 .hero-header {
   text-align: center;
   display: flex;
@@ -401,9 +405,6 @@ body {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* ==========================================================================
-   Central Stage Layout (Balanced On-Load & Post-Reveal)
-   ========================================================================== */
 .main-stage-container {
   display: flex;
   flex-direction: column;
@@ -451,7 +452,6 @@ body {
   letter-spacing: 0.3px !important;
   border-radius: 20px !important;
   cursor: pointer !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
   white-space: nowrap !important;
   text-align: center !important;
   transition: transform 0.1s ease, filter 0.15s ease !important;
@@ -466,18 +466,20 @@ body {
   cursor: not-allowed !important;
 }
 
-/* 1. Topic Button (Coral / Pink) */
+/* 1. Topic Button (Electric Cyan Hero) */
 .action-buttons-row .btn-spotlight {
-  background: linear-gradient(135deg, #ff3366, #ff6b8b) !important;
-  color: #ffffff !important;
-  box-shadow: 0 8px 24px rgba(255, 51, 102, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  background: linear-gradient(135deg, #00e5ff, #0284c7) !important;
+  color: #04192b !important;
+  border: none !important;
+  box-shadow: 0 8px 24px rgba(0, 229, 255, 0.45) !important;
 }
 
-/* 2. Quick Word Button (Electric Violet Pop) */
+/* 2. Quick Word Button (Frosted Secondary Pill) */
 .action-buttons-row .btn-quick-word {
-  background: linear-gradient(135deg, #a55eea, #8854d0) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1.5px solid rgba(0, 229, 255, 0.4) !important;
   color: #ffffff !important;
-  box-shadow: 0 8px 24px rgba(165, 94, 234, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3) !important;
 }
 
 .action-buttons-row .btn-quick-word:hover {
@@ -565,16 +567,16 @@ body {
 }
 
 .btn-record-start {
-  background: linear-gradient(135deg, var(--accent-green), #05c46b);
-  color: #0d2818;
+  background: linear-gradient(135deg, #05df72, #00ba58);
+  color: #051b11;
   border: 1.5px solid rgba(255, 255, 255, 0.4);
-  padding: 9px 16px;
+  padding: 9px 18px;
   font-family: inherit;
   font-size: 0.95rem;
   font-weight: 900;
   border-radius: 16px;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(11, 232, 129, 0.5);
+  box-shadow: 0 6px 20px rgba(5, 223, 114, 0.45);
   transition: transform 0.1s;
 }
 
@@ -831,11 +833,11 @@ body {
 .reaction-weird.selected .reaction-text { color: #0fbcf9; }
 
 /* ==========================================================================
-   11. Interactive First-Time Guide Tooltip (Fixed & Rock Solid)
+   11. Interactive First-Time Guide Tooltip
    ========================================================================== */
 .onboarding-guide-badge {
   position: absolute;
-  top: -46px; /* Sits right above the button row */
+  top: -46px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1500;
@@ -942,11 +944,14 @@ body {
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: radial-gradient(circle at center, #1e1b4b 0%, #0f1016 85%);
-  z-index: 99999;
+  background: radial-gradient(circle at center, #2e1065 0%, #0d0e15 90%);
+  z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
   opacity: 1;
   visibility: visible;
   transition: opacity 0.4s ease, visibility 0.4s ease;
@@ -963,7 +968,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  gap: 14px;
   animation: splashPop 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -972,50 +981,78 @@ body {
   100% { transform: scale(1); opacity: 1; }
 }
 
-.splash-mascot {
-  font-size: 3.2rem;
-  letter-spacing: 8px;
-  filter: drop-shadow(0 0 20px rgba(255, 107, 129, 0.6));
-  animation: mascotHover 1.5s ease-in-out infinite alternate;
+.splash-mascot-wrapper {
+  width: clamp(110px, 16vw, 150px);
+  height: clamp(110px, 16vw, 150px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 25px rgba(255, 56, 56, 0.55));
+  animation: mascotHover 1.6s ease-in-out infinite alternate;
+  user-select: none;
+}
+
+.splash-mascot-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.visor-wave {
+  animation: waveSound 1.2s ease-in-out infinite alternate;
+  transform-origin: center;
 }
 
 @keyframes mascotHover {
-  0% { transform: translateY(0px) scale(1); }
-  100% { transform: translateY(-8px) scale(1.05); }
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-8px) rotate(1.5deg); }
+}
+
+@keyframes waveSound {
+  0% { stroke-dasharray: 2, 8; stroke: #18dcff; }
+  100% { stroke-dasharray: 12, 2; stroke: #ff3838; }
 }
 
 .splash-title {
   margin: 0;
-  font-size: 2.4rem;
+  font-size: clamp(2.6rem, 5.5vw, 4rem);
   font-weight: 900;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   color: #ffffff;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 16px rgba(255, 51, 102, 0.8);
+  font-family: 'Fredoka', sans-serif;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 56, 56, 0.85);
+}
+
+.splash-title span {
+  color: #18dcff;
+  text-shadow: 0 0 20px rgba(24, 220, 255, 0.85);
 }
 
 .splash-tagline {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: clamp(1.1rem, 2.2vw, 1.45rem);
   font-weight: 800;
-  color: #feca57;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  color: #ffd32a;
+  font-family: 'Fredoka', sans-serif;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 12px rgba(255, 211, 42, 0.4);
 }
 
 .splash-loader {
   margin-top: 14px;
-  width: 140px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  width: min(240px, 70vw);
+  height: 8px;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
 .splash-loader-bar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #ff3366, #feca57, #0be881);
-  border-radius: 10px;
+  background: linear-gradient(90deg, #ff3838, #ffd32a, #18dcff);
+  border-radius: 20px;
   animation: splashFill 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
@@ -1091,7 +1128,6 @@ body {
   transform: scale(0.95) !important;
 }
 
-/* Accessible Off-Screen Container for Search Crawlers & Screen Readers */
 .sr-only {
   position: absolute !important;
   width: 1px !important;
@@ -1104,9 +1140,6 @@ body {
   border: 0 !important;
 }
 
-/* ==========================================================================
-   Mobile-First Layout & Responsive Adaptations
-   ========================================================================== */
 body {
   margin: 0;
   padding: 0;
@@ -1133,24 +1166,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Dual Action Buttons Responsive Grid */
-.action-buttons-row {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.action-buttons-row button {
-  flex: 1;
-  min-width: 0; /* Prevents text overflow */
-  padding: 12px 8px;
-  font-size: 0.95rem;
-  white-space: nowrap;
-}
-
-/* Tablet & Desktop Upgrades */
 @media (min-width: 600px) {
   body {
     padding: 2rem 0;
@@ -1168,7 +1183,6 @@ body {
   }
 }
 
-/* Small Height Mobile Devices (e.g., iPhone SE) */
 @media (max-height: 700px) {
   .app-screen {
     padding: 0.75rem;

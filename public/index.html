@@ -4,35 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 
-  <title>TalkStars ⭐ Fun Extempore & Speech Practice WebApp for Kids</title>
-  <meta name="title" content="TalkStars ⭐ Fun Extempore & Speech Practice for Kids" />
-  <meta name="description" content="Boost your child's speaking confidence with TalkStars! Free web app featuring instant fun topics, quick speech timers, and voice recording for kids." />
+  <title>Vocoki ⭐ Storytelling & Speech Practice for Kids</title>
+  <meta name="title" content="Vocoki ⭐ Storytelling & Speech Practice for Kids" />
+  <meta name="description" content="Boost your child's speaking confidence with Vocoki! Free web app featuring instant fun topics, quick speech timers, and voice recording for kids." />
 
   <!-- Canonical Tag -->
-  <link rel="canonical" href="https://talkstars.vercel.app/" />
+  <link rel="canonical" href="https://vocoki.vercel.app/" />
 
   <!-- Google Site Verification Tag -->
   <meta name="google-site-verification" content="yOVDQ_jToO7CXc-g6H2GBMZ_MnVbq-gBJKG1ioBZRYA" />
 
   <!-- Open Graph (WhatsApp, Teams, LinkedIn, Facebook) -->
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="TalkStars" />
-  <meta property="og:url" content="https://talkstars.vercel.app/" />
-  <meta property="og:title" content="TalkStars ⭐ Fun Extempore & Speech Practice for Kids" />
-  <meta property="og:description" content="Boost your child's speaking confidence with TalkStars! Free web app featuring instant fun topics, quick speech timers, and voice recording for kids." />
-  <meta property="og:image" content="https://talkstars.vercel.app/images/og-image.jpg" />
-  <meta property="og:image:secure_url" content="https://talkstars.vercel.app/images/og-image.jpg" />
+  <meta property="og:site_name" content="Vocoki" />
+  <meta property="og:url" content="https://vocoki.vercel.app/" />
+  <meta property="og:title" content="Vocoki ⭐ Storytelling & Speech Practice for Kids" />
+  <meta property="og:description" content="Boost your child's speaking confidence with Vocoki! Free web app featuring instant fun topics, quick speech timers, and voice recording for kids." />
+  <meta property="og:image" content="https://vocoki.vercel.app/images/og-image.jpg" />
+  <meta property="og:image:secure_url" content="https://vocoki.vercel.app/images/og-image.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="600" />
   <meta property="og:image:height" content="600" />
-  <meta property="og:image:alt" content="TalkStars Mascot" />
+  <meta property="og:image:alt" content="Vocoki Mascot" />
 
   <!-- Twitter / X & Instagram DMs (Large 1200x630 Banner) -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://talkstars.vercel.app/" />
-  <meta name="twitter:title" content="TalkStars ⭐ Fun Extempore & Speech Practice for Kids" />
-  <meta name="twitter:description" content="Boost your child's speaking confidence with TalkStars! Free web app featuring instant fun topics, quick speech timers, and voice recording for kids." />
-  <meta name="twitter:image" content="https://talkstars.vercel.app/images/preview-banner.png" />
+  <meta name="twitter:url" content="https://vocoki.vercel.app/" />
+  <meta name="twitter:title" content="Vocoki ⭐ Storytelling & Speech Practice for Kids" />
+  <meta name="twitter:description" content="Boost your child's speaking confidence with Vocoki! Free web app featuring instant fun topics, quick speech timers, and voice recording for kids." />
+  <meta name="twitter:image" content="https://vocoki.vercel.app/images/preview-banner.png" />
 
   <link rel="stylesheet" href="/style.css">
 
@@ -58,7 +58,7 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "TalkStars",
+  "name": "Vocoki",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "offers": {
@@ -67,37 +67,69 @@
     "priceCurrency": "USD",
     "description": "Free tier with core topics, timers, and voice recording features."
   },
-  "description": "Boost your child's speaking confidence with TalkStars! Interactive web app featuring instant fun topics, speech timers, and voice recording for kids.",
-  "url": "https://talkstars.vercel.app/"
+  "description": "Boost your child's speaking confidence with Vocoki! Interactive web app featuring instant fun topics, speech timers, and voice recording for kids.",
+  "url": "https://vocoki.vercel.app/"
 }
 </script>
 </head>
 <body>
-<!-- 🚀 Direct Inline-Styled Hook Screen (Desktop & Mobile Centered) -->
-<!-- 🚀 Responsive Opening Hook Screen -->
-<!-- 🚀 High-Impact Hook Screen (Desktop Expanded & Mobile Optimized) -->
-<div id="splashScreen" style="position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; background: radial-gradient(circle at center, #1e1b4b 0%, #0f1016 85%); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; padding: 20px; box-sizing: border-box; transition: opacity 0.4s ease, visibility 0.4s ease;">
-  
-  <div class="splash-box" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 680px; margin: 0 auto; gap: 16px;">
+<div id="splashScreen" class="splash-screen">
+  <div class="splash-box splash-content">
     
-    <div class="splash-mascot-txt" style="font-size: clamp(3.2rem, 6vw, 4.6rem); letter-spacing: 10px; filter: drop-shadow(0 0 24px rgba(255, 107, 129, 0.7)); user-select: none;">
-      🎙️ ⭐ 🚀
+    <div class="splash-mascot-wrapper">
+      <svg class="splash-mascot-svg" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="starGlow" x1="20" y1="20" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffeaa7"/>
+            <stop offset="50%" stop-color="#ffd32a"/>
+            <stop offset="100%" stop-color="#ff3838"/>
+          </linearGradient>
+          <linearGradient id="visorGrad" x1="45" y1="52" x2="95" y2="78" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#18dcff"/>
+            <stop offset="100%" stop-color="#7d5fff"/>
+          </linearGradient>
+          <filter id="neonBlur" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+
+        <path d="M70 12 L86 48 L124 53 L96 79 L103 118 L70 99 L37 118 L44 79 L16 53 L54 48 Z" 
+              fill="url(#starGlow)" 
+              stroke="#ffffff" 
+              stroke-width="3.5" 
+              stroke-linejoin="round"/>
+
+        <path d="M40 68 C38 35, 102 35, 100 68" 
+              stroke="#ffffff" 
+              stroke-width="4.5" 
+              stroke-linecap="round"/>
+
+        <rect x="30" y="58" width="12" height="22" rx="6" fill="#ff3838" stroke="#ffffff" stroke-width="2.5"/>
+        <rect x="98" y="58" width="12" height="22" rx="6" fill="#ff3838" stroke="#ffffff" stroke-width="2.5"/>
+
+        <rect x="46" y="56" width="48" height="20" rx="10" fill="#0f1016" stroke="#ffffff" stroke-width="2"/>
+        <path class="visor-wave" d="M53 66 Q60 58 68 66 T83 66" fill="none" stroke="#18dcff" stroke-width="3.5" stroke-linecap="round"/>
+
+        <path d="M36 76 Q38 88 52 87" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="54" cy="87" r="3.5" fill="#18dcff" filter="url(#neonBlur)"/>
+      </svg>
     </div>
     
-    <h1 class="splash-title-txt" style="margin: 0; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 900; letter-spacing: 2px; color: #ffffff; text-shadow: 0 4px 24px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 51, 102, 0.85); font-family: 'Fredoka', sans-serif;">
-      TALK STARS
+    <h1 class="splash-title splash-title-txt">
+      VOCO<span>KI</span>
     </h1>
     
-    <p class="splash-tagline-txt" style="margin: 0; font-size: clamp(1.1rem, 2.4vw, 1.55rem); font-weight: 800; color: #feca57; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85); font-family: 'Fredoka', sans-serif;">
-      Speak • Shine • Earn 5 Stars!
+    <p class="splash-tagline splash-tagline-txt">
+      Speak • Think • Shine ⭐
     </p>
     
-    <!-- 2-Second Progress Bar Container -->
-    <div style="margin-top: 16px; width: min(260px, 75vw); height: 8px; background: rgba(255, 255, 255, 0.18); border-radius: 20px; overflow: hidden; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); position: relative;">
-      <div id="splashProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff3366, #feca57, #0be881); border-radius: 20px; transition: width 2s cubic-bezier(0.1, 0.7, 0.1, 1);"></div>
+    <div class="splash-loader">
+      <div id="splashProgressBar" class="splash-loader-bar"></div>
     </div>
 
   </div>
+</div>
 
   <script>
     // 1. Kick off progress animation immediately
@@ -127,7 +159,6 @@
       }
     }, 2000);
   </script>
-</div>
 
 <div class="bg-doodles" id="doodlesContainer"></div>
 
@@ -156,14 +187,13 @@
           </button>
 
           <div class="theme-list-dropdown" id="themeDropdown">
-            <button class="theme-list-item" onclick="switchTheme(0)">🚀 Space Rocket Explorer</button>
-            <button class="theme-list-item" onclick="switchTheme(1)">🌳 TalkStars Treehouse</button>
-            <button class="theme-list-item" onclick="switchTheme(2)">🦖 Dino Volcano Jungle</button>
-            <button class="theme-list-item" onclick="switchTheme(3)">🏎️ Cyber Racing Grid</button>
-            <button class="theme-list-item" onclick="switchTheme(4)">⚽ Stadium Sports Arena</button>
-            <button class="theme-list-item" onclick="switchTheme(5)">🦄 Unicorn Dreamland</button>
-            <button class="theme-list-item" onclick="switchTheme(6)">🏰 Princess Fairy Garden</button>
-            <button class="theme-list-item" onclick="switchTheme(7)">🍬 Candy Bubble Carnival</button>
+            <button class="theme-list-item" onclick="switchTheme(0)">🎧 Sonic Equalizer</button>
+            <button class="theme-list-item" onclick="switchTheme(1)">🌟 Centerstage Spotlight</button>
+            <button class="theme-list-item" onclick="switchTheme(2)">🎙️ Live On-Air Studio</button>
+            <button class="theme-list-item" onclick="switchTheme(3)">💬 Comic Storyteller</button>
+            <button class="theme-list-item" onclick="switchTheme(4)">🕹️ Synthwave Studio</button>
+            <button class="theme-list-item" onclick="switchTheme(5)">🌊 Audio Waves Pulse</button>
+            <button class="theme-list-item" onclick="switchTheme(6)">🏆 Gold Mic Trophy</button>
             
             <div class="theme-list-divider"></div>
             
@@ -189,7 +219,7 @@
     
     <!-- Hero Headings -->
     <div class="hero-header">
-      <h1 class="main-title" id="mainTitle">TALK STARS</h1>
+      <h1 class="main-title" id="mainTitle">VOCOKI</h1>
       <p class="subtitle" id="mainSubtitle">Tell Your Story & Earn 5 Stars! ⭐</p>
     </div>
 
@@ -231,9 +261,9 @@
 
   </section>
 
-    <!-- Semantic Crawlable Content (Hidden Visually, Indexed by Search Engines) -->
+  <!-- Semantic Crawlable Content (Hidden Visually, Indexed by Search Engines) -->
   <section class="sr-only">
-    <h2>Why Parents & Kids Love TalkStars</h2>
+    <h2>Why Parents & Kids Love Vocoki</h2>
     
     <article>
       <h3>Instant Story Prompts & Quick Words</h3>
@@ -249,7 +279,6 @@
       </p>
     </article>
   </section>
-
 
   <!-- Live Mic Status Bar -->
   <div class="recording-bar" id="recordingStatus">
@@ -281,15 +310,27 @@
      1. Themes & Backdrop Engine
      ========================================================================== */
   const backdrops = [
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_space" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%230f172a"/><stop offset="50%" stop-color="%231e1b4b"/><stop offset="100%" stop-color="%233b82f6"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_space)"/><polygon points="120,100 125,115 140,115 128,125 132,140 120,130 108,140 112,125 100,115 115,115" fill="%23facc15" opacity="0.85"/><polygon points="480,220 484,232 496,232 486,240 489,252 480,244 471,252 474,240 464,232 476,232" fill="%2338bdf8" opacity="0.9"/><circle cx="500" cy="650" r="50" fill="%23f97316" opacity="0.6"/><circle cx="120" cy="500" r="30" fill="%2306b6d4" opacity="0.5"/></svg>`,
-    "/images/treehouse-backdrop.png",
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_dino" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23ea580c"/><stop offset="50%" stop-color="%23ca8a04"/><stop offset="100%" stop-color="%2315803d"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_dino)"/><polygon points="300,350 480,750 120,750" fill="%23431407" opacity="0.6"/><path d="M0,750 Q150,680 300,750 T600,750 L600,900 L0,900 Z" fill="%23166534" opacity="0.75"/><circle cx="500" cy="150" r="60" fill="%23fef08a" opacity="0.45"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_race" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%2318181b"/><stop offset="50%" stop-color="%23312e81"/><stop offset="100%" stop-color="%2306b6d4"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_race)"/><line x1="50" y1="0" x2="250" y2="900" stroke="%2322d3ee" stroke-width="4" opacity="0.3"/><line x1="550" y1="0" x2="350" y2="900" stroke="%2322d3ee" stroke-width="4" opacity="0.3"/><line x1="0" y1="650" x2="600" y2="650" stroke="%23f43f5e" stroke-width="3" opacity="0.4"/><line x1="0" y1="750" x2="600" y2="750" stroke="%23f43f5e" stroke-width="5" opacity="0.4"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_sport" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%231e3a8a"/><stop offset="60%" stop-color="%230284c7"/><stop offset="100%" stop-color="%2316a34a"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_sport)"/><circle cx="100" cy="180" r="70" fill="%23ffffff" opacity="0.15"/><circle cx="500" cy="180" r="70" fill="%23ffffff" opacity="0.15"/><line x1="0" y1="720" x2="600" y2="720" stroke="%23ffffff" stroke-width="6" opacity="0.5"/><circle cx="300" cy="720" r="90" stroke="%23ffffff" stroke-width="6" fill="none" opacity="0.5"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_uni" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23ff9a9e"/><stop offset="50%" stop-color="%23fecfef"/><stop offset="100%" stop-color="%23a1c4fd"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_uni)"/><circle cx="500" cy="550" r="70" fill="%23ffffff" opacity="0.4"/><polygon points="150,120 156,138 175,138 160,150 165,168 150,156 135,168 140,150 125,138 144,138" fill="%23ffd166" opacity="0.85"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g_prin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23fad0c4"/><stop offset="50%" stop-color="%23ffd1ff"/><stop offset="100%" stop-color="%23c2e9fb"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g_prin)"/><circle cx="140" cy="200" r="45" fill="%23ff85a2" opacity="0.4"/><circle cx="450" cy="350" r="55" fill="%23ff85a2" opacity="0.35"/><path d="M0,800 Q150,750 300,800 T600,800 L600,900 L0,900 Z" fill="%23bbf7d0" opacity="0.6"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23ff9ff3"/><stop offset="50%" stop-color="%23feca57"/><stop offset="100%" stop-color="%23ff6b6b"/></linearGradient></defs><rect width="600" height="900" fill="url(%23g4)"/><circle cx="120" cy="180" r="50" fill="%23ffffff" opacity="0.4"/><circle cx="480" cy="280" r="65" fill="%23ffffff" opacity="0.35"/></svg>`
-  ];
+    // 1. Sonic Equalizer (Enhanced with vertical gradients, ripples & spark dots)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="eq_bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%2306070d"/><stop offset="55%" stop-color="%230d1024"/><stop offset="100%" stop-color="%23171338"/></linearGradient><linearGradient id="b_cyan" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%2300f2fe"/><stop offset="100%" stop-color="%234facfe"/></linearGradient><linearGradient id="b_purple" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23c471ed"/><stop offset="100%" stop-color="%2312c2e9"/></linearGradient><linearGradient id="b_pink" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23ff0844"/><stop offset="100%" stop-color="%23ffb199"/></linearGradient><linearGradient id="b_gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23f6d365"/><stop offset="100%" stop-color="%23fda085"/></linearGradient><radialGradient id="stage_glow" cx="50%" cy="35%" r="55%"><stop offset="0%" stop-color="%2300e5ff" stop-opacity="0.18"/><stop offset="60%" stop-color="%23747dff" stop-opacity="0.08"/><stop offset="100%" stop-color="%23000000" stop-opacity="0"/></radialGradient></defs><rect width="600" height="900" fill="url(%23eq_bg)"/><rect width="600" height="900" fill="url(%23stage_glow)"/><circle cx="300" cy="320" r="160" stroke="%2300e5ff" stroke-width="2" stroke-dasharray="12 12" fill="none" opacity="0.18"/><circle cx="300" cy="320" r="230" stroke="%23747dff" stroke-width="1.5" stroke-dasharray="8 16" fill="none" opacity="0.12"/><line x1="0" y1="760" x2="600" y2="760" stroke="%2300e5ff" stroke-width="2" opacity="0.35"/><ellipse cx="300" cy="775" rx="260" ry="25" fill="%2300e5ff" opacity="0.06"/><rect x="52" y="520" width="22" height="235" rx="11" fill="url(%23b_cyan)" opacity="0.75"/><rect x="102" y="430" width="22" height="325" rx="11" fill="url(%23b_purple)" opacity="0.8"/><rect x="152" y="340" width="22" height="415" rx="11" fill="url(%23b_cyan)" opacity="0.85"/><rect x="202" y="470" width="22" height="285" rx="11" fill="url(%23b_purple)" opacity="0.75"/><rect x="252" y="270" width="22" height="485" rx="11" fill="url(%23b_pink)" opacity="0.95"/><rect x="302" y="220" width="22" height="535" rx="11" fill="url(%23b_gold)" opacity="0.95"/><rect x="352" y="310" width="22" height="445" rx="11" fill="url(%23b_pink)" opacity="0.9"/><rect x="402" y="440" width="22" height="315" rx="11" fill="url(%23b_purple)" opacity="0.8"/><rect x="452" y="360" width="22" height="395" rx="11" fill="url(%23b_cyan)" opacity="0.85"/><rect x="502" y="500" width="22" height="255" rx="11" fill="url(%23b_purple)" opacity="0.7"/><rect x="52" y="770" width="22" height="45" rx="11" fill="url(%23b_cyan)" opacity="0.15"/><rect x="102" y="770" width="22" height="60" rx="11" fill="url(%23b_purple)" opacity="0.15"/><rect x="152" y="770" width="22" height="85" rx="11" fill="url(%23b_cyan)" opacity="0.2"/><rect x="202" y="770" width="22" height="55" rx="11" fill="url(%23b_purple)" opacity="0.15"/><rect x="252" y="770" width="22" height="100" rx="11" fill="url(%23b_pink)" opacity="0.25"/><rect x="302" y="770" width="22" height="110" rx="11" fill="url(%23b_gold)" opacity="0.25"/><rect x="352" y="770" width="22" height="90" rx="11" fill="url(%23b_pink)" opacity="0.2"/><rect x="402" y="770" width="22" height="60" rx="11" fill="url(%23b_purple)" opacity="0.15"/><rect x="452" y="770" width="22" height="80" rx="11" fill="url(%23b_cyan)" opacity="0.2"/><rect x="502" y="770" width="22" height="50" rx="11" fill="url(%23b_purple)" opacity="0.15"/><circle cx="163" cy="300" r="4" fill="%2300e5ff" opacity="0.7"/><circle cx="263" cy="230" r="5" fill="%23ff3366" opacity="0.8"/><circle cx="313" cy="180" r="6" fill="%23ffd32a" opacity="0.9"/><circle cx="463" cy="320" r="4" fill="%2300e5ff" opacity="0.6"/></svg>`,
+
+    // 2. Stage Spotlight
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="v_stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%230b0b14"/><stop offset="70%" stop-color="%231a103c"/><stop offset="100%" stop-color="%233b0764"/></linearGradient></defs><rect width="600" height="900" fill="url(%23v_stage)"/><polygon points="0,0 200,900 400,900" fill="%23fef08a" opacity="0.12"/><polygon points="600,0 200,900 400,900" fill="%2338bdf8" opacity="0.14"/><ellipse cx="300" cy="820" rx="190" ry="45" fill="%23facc15" opacity="0.25"/><polygon points="120,240 126,258 145,258 130,270 135,288 120,276 105,288 110,270 95,258 114,258" fill="%23fde047" opacity="0.8"/><polygon points="480,180 485,195 500,195 488,205 492,220 480,210 468,220 472,205 460,195 475,195" fill="%23f43f5e" opacity="0.85"/></svg>`,
+
+    // 3. Electric Broadcast Studio
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="v_onair" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%2318181b"/><stop offset="50%" stop-color="%23450a0a"/><stop offset="100%" stop-color="%23991b1b"/></linearGradient></defs><rect width="600" height="900" fill="url(%23v_onair)"/><rect x="180" y="140" width="240" height="70" rx="16" fill="%23ef4444" opacity="0.85"/><text x="300" y="188" fill="%23ffffff" font-family="sans-serif" font-weight="900" font-size="34" text-anchor="middle" letter-spacing="4">LIVE ON AIR</text><circle cx="300" cy="540" r="140" stroke="%23f87171" stroke-width="4" fill="none" opacity="0.25"/><circle cx="300" cy="540" r="90" stroke="%23fca5a5" stroke-width="6" fill="none" opacity="0.4"/><circle cx="300" cy="540" r="45" fill="%23ef4444" opacity="0.5"/></svg>`,
+
+    // 4. Pop Storyteller Comic
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="v_story" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23f43f5e"/><stop offset="45%" stop-color="%23ec4899"/><stop offset="100%" stop-color="%238b5cf6"/></linearGradient></defs><rect width="600" height="900" fill="url(%23v_story)"/><circle cx="160" cy="220" r="90" fill="%23ffffff" opacity="0.22"/><path d="M120 280 L90 330 L160 300 Z" fill="%23ffffff" opacity="0.22"/><circle cx="440" cy="460" r="110" fill="%23ffffff" opacity="0.2"/><path d="M480 540 L530 600 L440 560 Z" fill="%23ffffff" opacity="0.2"/><circle cx="180" cy="720" r="60" fill="%23fef08a" opacity="0.35"/></svg>`,
+
+    // 5. Synthwave Studio
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="v_synth" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%2309090b"/><stop offset="55%" stop-color="%232e1065"/><stop offset="100%" stop-color="%23ec4899"/></linearGradient></defs><rect width="600" height="900" fill="url(%23v_synth)"/><circle cx="300" cy="420" r="130" fill="%23fb7185" opacity="0.85"/><line x1="0" y1="620" x2="600" y2="620" stroke="%2322d3ee" stroke-width="3" opacity="0.6"/><line x1="0" y1="680" x2="600" y2="680" stroke="%2322d3ee" stroke-width="4" opacity="0.6"/><line x1="0" y1="760" x2="600" y2="760" stroke="%2322d3ee" stroke-width="5" opacity="0.6"/><line x1="0" y1="860" x2="600" y2="860" stroke="%2322d3ee" stroke-width="7" opacity="0.6"/></svg>`,
+
+    // 6. Sound Wave Pulse
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="v_pulse" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23064e3b"/><stop offset="50%" stop-color="%230f766e"/><stop offset="100%" stop-color="%230284c7"/></linearGradient></defs><rect width="600" height="900" fill="url(%23v_pulse)"/><circle cx="300" cy="450" r="220" stroke="%235eead4" stroke-width="3" stroke-dasharray="14 10" fill="none" opacity="0.35"/><circle cx="300" cy="450" r="160" stroke="%2367e8f9" stroke-width="5" fill="none" opacity="0.5"/><circle cx="300" cy="450" r="90" stroke="%23a7f3d0" stroke-width="6" fill="none" opacity="0.7"/><circle cx="300" cy="450" r="30" fill="%2334d399" opacity="0.85"/></svg>`,
+
+    // 7. Gold Microphone Trophy / 5-Star Talker
+  `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="v_gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23422006"/><stop offset="50%" stop-color="%23713f12"/><stop offset="100%" stop-color="%23ca8a04"/></linearGradient></defs><rect width="600" height="900" fill="url(%23v_gold)"/><circle cx="300" cy="380" r="140" fill="%23fef08a" opacity="0.25"/><polygon points="300,180 312,216 350,216 320,240 330,276 300,252 270,276 280,240 250,216 288,216" fill="%23fde047" opacity="0.95"/><polygon points="160,340 168,364 194,364 174,380 181,404 160,388 139,404 146,380 126,364 152,364" fill="%23fde047" opacity="0.75"/><polygon points="440,340 448,364 474,364 454,380 461,404 440,388 419,404 426,380 406,364 432,364" fill="%23fde047" opacity="0.75"/><circle cx="100" cy="700" r="80" fill="%23eab308" opacity="0.2"/><circle cx="500" cy="720" r="100" fill="%23eab308" opacity="0.2"/></svg>`
+ ];
 
   function toggleThemeMenu(e) {
     if (e) {
@@ -307,14 +348,14 @@
     }
   });
 
-    /* ==========================================================================
+  /* ==========================================================================
      1. Themes & Backdrop Engine (With Persistence)
      ========================================================================== */
   function switchTheme(index) {
     const themeNames = [
-      "Space Rocket Explorer", "TalkStars Treehouse", "Dino Volcano Jungle",
-      "Cyber Racing Grid", "Stadium Sports Arena", "Unicorn Dreamland",
-      "Princess Fairy Garden", "Candy Bubble Carnival"
+      "Sonic Equalizer", "Centerstage Spotlight", "Live On-Air Studio",
+      "Comic Storyteller", "Synthwave Studio", "Audio Waves Pulse",
+      "Gold Mic Trophy"
     ];
     const card = document.getElementById("appScreen");
      
@@ -327,54 +368,51 @@
 
     if (card && backdrops[index]) {
       card.style.backgroundImage = `url('${backdrops[index]}')`;
-      // 💾 Save selected preset theme index
-      localStorage.setItem('talkstars_saved_theme_type', 'preset');
-      localStorage.setItem('talkstars_saved_theme_index', index.toString());
+      localStorage.setItem('vocoki_saved_theme_type', 'preset');
+      localStorage.setItem('vocoki_saved_theme_index', index.toString());
     }
     document.getElementById("themeDropdown").classList.remove("show");
   }
 
   function handleCustomUpload(event) {
-  const file = event.target.files?.[0];
-  if (!file) return;
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-  const img = new Image();
-  img.onload = function () {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Downscale for performance
-    const maxDimension = 1200;
-    let { width, height } = img;
-    if (width > height && width > maxDimension) {
-      height = Math.round((height * maxDimension) / width);
-      width = maxDimension;
-    } else if (height > maxDimension) {
-      width = Math.round((width * maxDimension) / height);
-      height = maxDimension;
-    }
+    const img = new Image();
+    img.onload = function () {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      const maxDimension = 1200;
+      let { width, height } = img;
+      if (width > height && width > maxDimension) {
+        height = Math.round((height * maxDimension) / width);
+        width = maxDimension;
+      } else if (height > maxDimension) {
+        width = Math.round((width * maxDimension) / height);
+        height = maxDimension;
+      }
 
-    canvas.width = width;
-    canvas.height = height;
-    ctx.drawImage(img, 0, 0, width, height);
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
 
-    // Compress as JPEG at 75% quality (~100-200 KB)
-    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
 
-    const card = document.getElementById("appScreen");
-    if (card) card.style.backgroundImage = `url('${compressedDataUrl}')`;
+      const card = document.getElementById("appScreen");
+      if (card) card.style.backgroundImage = `url('${compressedDataUrl}')`;
 
-    try {
-      localStorage.setItem('talkstars_saved_theme_type', 'custom');
-      localStorage.setItem('talkstars_saved_custom_bg', compressedDataUrl);
-    } catch (err) {
-      console.warn("Storage quota exceeded", err);
-    }
-  };
+      try {
+        localStorage.setItem('vocoki_saved_theme_type', 'custom');
+        localStorage.setItem('vocoki_saved_custom_bg', compressedDataUrl);
+      } catch (err) {
+        console.warn("Storage quota exceeded", err);
+      }
+    };
 
-  img.src = URL.createObjectURL(file);
-  document.getElementById("themeDropdown")?.classList.remove("show");
-}
+    img.src = URL.createObjectURL(file);
+    document.getElementById("themeDropdown")?.classList.remove("show");
+  }
 
   /* ==========================================================================
      2. Doodles Engine (With Persistence)
@@ -394,8 +432,7 @@
       if (doodlesActive) renderDoodles();
     }
 
-    // 💾 Save doodle checkbox state
-    localStorage.setItem('talkstars_doodles_active', doodlesActive ? 'true' : 'false');
+    localStorage.setItem('vocoki_doodles_active', doodlesActive ? 'true' : 'false');
   }
 
   function renderDoodles() {
@@ -425,8 +462,8 @@
   /* ==========================================================================
      3. Personalization & Setup
      ========================================================================== */
-    let nameDebounceTimer = null;
-  function updatePersonalization() {
+  let nameDebounceTimer = null;
+    function updatePersonalization() {
     const nameInput = document.getElementById("kidNameInput");
     const rawName = nameInput?.value.trim() || "";
     const title = document.getElementById("mainTitle");
@@ -436,11 +473,11 @@
     if (rawName) {
       title.innerText = `${rawName.toUpperCase()}`;
       subtitle.innerText = `Tell Your Story & Earn 5 Stars! ⭐`;
-      localStorage.setItem("talkstars_saved_name", rawName); // 💾 Save name for future visits
+      localStorage.setItem("vocoki_saved_name", rawName); // 💾 Save name for future visits
     } else {
-      title.innerText = "TALK STARS";
+      title.innerText = "VOCOKI";
       subtitle.innerText = "Tell Your Story & Earn 5 Stars! ⭐";
-      localStorage.removeItem("talkstars_saved_name"); // Clear if the input is deleted
+      localStorage.removeItem("vocoki_saved_name"); // Clear if the input is deleted
     }
 
     // 2. Debounce PostHog analytics update (500ms)
@@ -454,12 +491,12 @@
   }
 
   function restoreSavedName() {
-    const savedName = localStorage.getItem("talkstars_saved_name");
+    const savedName = localStorage.getItem("vocoki_saved_name");
     const nameInput = document.getElementById("kidNameInput");
 
     if (savedName && nameInput) {
       nameInput.value = savedName;
-      updatePersonalization(); // Refreshes hero title, subtitle & PostHog
+      updatePersonalization();
     }
   }
 
@@ -486,7 +523,7 @@
   /* ==========================================================================
      4. Topic Generator (Gemini API + Fallbacks)
      ========================================================================== */
-   let currentExtraWords = [];
+  let currentExtraWords = [];
   const fallbackBank = {
     topic: {
       "4-6 years old": { main: "The Secret Life of My Favorite Toy: What does it do when I am asleep?", extra: ["Playful", "Magic", "Adventure"] },
@@ -579,7 +616,7 @@
     }
   }
 
-    function renderResult(mainWord, extraWords, mode = 'topic') {
+  function renderResult(mainWord, extraWords, mode = 'topic') {
     const promptCard = document.getElementById("promptCard");
     const wordDisplay = document.getElementById("wordDisplay");
     const bonusCard = document.getElementById("bonusCard");
@@ -620,6 +657,7 @@
   let speechTextAccumulator = "";
   let speechSecondsSpoken = 0;
   let audioStream = null;
+  let audioBlob = null;
 
   function changeDuration() {
     totalDuration = parseInt(document.getElementById("talkDuration").value, 10);
@@ -632,8 +670,7 @@
     document.getElementById("timer").innerText = 
       `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   }
-// Global audio storage
-let audioBlob = null;
+
   async function startChallenge() {
     speechTextAccumulator = "";
     speechSecondsSpoken = 0;
@@ -661,17 +698,16 @@ let audioBlob = null;
         if (e.data && e.data.size > 0) audioChunks.push(e.data);
       };
       
-
-mediaRecorder.onstop = () => {
-  const mime = audioChunks[0]?.type || 'audio/mp4';
-  audioBlob = new Blob(audioChunks, { type: mime }); // 👈 Removed 'const' to assign globally
-  const audioUrl = URL.createObjectURL(audioBlob);
-  const player = document.getElementById("audioPlayback");
-  if (player) {
-    player.src = audioUrl;
-    player.load();
-  }
-};
+      mediaRecorder.onstop = () => {
+        const mime = audioChunks[0]?.type || 'audio/mp4';
+        audioBlob = new Blob(audioChunks, { type: mime });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const player = document.getElementById("audioPlayback");
+        if (player) {
+          player.src = audioUrl;
+          player.load();
+        }
+      };
 
       mediaRecorder.start(250);
 
@@ -760,64 +796,57 @@ mediaRecorder.onstop = () => {
     }
   }
 
-    /* ==========================================================================
+  /* ==========================================================================
      Share Recording Handler (Web Share API + WhatsApp Fallback)
      ========================================================================== */
+  async function shareRecording() {
+    const savedName = (localStorage.getItem("vocoki_saved_name") || "Vocoki").trim();
+    const topicElem = document.getElementById("wordDisplay");
+    const currentTopic = topicElem ? topicElem.innerText : "a fun topic";
+    const shareText = `🎙️ Listen to ${savedName}'s speech on "${currentTopic}" on Vocoki! ⭐\nhttps://vocoki.vercel.app/`;
 
-async function shareRecording() {
-  const savedName = (localStorage.getItem("talkstars_saved_name") || "TalkStars").trim();
-  const topicElem = document.getElementById("wordDisplay");
-  const currentTopic = topicElem ? topicElem.innerText : "a fun topic";
-  const shareText = `🎙️ Listen to ${savedName}'s speech on "${currentTopic}" on TalkStars! ⭐\nhttps://talkstars.vercel.app/`;
+    if (typeof window.posthog?.capture === 'function') {
+      posthog.capture('Recording Share Clicked', { speaker: savedName });
+    }
 
-  if (typeof window.posthog?.capture === 'function') {
-    posthog.capture('Recording Share Clicked', { speaker: savedName });
-  }
+    if (audioBlob && navigator.canShare) {
+      try {
+        const isMp4 = audioBlob.type.includes('mp4') || audioBlob.type.includes('m4a');
+        const ext = isMp4 ? 'm4a' : 'webm';
+        const cleanMime = isMp4 ? 'audio/mp4' : 'audio/webm';
+        const fileName = `${savedName.replace(/[^a-zA-Z0-9]/g, '_')}_speech.${ext}`;
 
-  // 1. Attempt Native Audio File Share (Mobile OS)
-  if (audioBlob && navigator.canShare) {
-    try {
-      // Determine clean extension based on actual blob type
-      const isMp4 = audioBlob.type.includes('mp4') || audioBlob.type.includes('m4a');
-      const ext = isMp4 ? 'm4a' : 'webm';
-      const cleanMime = isMp4 ? 'audio/mp4' : 'audio/webm';
-      const fileName = `${savedName.replace(/[^a-zA-Z0-9]/g, '_')}_speech.${ext}`;
+        const audioFile = new File([audioBlob], fileName, { type: cleanMime });
 
-      const audioFile = new File([audioBlob], fileName, { type: cleanMime });
+        if (navigator.canShare({ files: [audioFile] })) {
+          await navigator.share({
+            files: [audioFile],
+            title: `${savedName}'s Speech`
+          });
+          return;
+        }
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        console.warn('File share not permitted by browser, falling back to text share...', err);
+      }
+    }
 
-      // Check if the OS specifically accepts this audio file
-      if (navigator.canShare({ files: [audioFile] })) {
-        // IMPORTANT: Send ONLY the file (do not mix text/url in the same call)
+    if (navigator.share) {
+      try {
         await navigator.share({
-          files: [audioFile],
-          title: `${savedName}'s Speech`
+          title: 'Vocoki Speech Recording',
+          text: shareText
         });
         return;
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        console.warn('Native text share failed, falling back to direct link...', err);
       }
-    } catch (err) {
-      if (err.name === 'AbortError') return; // User simply closed the share sheet
-      console.warn('File share not permitted by browser, falling back to text share...', err);
     }
-  }
 
-  // 2. Fallback: Native Text/Link Share
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: 'TalkStars Speech Recording',
-        text: shareText
-      });
-      return;
-    } catch (err) {
-      if (err.name === 'AbortError') return;
-      console.warn('Native text share failed, falling back to direct link...', err);
-    }
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+    window.open(whatsappUrl, '_blank');
   }
-
-  // 3. Desktop / Non-Supported Fallback: Direct WhatsApp Web
-  const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
-  window.open(whatsappUrl, '_blank');
-}
 
   function evaluateSpeech() {
     const transcript = speechTextAccumulator.trim();
@@ -903,7 +932,7 @@ async function shareRecording() {
   let currentGuideStep = 0;
 
   function initOnboardingGuide() {
-    const hasRecorded = localStorage.getItem('talkstars_first_speech_recorded');
+    const hasRecorded = localStorage.getItem('vocoki_first_speech_recorded');
     if (hasRecorded === 'true') {
       const tooltip = document.getElementById('onboardingTooltip');
       if (tooltip) tooltip.remove();
@@ -911,7 +940,7 @@ async function shareRecording() {
     }
 
     currentGuideStep = 1;
-    showGuideForElement('actionBtnRow', '👇 Pick a topic or word to speak!');
+    showGuideForElement('actionBtnRow', '👇 Pick a topic or word to start!');
 
     if (typeof window.posthog?.capture === 'function') {
       window.posthog.capture('onboarding_started');
@@ -919,22 +948,19 @@ async function shareRecording() {
   }
 
   function showGuideForElement(elementId, text) {
-  const target = document.getElementById(elementId);
-  const tooltip = document.getElementById('onboardingTooltip');
-  const guideText = document.getElementById('guideText');
+    const target = document.getElementById(elementId);
+    const tooltip = document.getElementById('onboardingTooltip');
+    const guideText = document.getElementById('guideText');
 
-  if (!target || !tooltip) return;
+    if (!target || !tooltip) return;
 
-  guideText.innerText = text;
-  
-  // Anchor tooltip directly inside the target element so relative positioning works
-  target.appendChild(tooltip);
-
-  tooltip.style.display = 'inline-flex';
-}
+    guideText.innerText = text;
+    target.appendChild(tooltip);
+    tooltip.style.display = 'inline-flex';
+  }
 
   function advanceGuideStep(completedStep) {
-    const hasRecorded = localStorage.getItem('talkstars_first_speech_recorded');
+    const hasRecorded = localStorage.getItem('vocoki_first_speech_recorded');
     if (hasRecorded === 'true') return;
 
     if (completedStep === 1 && currentGuideStep === 1) {
@@ -950,7 +976,7 @@ async function shareRecording() {
     const tooltip = document.getElementById('onboardingTooltip');
     if (tooltip) tooltip.remove();
 
-    localStorage.setItem('talkstars_first_speech_recorded', 'true');
+    localStorage.setItem('vocoki_first_speech_recorded', 'true');
 
     if (typeof window.posthog?.capture === 'function') {
       window.posthog.capture('onboarding_completed');
@@ -970,41 +996,36 @@ async function shareRecording() {
   }
   setInterval(updateOnlineUsers, 4000);
 
-    /* ==========================================================================
+  /* ==========================================================================
      Restore Preferences on Page Load
      ========================================================================== */
   function restoreSavedPreferences() {
-    // 1. Restore Theme
-    const themeType = localStorage.getItem('talkstars_saved_theme_type');
+    const themeType = localStorage.getItem('vocoki_saved_theme_type');
     const card = document.getElementById("appScreen");
 
     if (themeType === 'preset') {
-      const savedIndex = localStorage.getItem('talkstars_saved_theme_index');
+      const savedIndex = localStorage.getItem('vocoki_saved_theme_index');
       if (savedIndex !== null && backdrops[savedIndex] && card) {
         card.style.backgroundImage = `url('${backdrops[savedIndex]}')`;
       }
     } else if (themeType === 'custom') {
-      const customBg = localStorage.getItem('talkstars_saved_custom_bg');
+      const customBg = localStorage.getItem('vocoki_saved_custom_bg');
       if (customBg && card) {
         card.style.backgroundImage = `url('${customBg}')`;
       }
     }
 
-    // 2. Restore Doodles Toggle
-    const savedDoodles = localStorage.getItem('talkstars_doodles_active');
+    const savedDoodles = localStorage.getItem('vocoki_doodles_active');
     if (savedDoodles === 'true') {
       toggleDoodles(true);
     }
   }
 
-  // Initialize background data without blocking the timer
   window.addEventListener('DOMContentLoaded', () => {
     loadModalSnippet();
-    restoreSavedName(); // 🌟 Restores previously saved name
-    restoreSavedPreferences(); // 🌟 Restores theme and doodles toggle
+    restoreSavedName();
+    restoreSavedPreferences();
   });
-
 </script>
-
 </body>
 </html>
