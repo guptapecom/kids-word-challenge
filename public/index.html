@@ -187,13 +187,15 @@
           </button>
 
           <div class="theme-list-dropdown" id="themeDropdown">
-            <button class="theme-list-item" onclick="switchTheme(0)">🎧 Sonic Equalizer</button>
-            <button class="theme-list-item" onclick="switchTheme(1)">🌟 Centerstage Spotlight</button>
-            <button class="theme-list-item" onclick="switchTheme(2)">🎙️ Live On-Air Studio</button>
-            <button class="theme-list-item" onclick="switchTheme(3)">💬 Comic Storyteller</button>
-            <button class="theme-list-item" onclick="switchTheme(4)">🕹️ Synthwave Studio</button>
-            <button class="theme-list-item" onclick="switchTheme(5)">🌊 Audio Waves Pulse</button>
-            <button class="theme-list-item" onclick="switchTheme(6)">🏆 Gold Mic Trophy</button>
+            <button class="theme-list-item" onclick="switchTheme(0)">🌑 Minimal Dark Stage</button>
+            <button class="theme-list-item" onclick="switchTheme(1)">🎧 Sonic Equalizer</button>
+            <button class="theme-list-item" onclick="switchTheme(2)">🌟 Centerstage Spotlight</button>
+            <button class="theme-list-item" onclick="switchTheme(3)">🎙️ Live On-Air Studio</button>
+            <button class="theme-list-item" onclick="switchTheme(4)">💬 Comic Storyteller</button>
+            <button class="theme-list-item" onclick="switchTheme(5)">🕹️ Synthwave Studio</button>
+            <button class="theme-list-item" onclick="switchTheme(6)">🌊 Audio Waves Pulse</button>
+            <button class="theme-list-item" onclick="switchTheme(7)">🏆 Gold Mic Trophy</button>
+
             
             <div class="theme-list-divider"></div>
             
@@ -310,6 +312,8 @@
      1. Themes & Backdrop Engine
      ========================================================================== */
   const backdrops = [
+   // 0. Clean Deep Dark / Minimal Obsidian
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900"><defs><radialGradient id="v_dark" cx="50%" cy="40%" r="65%"><stop offset="0%" stop-color="%23141627"/><stop offset="60%" stop-color="%230c0d16"/><stop offset="100%" stop-color="%23050508"/></radialGradient></defs><rect width="600" height="900" fill="url(%23v_dark)"/></svg>`,
     // 1. Sonic Equalizer (Enhanced with vertical gradients, ripples & spark dots)
     `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="eq_bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%2306070d"/><stop offset="55%" stop-color="%230d1024"/><stop offset="100%" stop-color="%23171338"/></linearGradient><linearGradient id="b_cyan" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%2300f2fe"/><stop offset="100%" stop-color="%234facfe"/></linearGradient><linearGradient id="b_purple" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23c471ed"/><stop offset="100%" stop-color="%2312c2e9"/></linearGradient><linearGradient id="b_pink" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23ff0844"/><stop offset="100%" stop-color="%23ffb199"/></linearGradient><linearGradient id="b_gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23f6d365"/><stop offset="100%" stop-color="%23fda085"/></linearGradient><radialGradient id="stage_glow" cx="50%" cy="35%" r="55%"><stop offset="0%" stop-color="%2300e5ff" stop-opacity="0.18"/><stop offset="60%" stop-color="%23747dff" stop-opacity="0.08"/><stop offset="100%" stop-color="%23000000" stop-opacity="0"/></radialGradient></defs><rect width="600" height="900" fill="url(%23eq_bg)"/><rect width="600" height="900" fill="url(%23stage_glow)"/><circle cx="300" cy="320" r="160" stroke="%2300e5ff" stroke-width="2" stroke-dasharray="12 12" fill="none" opacity="0.18"/><circle cx="300" cy="320" r="230" stroke="%23747dff" stroke-width="1.5" stroke-dasharray="8 16" fill="none" opacity="0.12"/><line x1="0" y1="760" x2="600" y2="760" stroke="%2300e5ff" stroke-width="2" opacity="0.35"/><ellipse cx="300" cy="775" rx="260" ry="25" fill="%2300e5ff" opacity="0.06"/><rect x="52" y="520" width="22" height="235" rx="11" fill="url(%23b_cyan)" opacity="0.75"/><rect x="102" y="430" width="22" height="325" rx="11" fill="url(%23b_purple)" opacity="0.8"/><rect x="152" y="340" width="22" height="415" rx="11" fill="url(%23b_cyan)" opacity="0.85"/><rect x="202" y="470" width="22" height="285" rx="11" fill="url(%23b_purple)" opacity="0.75"/><rect x="252" y="270" width="22" height="485" rx="11" fill="url(%23b_pink)" opacity="0.95"/><rect x="302" y="220" width="22" height="535" rx="11" fill="url(%23b_gold)" opacity="0.95"/><rect x="352" y="310" width="22" height="445" rx="11" fill="url(%23b_pink)" opacity="0.9"/><rect x="402" y="440" width="22" height="315" rx="11" fill="url(%23b_purple)" opacity="0.8"/><rect x="452" y="360" width="22" height="395" rx="11" fill="url(%23b_cyan)" opacity="0.85"/><rect x="502" y="500" width="22" height="255" rx="11" fill="url(%23b_purple)" opacity="0.7"/><rect x="52" y="770" width="22" height="45" rx="11" fill="url(%23b_cyan)" opacity="0.15"/><rect x="102" y="770" width="22" height="60" rx="11" fill="url(%23b_purple)" opacity="0.15"/><rect x="152" y="770" width="22" height="85" rx="11" fill="url(%23b_cyan)" opacity="0.2"/><rect x="202" y="770" width="22" height="55" rx="11" fill="url(%23b_purple)" opacity="0.15"/><rect x="252" y="770" width="22" height="100" rx="11" fill="url(%23b_pink)" opacity="0.25"/><rect x="302" y="770" width="22" height="110" rx="11" fill="url(%23b_gold)" opacity="0.25"/><rect x="352" y="770" width="22" height="90" rx="11" fill="url(%23b_pink)" opacity="0.2"/><rect x="402" y="770" width="22" height="60" rx="11" fill="url(%23b_purple)" opacity="0.15"/><rect x="452" y="770" width="22" height="80" rx="11" fill="url(%23b_cyan)" opacity="0.2"/><rect x="502" y="770" width="22" height="50" rx="11" fill="url(%23b_purple)" opacity="0.15"/><circle cx="163" cy="300" r="4" fill="%2300e5ff" opacity="0.7"/><circle cx="263" cy="230" r="5" fill="%23ff3366" opacity="0.8"/><circle cx="313" cy="180" r="6" fill="%23ffd32a" opacity="0.9"/><circle cx="463" cy="320" r="4" fill="%2300e5ff" opacity="0.6"/></svg>`,
 
@@ -351,11 +355,11 @@
   /* ==========================================================================
      1. Themes & Backdrop Engine (With Persistence)
      ========================================================================== */
-  function switchTheme(index) {
+     function switchTheme(index) {
     const themeNames = [
-      "Sonic Equalizer", "Centerstage Spotlight", "Live On-Air Studio",
-      "Comic Storyteller", "Synthwave Studio", "Audio Waves Pulse",
-      "Gold Mic Trophy"
+      "Minimal Dark Stage", "Sonic Equalizer", "Centerstage Spotlight",
+      "Live On-Air Studio", "Comic Storyteller", "Synthwave Studio",
+      "Audio Waves Pulse", "Gold Mic Trophy"
     ];
     const card = document.getElementById("appScreen");
      
@@ -366,8 +370,13 @@
       });
     }
 
-    if (card && backdrops[index]) {
-      card.style.backgroundImage = `url('${backdrops[index]}')`;
+    if (card) {
+      if (index === 0) {
+        // Removes any background image so pure dark gradient shows through
+        card.style.backgroundImage = 'none';
+      } else if (backdrops[index]) {
+        card.style.backgroundImage = `url('${backdrops[index]}')`;
+      }
       localStorage.setItem('vocoki_saved_theme_type', 'preset');
       localStorage.setItem('vocoki_saved_theme_index', index.toString());
     }
