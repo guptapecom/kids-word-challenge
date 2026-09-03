@@ -796,8 +796,10 @@ body {
   border-radius: 26px;
   width: 100%;
   max-width: 400px;
-  max-height: 90vh;
+  max-height: 94vh; /* Increased from 90vh */
+  max-height: 94dvh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth iOS momentum scrolling */
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
@@ -910,12 +912,14 @@ body {
   background: #f8f9fa;
   border: 1px solid #e9ecef;
   border-radius: 14px;
-  padding: 8px 10px;
+  padding: 10px 12px;
   text-align: left;
   font-size: 0.8rem;
   color: #495057;
-  max-height: 90px;
-  overflow-y: auto;
+  max-height: none; /* Removed the 90px ceiling so highlights don't cut off */
+  overflow: visible;
+  line-height: 1.45;
+  word-break: break-word;
 }
 
 .topic-feedback-section {
@@ -965,6 +969,8 @@ body {
   border-radius: 50px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(247, 103, 7, 0.3);
+  flex-shrink: 0; /* Prevents button compression on small viewports */
+  margin-top: 2px;
 }
 
 .onboarding-guide-badge {
