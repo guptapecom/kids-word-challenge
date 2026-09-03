@@ -1,91 +1,109 @@
-<!-- Evaluation Modal Sheet Partial -->
+<!-- Dynamic Evaluation Modal Sheet -->
 <div class="modal-overlay" id="resultModal">
   <div class="modal-sheet">
-    <div class="modal-header-block">
-      <h2>🎉 Fantastic Speech!</h2>
-      <div class="stars-row" id="starsDisplay">⭐⭐⭐</div>
-      <div class="feedback-badge" id="ratingFeedback">Good Effort!</div>
-    </div>
-
-    <!-- Compact Action Bar (Playback + Icon Actions) -->
-    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; width: 100%; margin-top: 14px; box-sizing: border-box;">
-      
-      <!-- Audio Player -->
-      <audio id="audioPlayback" controls style="flex: 1 1 auto; min-width: 0; height: 42px; border-radius: 25px; outline: none; background: transparent;"></audio>
-
-      <!-- Icons Group -->
-      <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; flex-shrink: 0;">
-        
-        <!-- Download Icon Button -->
-        <button 
-          type="button" 
-          id="downloadBtn" 
-          title="Download Audio" 
-          onclick="downloadRecording()"
-          style="width: 42px; height: 42px; border-radius: 50%; background: rgba(0, 229, 255, 0.18); border: 1.5px solid #00e5ff; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; outline: none; box-shadow: 0 4px 14px rgba(0, 229, 255, 0.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-        </button>
-
-        <!-- Share Icon Button -->
-        <button 
-          type="button" 
-          id="shareBtn" 
-          title="Share Recording" 
-          onclick="shareRecording()"
-          style="width: 42px; height: 42px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); border: 1.5px solid rgba(255, 255, 255, 0.22); color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; outline: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display:none;"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
-            <circle cx="18" cy="5" r="3"></circle>
-            <circle cx="6" cy="12" r="3"></circle>
-            <circle cx="18" cy="19" r="3"></circle>
-            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-          </svg>
-        </button>
-
+    
+    <!-- Child Avatar & Check Header -->
+    <div class="modal-sheet-avatar-area">
+      <div class="avatar-badge-wrap" style="width: 60px; height: 60px;">
+        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="38" fill="#d0ebff"/>
+          <circle cx="40" cy="38" r="20" fill="#ffd8a8"/>
+          <path d="M26 30 C26 16 54 16 54 30 Z" fill="#5c3613"/>
+          <circle cx="33" cy="38" r="3" fill="#212529"/>
+          <circle cx="47" cy="38" r="3" fill="#212529"/>
+          <path d="M36 46 Q40 50 44 46" stroke="#c92a2a" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="avatar-check-badge">✓</div>
+      </div>
+      <h3 class="modal-topic-title" id="modalTopicText">If animals could talk</h3>
+      <div class="stars-row" id="starsDisplay">⭐⭐⭐⭐⭐</div>
+      <div id="ratingFeedback" style="font-size: 0.84rem; font-weight: 800; color: #7048e8;">
+        Instant Stars & Feedback
       </div>
     </div>
 
-    <!-- Detailed Speech Highlights -->
-    <div style="text-align: left; font-size: 0.82rem; font-weight: 800; color: #00e5ff; margin-bottom: -4px;">
-      📋 Speech Summary & Highlights:
+    <!-- Audio Playback & Action -->
+    <div class="modal-audio-bar">
+      <audio id="audioPlayback" controls></audio>
+      <button type="button" id="downloadBtn" class="modal-round-icon-btn" title="Download Audio" onclick="downloadRecording()">
+        💾
+      </button>
+      <!-- Share button hidden as requested -->
+      <button type="button" id="shareBtn" class="modal-round-icon-btn" title="Share Recording" onclick="shareRecording()" style="display: none !important;">
+        🔗
+      </button>
     </div>
+
+    <!-- Dynamic Speech Summary Breakdown (Values calculated by JS) -->
+    <div class="speech-summary-card">
+      <div class="speech-summary-title">
+        <span>📊</span> Speech Summary Breakdown
+      </div>
+
+      <div class="metric-bar-item">
+        <span>Pronunciation</span>
+        <div class="metric-track">
+          <div class="metric-fill" id="fillPronunciation" style="width: 0%; background: #20c997;"></div>
+        </div>
+        <span id="valPronunciation">0%</span>
+      </div>
+
+      <div class="metric-bar-item">
+        <span>Grammar</span>
+        <div class="metric-track">
+          <div class="metric-fill" id="fillGrammar" style="width: 0%; background: #15aabf;"></div>
+        </div>
+        <span id="valGrammar">0%</span>
+      </div>
+
+      <div class="metric-bar-item">
+        <span>Tone & Pacing</span>
+        <div class="metric-track">
+          <div class="metric-fill" id="fillPacing" style="width: 0%; background: #ff922b;"></div>
+        </div>
+        <span id="valPacing">0%</span>
+      </div>
+
+      <div class="metric-bar-item">
+        <span>Vocabulary</span>
+        <div class="metric-track">
+          <div class="metric-fill" id="fillVocabulary" style="width: 0%; background: #7048e8;"></div>
+        </div>
+        <span id="valVocabulary">0%</span>
+      </div>
+    </div>
+
+    <!-- Speech Summary Card -->
     <div class="summary-card-inner" id="summaryDisplay">
       <!-- Injected by JavaScript -->
     </div>
 
-    <!-- Dark Frosted Feedback Reaction Bar -->
+    <!-- Topic Reaction Row -->
     <div class="topic-feedback-section" id="feedbackSection">
       <div class="feedback-header-row">
-        <span class="feedback-label">How was this topic?</span>
-        <span id="feedbackThanks" class="feedback-thanks-msg" style="display:none;">✨ Thanks!</span>
+        <span>How was this topic?</span>
+        <span id="feedbackThanks" style="display:none; color:#20c997;">✨ Thanks!</span>
       </div>
-
       <div class="feedback-reactions-grid">
-        <button type="button" class="reaction-pill reaction-easy" onclick="submitTopicFeedback('Easy 😄', this)">
+        <button type="button" class="reaction-pill" onclick="submitTopicFeedback('Easy 😄', this)">
           <span class="reaction-emoji">😄</span>
           <span class="reaction-text">Easy</span>
         </button>
-        <button type="button" class="reaction-pill reaction-fun" onclick="submitTopicFeedback('Loved It ⭐', this)">
+        <button type="button" class="reaction-pill" onclick="submitTopicFeedback('Loved It ⭐', this)">
           <span class="reaction-emoji">⭐</span>
           <span class="reaction-text">Fun</span>
         </button>
-        <button type="button" class="reaction-pill reaction-tough" onclick="submitTopicFeedback('Tough 🤯', this)">
+        <button type="button" class="reaction-pill" onclick="submitTopicFeedback('Tough 🤯', this)">
           <span class="reaction-emoji">🤯</span>
           <span class="reaction-text">Tough</span>
         </button>
-        <button type="button" class="reaction-pill reaction-weird" onclick="submitTopicFeedback('Irrelevant 🤔', this)">
+        <button type="button" class="reaction-pill" onclick="submitTopicFeedback('Irrelevant 🤔', this)">
           <span class="reaction-emoji">🤔</span>
           <span class="reaction-text">Weird</span>
         </button>
       </div>
     </div>
 
-    <button class="btn-modal-close" onclick="closeModal()">Try Another Topic 🔄</button>
+    <button class="btn-modal-close" onclick="closeModal()">Try Another Topic 🚀</button>
   </div>
 </div>
