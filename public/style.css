@@ -996,3 +996,103 @@ body {
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+/* ==========================================================================
+   Interactive Avatar Trigger & Selection Modal
+   ========================================================================== */
+.avatar-badge-wrap {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.avatar-badge-wrap:hover {
+  transform: scale(1.05);
+}
+
+.avatar-badge-wrap:active {
+  transform: scale(0.95);
+}
+
+.avatar-edit-icon {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  background: var(--brand-purple);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 10px;
+}
+
+/* Avatar Modal Overlay & Grid */
+.avatar-modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(33, 37, 41, 0.65);
+  backdrop-filter: blur(5px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  z-index: 5500;
+}
+
+.avatar-modal-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 18px 16px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 20px 45px rgba(112, 72, 232, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.avatar-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 4px 0;
+}
+
+.avatar-option-btn {
+  background: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 18px;
+  padding: 10px 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.avatar-option-btn svg {
+  width: 46px;
+  height: 46px;
+}
+
+.avatar-option-btn span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #495057;
+}
+
+.avatar-option-btn.selected,
+.avatar-option-btn:hover {
+  background: #f3f0ff;
+  border-color: var(--brand-purple);
+  box-shadow: 0 4px 12px rgba(112, 72, 232, 0.25);
+  transform: translateY(-2px);
+}

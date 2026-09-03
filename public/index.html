@@ -132,6 +132,110 @@
   </div>
 </div>
 
+<!-- Avatar Selection Popup Modal -->
+<div class="avatar-modal-overlay" id="avatarModal">
+  <div class="avatar-modal-card">
+    <div class="age-modal-header">
+      <h3>Choose Your Avatar 🎨</h3>
+      <p>Pick a buddy for your speaking journey!</p>
+    </div>
+
+    <div class="avatar-gallery-grid">
+      <!-- 1. Star Boy (Default) -->
+      <button type="button" class="avatar-option-btn selected" onclick="selectAvatar('starboy', this)">
+        <svg viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="38" fill="#d0ebff"/>
+          <circle cx="40" cy="38" r="22" fill="#ffd8a8"/>
+          <path d="M26 30 C26 16 54 16 54 30 Z" fill="#5c3613"/>
+          <circle cx="33" cy="38" r="3" fill="#212529"/>
+          <circle cx="47" cy="38" r="3" fill="#212529"/>
+          <path d="M36 46 Q40 50 44 46" stroke="#c92a2a" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="15" y="30" width="8" height="18" rx="4" fill="#339af0"/>
+          <rect x="57" y="30" width="8" height="18" rx="4" fill="#339af0"/>
+          <path d="M19 32 C19 16 61 16 61 32" stroke="#339af0" stroke-width="4" stroke-linecap="round" fill="none"/>
+        </svg>
+        <span>Star Boy</span>
+      </button>
+
+      <!-- 2. Sparkle Girl -->
+      <button type="button" class="avatar-option-btn" onclick="selectAvatar('sparklegirl', this)">
+        <svg viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="38" fill="#fce7f3"/>
+          <path d="M20 45 C18 20 62 20 60 45 Z" fill="#b91c1c"/>
+          <circle cx="40" cy="40" r="22" fill="#fed7aa"/>
+          <circle cx="33" cy="39" r="3" fill="#212529"/>
+          <circle cx="47" cy="39" r="3" fill="#212529"/>
+          <path d="M36 47 Q40 51 44 47" stroke="#c92a2a" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="26" cy="26" r="6" fill="#f43f5e"/>
+          <circle cx="54" cy="26" r="6" fill="#f43f5e"/>
+        </svg>
+        <span>Sparkle</span>
+      </button>
+
+      <!-- 3. Astro Kid -->
+      <button type="button" class="avatar-option-btn" onclick="selectAvatar('astro', this)">
+        <svg viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="38" fill="#ede9fe"/>
+          <circle cx="40" cy="40" r="26" fill="#ffffff" stroke="#7048e8" stroke-width="3"/>
+          <rect x="25" y="28" width="30" height="20" rx="10" fill="#0f172a"/>
+          <path d="M28 38 Q40 32 52 38" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span>Astro</span>
+      </button>
+
+      <!-- 4. Playful Panda -->
+      <button type="button" class="avatar-option-btn" onclick="selectAvatar('panda', this)">
+        <svg viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="38" fill="#e0f2fe"/>
+          <circle cx="24" cy="22" r="10" fill="#1e293b"/>
+          <circle cx="56" cy="22" r="10" fill="#1e293b"/>
+          <circle cx="40" cy="42" r="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <ellipse cx="32" cy="40" rx="6" ry="8" fill="#1e293b"/>
+          <ellipse cx="48" cy="40" rx="6" ry="8" fill="#1e293b"/>
+          <circle cx="33" cy="38" r="2.5" fill="#ffffff"/>
+          <circle cx="47" cy="38" r="2.5" fill="#ffffff"/>
+          <ellipse cx="40" cy="48" rx="4" ry="2.5" fill="#1e293b"/>
+        </svg>
+        <span>Panda</span>
+      </button>
+
+      <!-- 5. Happy Dino -->
+      <button type="button" class="avatar-option-btn" onclick="selectAvatar('dino', this)">
+        <svg viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="38" fill="#dcfce7"/>
+          <circle cx="40" cy="40" r="24" fill="#22c55e"/>
+          <circle cx="34" cy="36" r="4" fill="#ffffff"/>
+          <circle cx="46" cy="36" r="4" fill="#ffffff"/>
+          <circle cx="35" cy="36" r="2" fill="#0f172a"/>
+          <circle cx="45" cy="36" r="2" fill="#0f172a"/>
+          <path d="M34 46 Q40 52 46 46" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+          <polygon points="32,18 40,24 48,18" fill="#facc15"/>
+        </svg>
+        <span>Dino</span>
+      </button>
+
+      <!-- 6. Cool Cat -->
+      <button type="button" class="avatar-option-btn" onclick="selectAvatar('cat', this)">
+        <svg viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="38" fill="#fef3c7"/>
+          <polygon points="22,34 26,14 40,26" fill="#f97316"/>
+          <polygon points="58,34 54,14 40,26" fill="#f97316"/>
+          <circle cx="40" cy="42" r="22" fill="#fb923c"/>
+          <ellipse cx="33" cy="40" rx="3.5" ry="5" fill="#212529"/>
+          <ellipse cx="47" cy="40" rx="3.5" ry="5" fill="#212529"/>
+          <polygon points="38,47 42,47 40,49" fill="#ffffff"/>
+          <path d="M30 46 L20 45 M30 50 L20 51 M50 46 L60 45 M50 50 L60 51" stroke="#fed7aa" stroke-width="2"/>
+        </svg>
+        <span>Cool Cat</span>
+      </button>
+    </div>
+
+    <button type="button" class="btn-confirm-age" onclick="closeAvatarModal()">
+      Save Avatar ✨
+    </button>
+  </div>
+</div>
+
 <main class="app-screen" id="appScreen">
 
   <!-- 1. Top Navbar -->
@@ -144,8 +248,8 @@
       <div class="header-right-strip">
         <!-- Interactive Pill to reopen Age Modal at any time -->
         <button type="button" class="btn-age-pill" onclick="openAgeModal()">
-          🎯 Age: <strong id="ageSelectedLabel">7</strong> ▾
-        </button>
+  🎯 Age: <strong id="ageSelectedLabel">7</strong> ▾
+</button>
 
         <div class="online-pill">
           <span class="pulse-dot"></span>
@@ -206,20 +310,21 @@
 
     <!-- Surprise Prompt Card with Avatar -->
     <div class="prompt-card-avatar-view" id="promptCard">
-      <div class="avatar-badge-wrap">
-        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="40" r="38" fill="#d0ebff"/>
-          <circle cx="40" cy="38" r="22" fill="#ffd8a8"/>
-          <path d="M26 30 C26 16 54 16 54 30 Z" fill="#5c3613"/>
-          <circle cx="33" cy="38" r="3" fill="#212529"/>
-          <circle cx="47" cy="38" r="3" fill="#212529"/>
-          <path d="M36 46 Q40 50 44 46" stroke="#c92a2a" stroke-width="2.5" stroke-linecap="round"/>
-          <rect x="15" y="30" width="8" height="18" rx="4" fill="#339af0"/>
-          <rect x="57" y="30" width="8" height="18" rx="4" fill="#339af0"/>
-          <path d="M19 32 C19 16 61 16 61 32" stroke="#339af0" stroke-width="4" stroke-linecap="round" fill="none"/>
-        </svg>
-        <div class="avatar-check-badge">✓</div>
-      </div>
+      <div class="avatar-badge-wrap" id="mainAvatarBadge" onclick="openAvatarModal()" title="Tap to change avatar">
+  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="40" cy="40" r="38" fill="#d0ebff"/>
+    <circle cx="40" cy="38" r="22" fill="#ffd8a8"/>
+    <path d="M26 30 C26 16 54 16 54 30 Z" fill="#5c3613"/>
+    <circle cx="33" cy="38" r="3" fill="#212529"/>
+    <circle cx="47" cy="38" r="3" fill="#212529"/>
+    <path d="M36 46 Q40 50 44 46" stroke="#c92a2a" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="15" y="30" width="8" height="18" rx="4" fill="#339af0"/>
+    <rect x="57" y="30" width="8" height="18" rx="4" fill="#339af0"/>
+    <path d="M19 32 C19 16 61 16 61 32" stroke="#339af0" stroke-width="4" stroke-linecap="round" fill="none"/>
+  </svg>
+  <div class="avatar-check-badge">✓</div>
+</div>
+
 
       <h2 class="prompt-text-bold" id="wordDisplay">If animals could talk</h2>
       <p class="prompt-helper-text" id="promptHelperText">Pick an animal and tell what funny secrets they would share with you!</p>
@@ -294,20 +399,141 @@
   }
 
   function selectAge(btn, val) {
-    document.querySelectorAll('.age-num-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  document.querySelectorAll('.age-num-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 
-    const label = document.getElementById('ageSelectedLabel');
-    if (label) label.innerText = val;
+  const label = document.getElementById('ageSelectedLabel');
+  if (label) label.innerText = val;
 
-    const num = parseInt(val, 10);
-    const sel = document.getElementById('ageGroup');
-    if (num <= 6) sel.value = "4-6 years old";
-    else if (num <= 9) sel.value = "7-9 years old";
-    else if (num <= 12) sel.value = "10-12 years old";
-    else sel.value = "13-15 years old";
+  const num = parseInt(val, 10);
+  const sel = document.getElementById('ageGroup');
+  if (num <= 6) sel.value = "4-6 years old";
+  else if (num <= 9) sel.value = "7-9 years old";
+  else if (num <= 12) sel.value = "10-12 years old";
+  else sel.value = "13-15 years old";
 
-    localStorage.setItem('vocoki_saved_age_num', val);
+  // Saves choice permanently so the popup won't auto-open next visit
+  localStorage.setItem('vocoki_saved_age_num', val);
+}
+
+    /* ==========================================================================
+     Avatar Selection & Persistence Engine
+     ========================================================================== */
+  const avatarSvgLibrary = {
+    starboy: `
+      <svg viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" fill="#d0ebff"/>
+        <circle cx="40" cy="38" r="22" fill="#ffd8a8"/>
+        <path d="M26 30 C26 16 54 16 54 30 Z" fill="#5c3613"/>
+        <circle cx="33" cy="38" r="3" fill="#212529"/>
+        <circle cx="47" cy="38" r="3" fill="#212529"/>
+        <path d="M36 46 Q40 50 44 46" stroke="#c92a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <rect x="15" y="30" width="8" height="18" rx="4" fill="#339af0"/>
+        <rect x="57" y="30" width="8" height="18" rx="4" fill="#339af0"/>
+        <path d="M19 32 C19 16 61 16 61 32" stroke="#339af0" stroke-width="4" stroke-linecap="round" fill="none"/>
+      </svg>`,
+    sparklegirl: `
+      <svg viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" fill="#fce7f3"/>
+        <path d="M20 45 C18 20 62 20 60 45 Z" fill="#b91c1c"/>
+        <circle cx="40" cy="40" r="22" fill="#fed7aa"/>
+        <circle cx="33" cy="39" r="3" fill="#212529"/>
+        <circle cx="47" cy="39" r="3" fill="#212529"/>
+        <path d="M36 47 Q40 51 44 47" stroke="#c92a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="26" cy="26" r="6" fill="#f43f5e"/>
+        <circle cx="54" cy="26" r="6" fill="#f43f5e"/>
+      </svg>`,
+    astro: `
+      <svg viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" fill="#ede9fe"/>
+        <circle cx="40" cy="40" r="26" fill="#ffffff" stroke="#7048e8" stroke-width="3"/>
+        <rect x="25" y="28" width="30" height="20" rx="10" fill="#0f172a"/>
+        <path d="M28 38 Q40 32 52 38" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>`,
+    panda: `
+      <svg viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" fill="#e0f2fe"/>
+        <circle cx="24" cy="22" r="10" fill="#1e293b"/>
+        <circle cx="56" cy="22" r="10" fill="#1e293b"/>
+        <circle cx="40" cy="42" r="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+        <ellipse cx="32" cy="40" rx="6" ry="8" fill="#1e293b"/>
+        <ellipse cx="48" cy="40" rx="6" ry="8" fill="#1e293b"/>
+        <circle cx="33" cy="38" r="2.5" fill="#ffffff"/>
+        <circle cx="47" cy="38" r="2.5" fill="#ffffff"/>
+        <ellipse cx="40" cy="48" rx="4" ry="2.5" fill="#1e293b"/>
+      </svg>`,
+    dino: `
+      <svg viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" fill="#dcfce7"/>
+        <circle cx="40" cy="40" r="24" fill="#22c55e"/>
+        <circle cx="34" cy="36" r="4" fill="#ffffff"/>
+        <circle cx="46" cy="36" r="4" fill="#ffffff"/>
+        <circle cx="35" cy="36" r="2" fill="#0f172a"/>
+        <circle cx="45" cy="36" r="2" fill="#0f172a"/>
+        <path d="M34 46 Q40 52 46 46" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="32,18 40,24 48,18" fill="#facc15"/>
+      </svg>`,
+    cat: `
+      <svg viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" fill="#fef3c7"/>
+        <polygon points="22,34 26,14 40,26" fill="#f97316"/>
+        <polygon points="58,34 54,14 40,26" fill="#f97316"/>
+        <circle cx="40" cy="42" r="22" fill="#fb923c"/>
+        <ellipse cx="33" cy="40" rx="3.5" ry="5" fill="#212529"/>
+        <ellipse cx="47" cy="40" rx="3.5" ry="5" fill="#212529"/>
+        <polygon points="38,47 42,47 40,49" fill="#ffffff"/>
+        <path d="M30 46 L20 45 M30 50 L20 51 M50 46 L60 45 M50 50 L60 51" stroke="#fed7aa" stroke-width="2"/>
+      </svg>`
+  };
+
+  let currentAvatarKey = 'starboy';
+
+  function openAvatarModal() {
+    const modal = document.getElementById('avatarModal');
+    if (modal) modal.style.display = 'flex';
+  }
+
+  function closeAvatarModal() {
+    const modal = document.getElementById('avatarModal');
+    if (modal) modal.style.display = 'none';
+  }
+
+  function selectAvatar(key, btn) {
+    if (!avatarSvgLibrary[key]) return;
+    currentAvatarKey = key;
+
+    document.querySelectorAll('.avatar-option-btn').forEach(b => b.classList.remove('selected'));
+    if (btn) btn.classList.add('selected');
+
+    renderAvatar(key);
+    localStorage.setItem('vocoki_saved_avatar_key', key);
+  }
+
+  function renderAvatar(key) {
+  const svgCode = avatarSvgLibrary[key] || avatarSvgLibrary.starboy;
+
+  const badge = document.getElementById('mainAvatarBadge');
+  if (badge) {
+    badge.innerHTML = `${svgCode}<div class="avatar-check-badge">✓</div>`;
+  }
+
+  const modalAvatar = document.querySelector('.modal-sheet-avatar-area .avatar-badge-wrap');
+  if (modalAvatar) {
+    modalAvatar.innerHTML = `${svgCode}<div class="avatar-check-badge">✓</div>`;
+  }
+}
+
+  function restoreSavedAvatar() {
+    const saved = localStorage.getItem('vocoki_saved_avatar_key');
+    if (saved && avatarSvgLibrary[saved]) {
+      currentAvatarKey = saved;
+      const btn = document.querySelector(`.avatar-option-btn[onclick*="${saved}"]`);
+      if (btn) {
+        document.querySelectorAll('.avatar-option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      }
+    }
+    renderAvatar(currentAvatarKey);
   }
 
   // Hook Screen Dismissal + Auto Open Age Modal on Arrival
@@ -319,18 +545,23 @@
   });
 
   setTimeout(() => {
-    const splash = document.getElementById('splashScreen');
-    if (splash) {
-      splash.style.opacity = '0';
-      splash.style.visibility = 'hidden';
-      setTimeout(() => {
-        if (splash.parentNode) splash.parentNode.removeChild(splash);
-        // Show age popup automatically after hook screen
+  const splash = document.getElementById('splashScreen');
+  if (splash) {
+    splash.style.opacity = '0';
+    splash.style.visibility = 'hidden';
+    setTimeout(() => {
+      if (splash.parentNode) splash.parentNode.removeChild(splash);
+      
+      // Only auto-open the popup if the child hasn't chosen an age yet
+      const savedAge = localStorage.getItem('vocoki_saved_age_num');
+      if (!savedAge) {
         openAgeModal();
-        if (typeof initOnboardingGuide === 'function') initOnboardingGuide();
-      }, 400);
-    }
-  }, 2000);
+      }
+      
+      if (typeof initOnboardingGuide === 'function') initOnboardingGuide();
+    }, 400);
+  }
+}, 2000);
 
   /* ==========================================================================
      Theme Engine
@@ -500,6 +731,8 @@
 
   async function loadModalSnippet() {
     try {
+      restoreSavedAvatar();
+      restoreSavedName();
       const response = await fetch('/modal.html');
       const html = await response.text();
       document.getElementById('modalContainer').innerHTML = html;
@@ -978,6 +1211,7 @@
     loadModalSnippet();
     restoreSavedName();
     restoreSavedPreferences();
+    restoreSavedAvatar();
   });
 </script>
 </body>
