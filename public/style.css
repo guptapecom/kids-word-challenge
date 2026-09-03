@@ -209,6 +209,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative;
+  z-index: 100; /* Stacks header components above banner */
 }
 
 .header-top-bar {
@@ -216,6 +218,8 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  position: relative;
+  z-index: 101;
 }
 
 .brand-logo-area {
@@ -390,12 +394,6 @@ body {
 /* ==========================================================================
    6. Ribbon Banner
    ========================================================================== */
-/* ==========================================================================
-   Banner Repositioned & Refined (Shifted Down for Breathability)
-   ========================================================================== */
-/* ==========================================================================
-   Purple Banner Shifted Down
-   ========================================================================== */
 .hero-purple-banner {
   background: linear-gradient(135deg, #7048e8 0%, #5f3dc4 60%, #4c28b5 100%);
   border-radius: 18px;
@@ -406,11 +404,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 3px;
-  margin-top: 18px;       /* Increased top margin to push banner down */
-  margin-bottom: 12px;    /* Clean spacing above the topic stage */
+  margin-top: 18px;
+  margin-bottom: 12px;
   border: 1.5px solid rgba(255, 255, 255, 0.25);
   position: relative;
   overflow: hidden;
+  z-index: 1; /* Keeps banner safely below tooltips & menus */
 }
 
 .hero-purple-banner::after {
@@ -605,7 +604,7 @@ body {
 
 /* ==========================================================================
    8. Recording Dock & Mic Bar
-   ========================================================================== */
+   ========================================================================= */
 .recording-bar {
   display: none;
   align-items: center;
@@ -1095,4 +1094,114 @@ body {
   border-color: var(--brand-purple);
   box-shadow: 0 4px 12px rgba(112, 72, 232, 0.25);
   transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Coins & Gamification Styling
+   ========================================================================== */
+.coin-pill {
+  position: relative;
+  background: #fff9db;
+  border: 1.5px solid #ffe066;
+  border-radius: 50px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: #d9480f;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(245, 159, 0, 0.18);
+  transition: transform 0.15s ease;
+}
+
+.coin-pill:hover,
+.coin-pill:focus {
+  transform: scale(1.04);
+}
+
+.coin-icon {
+  font-size: 0.95rem;
+}
+
+/* Tooltip on Top Coin Pill */
+.coin-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 210px;
+  background: #212529;
+  color: #ffffff;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  line-height: 1.35;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  z-index: 9999; /* Floats above everything */
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(-4px);
+  pointer-events: none;
+}
+
+.coin-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 18px;
+  border-width: 0 6px 6px 6px;
+  border-style: solid;
+  border-color: transparent transparent #212529 transparent;
+}
+
+.coin-pill:hover .coin-tooltip,
+.coin-pill:focus .coin-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Modal Coin Reward Banner */
+.modal-coin-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #fff3bf, #ffe066);
+  border: 1.5px solid #fcc419;
+  color: #e67700;
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 900;
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(252, 196, 25, 0.35);
+}
+
+.coin-vault-sub {
+  font-size: 0.75rem;
+  color: #7950f2;
+}
+
+.pulse-reward {
+  animation: coinCelebrate 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes coinCelebrate {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.coin-bounce {
+  display: inline-block;
+  animation: miniBounce 1s infinite alternate ease-in-out;
+}
+
+@keyframes miniBounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-3px); }
 }

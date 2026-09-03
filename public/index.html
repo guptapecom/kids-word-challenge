@@ -246,16 +246,26 @@
       </div>
 
       <div class="header-right-strip">
-        <!-- Interactive Pill to reopen Age Modal at any time -->
-        <button type="button" class="btn-age-pill" onclick="openAgeModal()">
-  🎯 Age: <strong id="ageSelectedLabel">7</strong> ▾
-</button>
+  <!-- Interactive Pill to reopen Age Modal at any time -->
+  <button type="button" class="btn-age-pill" onclick="openAgeModal()">
+    🎯 Age: <strong id="ageSelectedLabel">7</strong> ▾
+  </button>
 
-        <div class="online-pill">
-          <span class="pulse-dot"></span>
-          <span id="onlineCount">136</span>
-        </div>
-      </div>
+  <!-- Coin Wallet Pill with 100-coin Tooltip -->
+  <div class="coin-pill" tabindex="0" aria-label="Vocoki Coins">
+    <span class="coin-icon">🪙</span>
+    <span id="coinCountDisplay">0</span>
+    <div class="coin-tooltip">
+      ⭐ <strong>100 Coins Goal!</strong><br>
+      Collect 100 coins to unlock secret themes, custom doodles, avatars &amp; surprise words!
+    </div>
+  </div>
+
+  <div class="online-pill">
+    <span class="pulse-dot"></span>
+    <span id="onlineCount">136</span>
+  </div>
+</div>
     </div>
 
     <!-- Secondary control strip -->
@@ -914,6 +924,15 @@
       };
 
       mediaRecorder.start(250);
+      
+if (typeof window.posthog?.capture === 'function') {
+  posthog.capture('Recording Started', {
+    coins_balance: getCoinBalance(),
+    topic: document.getElementById("wordDisplay")?.innerText || "Unknown",
+    duration_selected: totalDuration
+  });
+}
+
 
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (SpeechRecognition) {
@@ -1013,6 +1032,43 @@
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
     window.open(whatsappUrl, '_blank');
   }
+/* ==========================================================================
+   Coins & Rewards Engine
+   ========================================================================== */
+function getCoinBalance() {
+  return parseInt(localStorage.getItem('vocoki_user_coins') || '0', 10);
+}
+
+function updateCoinDisplays(total) {
+  const navCoin = document.getElementById('coinCountDisplay');
+  const modalBalance = document.getElementById('modalTotalCoins');
+  if (navCoin) navCoin.innerText = total;
+  if (modalBalance) modalBalance.innerText = total;
+}
+
+function awardCoinsForRating(starsCount) {
+  let earned = 0;
+  if (starsCount === 5) earned = 5;
+  else if (starsCount === 4) earned = 2;
+
+  const current = getCoinBalance();
+  const nextTotal = current + earned;
+  localStorage.setItem('vocoki_user_coins', nextTotal.toString());
+  updateCoinDisplays(nextTotal);
+
+  if (earned > 0 && typeof window.posthog?.capture === 'function') {
+    posthog.capture('Coins Earned', {
+      coins_earned: earned,
+      total_coins: nextTotal,
+      stars: starsCount
+    });
+  }
+  return { earned, total: nextTotal };
+}
+
+function initCoinWallet() {
+  updateCoinDisplays(getCoinBalance());
+}
 
   /* Dynamic Algorithmic Evaluation */
   function evaluateSpeech() {
@@ -1110,6 +1166,31 @@
     document.getElementById("starsDisplay").innerText = stars;
     document.getElementById("ratingFeedback").innerText = feedback;
     document.getElementById("resultModal").style.display = "flex";
+
+        let starCount = 3;
+    if (speechSecondsSpoken >= 35 && wordCount >= 20) {
+      stars = "⭐⭐⭐⭐⭐";
+      starCount = 5;
+      feedback = `🏆 Outstanding speech, ${speakerLabel}! You are a true Star Storyteller!`;
+    } else if (speechSecondsSpoken >= 15 || wordCount >= 10) {
+      stars = "⭐⭐⭐⭐";
+      starCount = 4;
+      feedback = `🎉 Awesome talk, ${speakerLabel}! Clear voice and great pace!`;
+    }
+
+    // Award Coins & Update Modal Reward Banner
+    const reward = awardCoinsForRating(starCount);
+    const modalRewardBanner = document.getElementById("modalCoinReward");
+    const earnedLabel = document.getElementById("coinsEarnedAmount");
+    if (modalRewardBanner && earnedLabel) {
+      if (reward.earned > 0) {
+        earnedLabel.innerText = `+${reward.earned} Coins! 🪙`;
+        modalRewardBanner.classList.add("pulse-reward");
+        modalRewardBanner.style.display = "flex";
+      } else {
+        modalRewardBanner.style.display = "none";
+      }
+    }
 
     completeOnboardingPermanently();
   }
@@ -1211,6 +1292,7 @@
     restoreSavedName();
     restoreSavedPreferences();
     restoreSavedAvatar();
+    initCoinWallet();
   });
 </script>
 </body>
