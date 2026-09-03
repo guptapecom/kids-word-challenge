@@ -57,7 +57,7 @@
 </head>
 <body>
 
-<!-- Space-Doodle Themed Hook Screen -->
+<!-- Space-Doodle Hook Screen -->
 <div id="splashScreen" class="splash-screen">
   <div class="splash-deco-star" style="top: 12%; left: 15%; font-size: 28px;">⭐</div>
   <div class="splash-deco-star" style="top: 20%; right: 18%; font-size: 24px; animation-delay: 0.5s;">✨</div>
@@ -85,41 +85,54 @@
   </div>
 </div>
 
-<script>
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      const bar = document.getElementById('splashProgressBar');
-      if (bar) bar.style.width = '100%';
-    }, 50);
-  });
-
-  setTimeout(() => {
-    const splash = document.getElementById('splashScreen');
-    if (splash) {
-      splash.style.opacity = '0';
-      splash.style.visibility = 'hidden';
-      setTimeout(() => {
-        if (splash.parentNode) splash.parentNode.removeChild(splash);
-        if (typeof initOnboardingGuide === 'function') initOnboardingGuide();
-      }, 400);
-    }
-  }, 2000);
-</script>
-
+<!-- Floating Doodles Engine -->
 <div class="bg-doodles" id="doodlesContainer"></div>
+
+<!-- Age Selection Popup Modal -->
+<div class="age-modal-overlay" id="ageModal">
+  <div class="age-modal-card">
+    <div class="age-modal-header">
+      <h3>Select Child's Age 🎯</h3>
+      <p>Topics adapt to speaking skill & age group</p>
+    </div>
+
+    <div class="age-grid-3x3" id="ageGrid">
+      <button type="button" class="age-num-btn" onclick="selectAge(this, '4')">4</button>
+      <button type="button" class="age-num-btn" onclick="selectAge(this, '5')">5</button>
+      <button type="button" class="age-num-btn" onclick="selectAge(this, '6')">6</button>
+      <button type="button" class="age-num-btn active" onclick="selectAge(this, '7')">7</button>
+      <button type="button" class="age-num-btn" onclick="selectAge(this, '8')">8</button>
+      <button type="button" class="age-num-btn" onclick="selectAge(this, '9')">9</button>
+      <button type="button" class="age-num-btn" onclick="selectAge(this, '10')">10</button>
+      <button type="button" class="age-num-btn" onclick="selectAge(this, '12')">12</button>
+      <button type="button" class="age-num-btn" onclick="selectAge(this, '14+')">14+</button>
+    </div>
+
+    <button type="button" class="btn-confirm-age" onclick="closeAgeModal()">
+      Let's Speak! 🚀
+    </button>
+  </div>
+</div>
 
 <main class="app-screen" id="appScreen">
 
-  <!-- 1. Streamlined Top Navbar (Without nav-video-right-group) -->
+  <!-- 1. Top Navbar -->
   <header class="app-nav">
     <div class="header-top-bar">
       <div class="brand-logo-area">
         <div class="brand-logo-text">voco<span>ki</span></div>
       </div>
 
-      <div class="online-pill">
-        <span class="pulse-dot"></span>
-        <span id="onlineCount">136</span> online
+      <div class="header-right-strip">
+        <!-- Interactive Pill to reopen Age Modal at any time -->
+        <button type="button" class="btn-age-pill" onclick="openAgeModal()">
+          🎯 Age: <strong id="ageSelectedLabel">7</strong> ▾
+        </button>
+
+        <div class="online-pill">
+          <span class="pulse-dot"></span>
+          <span id="onlineCount">136</span>
+        </div>
       </div>
     </div>
 
@@ -135,77 +148,45 @@
 
       <div class="theme-menu-container">
         <button type="button" class="nav-pill-btn" onclick="toggleThemeMenu(event)">🎨 Theme ▾</button>
-        <div class="theme-list-dropdown" id="themeDropdown">
-          <button class="theme-list-item" onclick="switchTheme(0)">☀️ White Pure</button>
-          <button class="theme-list-item" onclick="switchTheme(1)">🎧 Equalizer</button>
-          <button class="theme-list-item" onclick="switchTheme(2)">🌟 Centerstage</button>
-          <button class="theme-list-item" onclick="switchTheme(3)">🎙️ On Air</button>
-          <button class="theme-list-item" onclick="switchTheme(4)">💬 Comic Story</button>
-          <button class="theme-list-item" onclick="switchTheme(5)">🕹️ Synthwave</button>
-          <button class="theme-list-item" onclick="switchTheme(6)">🌊 Pulse Wave</button>
-          <button class="theme-list-item" onclick="switchTheme(7)">🏆 Gold Mic</button>
-          <div class="theme-list-divider"></div>
-          <button class="theme-list-item" onclick="document.getElementById('customUploadInput').click()">📤 Custom Photo...</button>
-          <input type="file" id="customUploadInput" accept="image/*" style="display:none;" onchange="handleCustomUpload(event)">
-          <div class="theme-list-divider"></div>
-          <label class="doodle-menu-toggle-row">
-            <span>✨ Floating Doodles</span>
-            <input type="checkbox" id="doodleCheckbox" onchange="toggleDoodles(this.checked)">
-          </label>
-        </div>
+       <div class="theme-list-dropdown" id="themeDropdown">
+  <button class="theme-list-item" onclick="switchTheme(0)">✨ Default Pastel Lilac</button>
+  <button class="theme-list-item" onclick="switchTheme(1)">🔮 Cosmic Lavender</button>
+  <button class="theme-list-item" onclick="switchTheme(2)">🌻 Sunny Meadow</button>
+  <button class="theme-list-item" onclick="switchTheme(3)">🍑 Peach Sunrise</button>
+  <button class="theme-list-item" onclick="switchTheme(4)">☁️ Baby Blue Drift</button>
+  <button class="theme-list-item" onclick="switchTheme(5)">🌱 Mint Gelato</button>
+  <button class="theme-list-item" onclick="switchTheme(6)">🎈 Confetti Carnival</button>
+  <button class="theme-list-item" onclick="switchTheme(7)">🍯 Warm Honey</button>
+  <div class="theme-list-divider"></div>
+  <button class="theme-list-item" onclick="document.getElementById('customUploadInput').click()">📤 Custom Photo...</button>
+  <input type="file" id="customUploadInput" accept="image/*" style="display:none;" onchange="handleCustomUpload(event)">
+  <div class="theme-list-divider"></div>
+  <label class="doodle-menu-toggle-row">
+    <span>✨ Floating Doodles</span>
+    <input type="checkbox" id="doodleCheckbox" onchange="toggleDoodles(this.checked)">
+  </label>
+</div>
       </div>
     </div>
   </header>
 
-  <!-- 2. Universal Ages 4-15 Tagline Banner -->
+  <!-- 2. Universal Banner -->
   <div class="hero-purple-banner">
     <h1 id="mainTitle">VOCOKI</h1>
-    <p id="mainSubtitle">Storytelling, Speech & Confidence Practice for Ages 4–15 ⭐</p>
+    <p id="mainSubtitle">Storytelling, Speech & Confidence Practice for Kids ⭐</p>
   </div>
 
-  <!-- 3. Stage Container with Corrected Age Grid -->
+  <!-- 3. Clean Single-Screen Stage -->
   <section class="main-stage-container" id="mainStage">
 
-    <!-- Age Grid Box: 4 to 15 Years -->
-    <div class="video-age-card">
-      <div class="age-card-title">Age selected: <span id="ageSelectedLabel" style="color:var(--brand-purple);">7</span></div>
-      
-      <div class="age-grid-3x3" id="ageGrid">
-        <button type="button" class="age-num-btn" onclick="selectAge(this, '4')">4</button>
-        <button type="button" class="age-num-btn" onclick="selectAge(this, '5')">5</button>
-        <button type="button" class="age-num-btn" onclick="selectAge(this, '6')">6</button>
-        <button type="button" class="age-num-btn active" onclick="selectAge(this, '7')">7</button>
-        <button type="button" class="age-num-btn" onclick="selectAge(this, '8')">8</button>
-        <button type="button" class="age-num-btn" onclick="selectAge(this, '9')">9</button>
-        <button type="button" class="age-num-btn" onclick="selectAge(this, '10')">10</button>
-        <button type="button" class="age-num-btn" onclick="selectAge(this, '12')">12</button>
-        <button type="button" class="age-num-btn" onclick="selectAge(this, '14+')">14+</button>
-      </div>
+    <select id="ageGroup" style="display:none;">
+      <option value="4-6 years old">🐣 Ages 4-6</option>
+      <option value="7-9 years old" selected>🦁 Ages 7-9</option>
+      <option value="10-12 years old">🚀 Ages 10-12</option>
+      <option value="13-15 years old">🎓 Ages 13-15</option>
+    </select>
 
-      <select id="ageGroup" style="display:none;">
-        <option value="4-6 years old">🐣 Ages 4-6</option>
-        <option value="7-9 years old" selected>🦁 Ages 7-9</option>
-        <option value="10-12 years old">🚀 Ages 10-12</option>
-        <option value="13-15 years old">🎓 Ages 13-15</option>
-      </select>
-
-      <div class="action-btn-anchor" id="actionBtnRow" style="position:relative; width:100%;">
-        <div id="onboardingTooltip" class="onboarding-guide-badge" style="display:none;">
-          <span id="guideText">1️⃣ Tap Random Topic!</span>
-        </div>
-        <button class="btn-random-topic-main" id="genBtn" onclick="generatePrompt('topic')" style="width:100%;">
-          🎲 Random Topic
-        </button>
-      </div>
-
-      <div style="display: flex; justify-content: center; gap: 8px;">
-        <button class="btn-quick-word-alt" id="wordBtn" onclick="generatePrompt('word')">
-          ⚡ Quick Word
-        </button>
-      </div>
-    </div>
-
-    <!-- Surprise Prompt Card -->
+    <!-- Surprise Prompt Card with Avatar -->
     <div class="prompt-card-avatar-view" id="promptCard">
       <div class="avatar-badge-wrap">
         <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -223,13 +204,25 @@
       </div>
 
       <h2 class="prompt-text-bold" id="wordDisplay">If animals could talk</h2>
-      <!-- Helper text displayed strictly for the 1st prompt; removed after generation -->
       <p class="prompt-helper-text" id="promptHelperText">Pick an animal and tell what funny secrets they would share with you!</p>
 
       <div class="bonus-card" id="bonusCard" style="display:none;">
         <div class="bonus-title">✨ Bonus Challenge Words</div>
         <div class="bonus-chips" id="adjoiningDisplay"></div>
       </div>
+    </div>
+
+    <!-- Main Action Buttons Row -->
+    <div class="action-buttons-row" id="actionBtnRow">
+      <div id="onboardingTooltip" class="onboarding-guide-badge" style="display:none;">
+        <span id="guideText">1️⃣ Tap Random Topic!</span>
+      </div>
+      <button class="btn-random-topic-main" id="genBtn" onclick="generatePrompt('topic')">
+        🎲 Random Topic
+      </button>
+      <button class="btn-quick-word-alt" id="wordBtn" onclick="generatePrompt('word')">
+        ⚡ Quick Word
+      </button>
     </div>
 
   </section>
@@ -248,7 +241,7 @@
     <span class="rec-pulse"></span> 🎙️ Mic Live • Speak loud and clear!
   </div>
 
-  <!-- Bottom Timer & Recording Dock -->
+  <!-- 4. Bottom Timer & Recording Dock -->
   <footer class="timer-dock">
     <select id="talkDuration" class="duration-select" onchange="changeDuration()">
       <option value="60" selected>⏱️ 1 Min</option>
@@ -269,10 +262,23 @@
 <div id="modalContainer"></div>
 
 <script>
-  /* Age Selection Logic for 4-15 Years */
+  /* ==========================================================================
+     Age Modal Popup Engine (Triggered after Splash & from Header Pill)
+     ========================================================================== */
+  function openAgeModal() {
+    const modal = document.getElementById('ageModal');
+    if (modal) modal.style.display = 'flex';
+  }
+
+  function closeAgeModal() {
+    const modal = document.getElementById('ageModal');
+    if (modal) modal.style.display = 'none';
+  }
+
   function selectAge(btn, val) {
     document.querySelectorAll('.age-num-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+
     const label = document.getElementById('ageSelectedLabel');
     if (label) label.innerText = val;
 
@@ -282,21 +288,67 @@
     else if (num <= 9) sel.value = "7-9 years old";
     else if (num <= 12) sel.value = "10-12 years old";
     else sel.value = "13-15 years old";
+
+    localStorage.setItem('vocoki_saved_age_num', val);
   }
+
+  // Hook Screen Dismissal + Auto Open Age Modal on Arrival
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      const bar = document.getElementById('splashProgressBar');
+      if (bar) bar.style.width = '100%';
+    }, 50);
+  });
+
+  setTimeout(() => {
+    const splash = document.getElementById('splashScreen');
+    if (splash) {
+      splash.style.opacity = '0';
+      splash.style.visibility = 'hidden';
+      setTimeout(() => {
+        if (splash.parentNode) splash.parentNode.removeChild(splash);
+        // Show age popup automatically after hook screen
+        openAgeModal();
+        if (typeof initOnboardingGuide === 'function') initOnboardingGuide();
+      }, 400);
+    }
+  }, 2000);
 
   /* ==========================================================================
      Theme Engine
      ========================================================================== */
+    /* ==========================================================================
+     High-Vibrancy SVG Themes & Backdrops Engine
+     ========================================================================== */
+    /* ==========================================================================
+     Harmonious Pastel Themes & Backdrops Engine (Matching Onload Aesthetics)
+     ========================================================================== */
   const backdrops = [
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900"><rect width="600" height="900" fill="%23ffffff"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="eq_bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%2306070d"/><stop offset="100%" stop-color="%23171338"/></linearGradient></defs><rect width="600" height="900" fill="url(%23eq_bg)"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><rect width="600" height="900" fill="%231a103c"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><rect width="600" height="900" fill="%23450a0a"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><rect width="600" height="900" fill="%23f43f5e"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><rect width="600" height="900" fill="%2309090b"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><rect width="600" height="900" fill="%23064e3b"/></svg>`,
-    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><rect width="600" height="900" fill="%23422006"/></svg>`
+    // 0. Default Soft Lilac Aura (The Clean Onload Theme)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><radialGradient id="th_default" cx="50%" cy="10%" r="90%"><stop offset="0%" stop-color="%23f8f9fa"/><stop offset="50%" stop-color="%23f3f0ff"/><stop offset="100%" stop-color="%23e5dbff"/></radialGradient></defs><rect width="600" height="900" fill="url(%23th_default)"/><circle cx="80" cy="160" r="120" fill="%23ffd43b" opacity="0.14"/><circle cx="520" cy="380" r="160" fill="%23ff922b" opacity="0.08"/><circle cx="150" cy="740" r="190" fill="%2320c997" opacity="0.1"/></svg>`,
+
+    // 1. Cosmic Lavender & Twinkle Stars
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="th_lavender" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23faf5ff"/><stop offset="50%" stop-color="%23f3e8ff"/><stop offset="100%" stop-color="%23e9d5ff"/></linearGradient></defs><rect width="600" height="900" fill="url(%23th_lavender)"/><circle cx="120" cy="220" r="70" fill="%23c084fc" opacity="0.16"/><circle cx="480" cy="500" r="100" fill="%23f472b6" opacity="0.15"/><polygon points="460,160 464,172 476,172 466,180 470,192 460,184 450,192 454,180 444,172 456,172" fill="%23eab308" opacity="0.6"/><polygon points="140,640 144,650 154,650 146,656 149,666 140,660 131,666 134,656 126,650 136,650" fill="%23a855f7" opacity="0.5"/><circle cx="300" cy="380" r="210" stroke="%23c084fc" stroke-width="2" stroke-dasharray="10 14" fill="none" opacity="0.25"/></svg>`,
+
+    // 2. Sunny Meadow & Sky (Soft Cyan & Buttercup Yellow)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><radialGradient id="th_sunny" cx="50%" cy="15%" r="85%"><stop offset="0%" stop-color="%23fef9c3"/><stop offset="45%" stop-color="%23f0fdf4"/><stop offset="100%" stop-color="%23e0f2fe"/></radialGradient></defs><rect width="600" height="900" fill="url(%23th_sunny)"/><circle cx="500" cy="180" r="90" fill="%23fde047" opacity="0.3"/><circle cx="100" cy="460" r="140" fill="%2386efac" opacity="0.18"/><circle cx="480" cy="720" r="160" fill="%237dd3fc" opacity="0.22"/><circle cx="150" cy="260" r="6" fill="%23eab308" opacity="0.5"/><circle cx="450" cy="380" r="8" fill="%2322c55e" opacity="0.4"/></svg>`,
+
+    // 3. Peach Sunrise (Warm Coral & Cotton Candy)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="th_peach" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23fff1f2"/><stop offset="50%" stop-color="%23ffe4e6"/><stop offset="100%" stop-color="%23fed7aa"/></linearGradient></defs><rect width="600" height="900" fill="url(%23th_peach)"/><circle cx="460" cy="240" r="120" fill="%23fb7185" opacity="0.14"/><circle cx="140" cy="520" r="150" fill="%23fdba74" opacity="0.2"/><circle cx="380" cy="740" r="130" fill="%23f43f5e" opacity="0.12"/><polygon points="200,200 205,212 218,212 207,220 211,232 200,224 189,232 193,220 182,212 195,212" fill="%23f43f5e" opacity="0.45"/></svg>`,
+
+    // 4. Baby Blue Cloud Drift
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><radialGradient id="th_blue" cx="50%" cy="20%" r="85%"><stop offset="0%" stop-color="%23f8fafc"/><stop offset="50%" stop-color="%23f0f9ff"/><stop offset="100%" stop-color="%23e0f2fe"/></radialGradient></defs><rect width="600" height="900" fill="url(%23th_blue)"/><ellipse cx="160" cy="220" rx="90" ry="40" fill="%23bae6fd" opacity="0.3"/><ellipse cx="450" cy="420" rx="110" ry="50" fill="%237dd3fc" opacity="0.22"/><ellipse cx="200" cy="680" rx="100" ry="45" fill="%2393c5fd" opacity="0.25"/><circle cx="480" cy="200" r="8" fill="%2338bdf8" opacity="0.5"/><circle cx="120" cy="500" r="6" fill="%2338bdf8" opacity="0.4"/></svg>`,
+
+    // 5. Mint Gelato (Fresh Pastel Mint & Pistachio)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="th_mint" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23f0fdf4"/><stop offset="50%" stop-color="%23dcfce7"/><stop offset="100%" stop-color="%23ccfbf1"/></linearGradient></defs><rect width="600" height="900" fill="url(%23th_mint)"/><circle cx="480" cy="260" r="110" fill="%2386efac" opacity="0.2"/><circle cx="120" cy="540" r="140" fill="%235eead4" opacity="0.22"/><circle cx="420" cy="740" r="120" fill="%23a7f3d0" opacity="0.25"/><circle cx="200" cy="300" r="8" fill="%2310b981" opacity="0.35"/><circle cx="450" cy="580" r="7" fill="%2314b8a6" opacity="0.35"/></svg>`,
+
+    // 6. Confetti Carnival (Soft Festive Dots & Ribbons)
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="th_carnival" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23faf5ff"/><stop offset="50%" stop-color="%23fff1f2"/><stop offset="100%" stop-color="%23f0f9ff"/></linearGradient></defs><rect width="600" height="900" fill="url(%23th_carnival)"/><circle cx="100" cy="180" r="16" fill="%23f472b6" opacity="0.35"/><circle cx="240" cy="140" r="12" fill="%23facc15" opacity="0.4"/><circle cx="480" cy="220" r="20" fill="%2338bdf8" opacity="0.3"/><circle cx="140" cy="460" r="14" fill="%234ade80" opacity="0.35"/><circle cx="440" cy="480" r="18" fill="%23c084fc" opacity="0.35"/><circle cx="220" cy="720" r="15" fill="%23fb923c" opacity="0.35"/><circle cx="480" cy="760" r="22" fill="%23f472b6" opacity="0.3"/></svg>`,
+
+    // 7. Warm Butter & Honey
+    `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900"><defs><linearGradient id="th_honey" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23fefce8"/><stop offset="50%" stop-color="%23fef9c3"/><stop offset="100%" stop-color="%23fef08a"/></linearGradient></defs><rect width="600" height="900" fill="url(%23th_honey)"/><circle cx="120" cy="200" r="90" fill="%23fde047" opacity="0.25"/><circle cx="480" cy="450" r="130" fill="%23facc15" opacity="0.2"/><circle cx="180" cy="700" r="150" fill="%23fbbf24" opacity="0.18"/><polygon points="460,200 464,212 476,212 466,220 470,232 460,224 450,232 454,220 444,212 456,212" fill="%23eab308" opacity="0.55"/></svg>`
   ];
+
 
   function toggleThemeMenu(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
@@ -376,7 +428,7 @@
     const container = document.getElementById("doodlesContainer");
     if (!container) return;
     container.innerHTML = "";
-    const totalDoodles = 9;
+    const totalDoodles = 8;
     for (let i = 0; i < totalDoodles; i++) {
       const emoji = doodleEmojis[i % doodleEmojis.length];
       const doodleEl = document.createElement("div");
@@ -500,7 +552,7 @@
     if (genBtn) genBtn.disabled = true;
     if (wordBtn) wordBtn.disabled = true;
 
-    // Remove the 1st prompt helper text upon subsequent generations
+    // Remove helper text after initial surprise prompt
     const helper = document.getElementById("promptHelperText");
     if (helper) helper.remove();
 
@@ -712,7 +764,8 @@
     window.open(whatsappUrl, '_blank');
   }
 
-    function evaluateSpeech() {
+  /* Dynamic Algorithmic Evaluation */
+  function evaluateSpeech() {
     const transcript = speechTextAccumulator.trim();
     const summaryBox = document.getElementById("summaryDisplay");
     const kidName = document.getElementById("kidNameInput")?.value.trim();
@@ -722,8 +775,7 @@
     const words = transcript ? transcript.split(/\s+/).filter(w => w.length > 0) : [];
     const wordCount = words.length;
 
-    // --- Dynamic Speech Scoring Calculations ---
-    // 1. Pronunciation: Based on browser speech-recognition confidence and transcript density
+    // 1. Pronunciation
     let pronunciationScore = 0;
     if (speechSecondsSpoken > 0) {
       if (wordCount >= 20) pronunciationScore = Math.min(96, 75 + Math.floor(Math.random() * 15));
@@ -732,7 +784,7 @@
       else pronunciationScore = speechSecondsSpoken > 5 ? 35 : 10;
     }
 
-    // 2. Tone & Pacing: Target ideal kid speaking rate of 70-120 words per minute (WPM)
+    // 2. Tone & Pacing (Words per minute)
     let pacingScore = 0;
     if (speechSecondsSpoken > 3) {
       const wpm = (wordCount / speechSecondsSpoken) * 60;
@@ -743,7 +795,7 @@
       pacingScore = 20;
     }
 
-    // 3. Vocabulary: Unique word ratio + length bonus
+    // 3. Vocabulary
     let vocabularyScore = 0;
     if (words.length > 0) {
       const uniqueWords = new Set(words.map(w => w.toLowerCase()));
@@ -753,14 +805,13 @@
       vocabularyScore = 15;
     }
 
-    // 4. Grammar: Basic sentence structure presence & word count threshold
+    // 4. Grammar
     let grammarScore = 0;
     if (wordCount >= 25) grammarScore = 85 + Math.floor(Math.random() * 10);
     else if (wordCount >= 12) grammarScore = 70 + Math.floor(Math.random() * 10);
     else if (wordCount >= 5) grammarScore = 45 + (wordCount * 2);
     else grammarScore = 20;
 
-    // --- Star Rating & Feedback Selection ---
     let stars = "⭐⭐⭐";
     let feedback = `Good effort, ${speakerLabel}! Keep practicing to speak even more!`;
 
@@ -772,7 +823,6 @@
       feedback = `🎉 Awesome talk, ${speakerLabel}! Clear voice and great pace!`;
     }
 
-    // Update Progress Bars & Text Values in Modal
     const updateMetric = (fillId, valId, score) => {
       const fill = document.getElementById(fillId);
       const val = document.getElementById(valId);
@@ -785,7 +835,6 @@
     updateMetric("fillPacing", "valPacing", pacingScore);
     updateMetric("fillVocabulary", "valVocabulary", vocabularyScore);
 
-    // Update Modal Topic & Stars
     const modalTopic = document.getElementById("modalTopicText");
     if (modalTopic) modalTopic.innerText = topic;
 
@@ -802,7 +851,7 @@
       summaryBox.innerHTML = `
         <div>
           • 🎯 <strong>Topic:</strong> ${topic}<br>
-          • ⏱️ <strong>Time:</strong> ${speechSecondsSpoken}s recorded (${wordCount} words spoken)<br>
+          • ⏱️ <strong>Time:</strong> ${speechSecondsSpoken}s recorded (${wordCount} words)<br>
           • ⭐ <strong>Highlights:</strong> ${bonusHitText}
         </div>
       `;
@@ -812,13 +861,8 @@
     document.getElementById("ratingFeedback").innerText = feedback;
     document.getElementById("resultModal").style.display = "flex";
 
-    // Ensure share button remains hidden
-    const shareBtn = document.getElementById("shareBtn");
-    if (shareBtn) shareBtn.style.display = "none";
-
     completeOnboardingPermanently();
   }
-
 
   function closeModal() {
     document.getElementById("resultModal").style.display = "none";
@@ -904,6 +948,12 @@
     }
     const savedDoodles = localStorage.getItem('vocoki_doodles_active');
     if (savedDoodles === 'true') toggleDoodles(true);
+
+    const savedAge = localStorage.getItem('vocoki_saved_age_num');
+    if (savedAge) {
+      const btn = Array.from(document.querySelectorAll('.age-num-btn')).find(b => b.innerText.trim() === savedAge);
+      if (btn) selectAge(btn, savedAge);
+    }
   }
 
   window.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. Fonts, Variables & Mobile Foundation
+   1. Foundation & Layout Reset (Zero-Scroll Viewport)
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800;900&family=Nunito:wght@700;800;900&display=swap');
 
@@ -11,7 +11,6 @@
   --accent-green: #20c997;
   --accent-cyan: #15aabf;
   --accent-yellow: #fcc419;
-  --bg-page: #f8f9fa;
   --text-main: #212529;
   --text-muted: #868e96;
   --border-subtle: #e9ecef;
@@ -26,8 +25,8 @@
 body {
   margin: 0;
   padding: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   font-family: 'Fredoka', cursive, sans-serif;
   background-color: #f1f3f5;
   background-image: radial-gradient(#d0bfff 0.85px, transparent 0.85px);
@@ -35,13 +34,12 @@ body {
   color: var(--text-main);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  overflow-x: hidden;
-  position: relative;
+  align-items: center;
+  overflow: hidden; /* No page scroll */
 }
 
 /* ==========================================================================
-   2. Floating Doodles Engine (Guaranteed Rendering & Visibility)
+   2. Floating Doodles Engine
    ========================================================================== */
 .bg-doodles {
   position: fixed;
@@ -56,23 +54,23 @@ body {
 
 .doodle {
   position: absolute;
-  font-size: 2rem;
+  font-size: 1.8rem;
   opacity: 0.9;
   user-select: none;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
   animation: floatDrift linear infinite;
-  bottom: -60px;
+  bottom: -50px;
 }
 
 @keyframes floatDrift {
   0% { transform: translateY(0vh) rotate(0deg) scale(0.9); opacity: 0; }
-  10% { opacity: 0.95; }
-  90% { opacity: 0.95; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.9; }
   100% { transform: translateY(-115vh) rotate(360deg) scale(1.1); opacity: 0; }
 }
 
 /* ==========================================================================
-   3. Space Doodle Hook Screen
+   3. Space Doodle Hook / Splash Screen
    ========================================================================== */
 .splash-screen {
   position: fixed;
@@ -107,9 +105,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 420px;
   gap: 12px;
   animation: splashPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
@@ -122,19 +117,19 @@ body {
 }
 
 .splash-rocket-wrap {
-  width: 95px;
-  height: 95px;
+  width: 85px;
+  height: 85px;
   filter: drop-shadow(0 12px 20px rgba(112, 72, 232, 0.3));
   animation: rocketBob 2.2s infinite ease-in-out alternate;
 }
 
 @keyframes rocketBob {
   0% { transform: translateY(0) rotate(-6deg); }
-  100% { transform: translateY(-12px) rotate(4deg); }
+  100% { transform: translateY(-10px) rotate(4deg); }
 }
 
 .splash-title-brand {
-  font-size: 3.2rem;
+  font-size: 3rem;
   font-weight: 900;
   color: var(--brand-purple);
   margin: 0;
@@ -146,19 +141,19 @@ body {
 }
 
 .splash-tagline-text {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: #495057;
   margin: 0;
 }
 
 .splash-loader-track {
-  width: 190px;
-  height: 8px;
+  width: 180px;
+  height: 7px;
   background: rgba(112, 72, 232, 0.15);
   border-radius: 20px;
   overflow: hidden;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .splash-loader-fill {
@@ -175,52 +170,45 @@ body {
 }
 
 /* ==========================================================================
-   4. Mobile Screen Architecture
+   4. App Screen Layout (Fits Screen Exactly Without Scrolling)
    ========================================================================== */
 .app-screen {
   width: 100%;
   max-width: 440px;
-  min-height: 100vh;
-  min-height: 100dvh;
-  margin: 0 auto;
-  padding: env(safe-area-inset-top, 8px) 14px env(safe-area-inset-bottom, 14px) 14px;
+  height: 100vh;
+  height: 100dvh;
+  padding: env(safe-area-inset-top, 8px) 12px env(safe-area-inset-bottom, 10px) 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
   background: #ffffff;
-  box-shadow: 0 0 40px rgba(112, 72, 232, 0.08);
+  box-shadow: 0 0 35px rgba(112, 72, 232, 0.08);
   position: relative;
   z-index: 10;
-  transition: background-image 0.3s ease;
   background-size: cover !important;
   background-position: center !important;
 }
 
 @media (min-width: 500px) {
-  body {
-    padding: 1.5rem 0;
-  }
+  body { padding: 1rem 0; }
   .app-screen {
-    min-height: 844px;
-    height: 94vh;
-    border-radius: 36px;
-    border: 4px solid #ffffff;
+    height: 92vh;
+    max-height: 840px;
+    border-radius: 32px;
+    border: 3.5px solid #ffffff;
     box-shadow: 0 20px 50px rgba(95, 61, 196, 0.18);
   }
 }
 
 /* ==========================================================================
-   5. Clean Navigation Bar
+   5. Clean Header Bar
    ========================================================================== */
 .app-nav {
   width: 100%;
-  background: #ffffff;
-  padding: 4px 0 6px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  border-bottom: 1.5px solid #f1f3f5;
+  gap: 6px;
 }
 
 .header-top-bar {
@@ -236,32 +224,60 @@ body {
 }
 
 .brand-logo-text {
-  font-size: 1.85rem;
+  font-size: 1.7rem;
   font-weight: 900;
   color: var(--brand-purple);
-  letter-spacing: -0.6px;
+  letter-spacing: -0.5px;
 }
 
 .brand-logo-text span {
   color: var(--brand-orange);
 }
 
+.header-right-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Age Selector Pill Button */
+.btn-age-pill {
+  background: #f3f0ff;
+  border: 1.5px solid #d0bfff;
+  color: var(--brand-purple);
+  border-radius: 50px;
+  padding: 5px 11px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(112, 72, 232, 0.1);
+  transition: transform 0.1s;
+}
+
+.btn-age-pill:active {
+  transform: scale(0.96);
+}
+
 .online-pill {
   background: #f8f9fa;
   border: 1px solid var(--border-subtle);
-  padding: 4px 10px;
+  padding: 4px 8px;
   border-radius: 50px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
   color: var(--text-muted);
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
 .pulse-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   background: var(--accent-green);
   border-radius: 50%;
   animation: liveDotBlink 1s infinite ease-in-out;
@@ -281,8 +297,8 @@ body {
 
 .name-input-appealing {
   flex: 1;
-  padding: 6px 12px;
-  font-size: 0.8rem;
+  padding: 5px 12px;
+  font-size: 0.78rem;
   font-family: inherit;
   font-weight: 800;
   border-radius: 50px;
@@ -305,15 +321,12 @@ body {
   background: #f8f9fa;
   border: 1.5px solid var(--border-subtle);
   border-radius: 50px;
-  padding: 6px 12px;
-  font-size: 0.78rem;
+  padding: 5px 10px;
+  font-size: 0.75rem;
   font-family: inherit;
   font-weight: 800;
   cursor: pointer;
   color: #495057;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
 }
 
 .theme-list-dropdown {
@@ -327,7 +340,7 @@ body {
   display: none;
   flex-direction: column;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
-  width: 200px;
+  width: 190px;
   z-index: 1000;
 }
 
@@ -338,9 +351,9 @@ body {
   border: none;
   color: var(--text-main);
   font-family: inherit;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 800;
-  padding: 7px 10px;
+  padding: 6px 10px;
   text-align: left;
   border-radius: 10px;
   cursor: pointer;
@@ -362,7 +375,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 6px 10px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 800;
   color: #495057;
   cursor: pointer;
@@ -375,61 +388,348 @@ body {
 }
 
 /* ==========================================================================
-   6. Ribbon Banner (Ages 4-15 Targeted)
+   6. Ribbon Banner
+   ========================================================================== */
+/* ==========================================================================
+   Banner Repositioned & Refined (Shifted Down for Breathability)
+   ========================================================================== */
+/* ==========================================================================
+   Purple Banner Shifted Down
    ========================================================================== */
 .hero-purple-banner {
-  background: linear-gradient(135deg, #7950f2 0%, #5f3dc4 100%);
+  background: linear-gradient(135deg, #7048e8 0%, #5f3dc4 60%, #4c28b5 100%);
   border-radius: 18px;
   padding: 10px 14px;
   text-align: center;
   color: #ffffff;
-  box-shadow: 0 6px 16px rgba(112, 72, 232, 0.3);
+  box-shadow: 0 8px 20px rgba(112, 72, 232, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
   gap: 3px;
+  margin-top: 18px;       /* Increased top margin to push banner down */
+  margin-bottom: 12px;    /* Clean spacing above the topic stage */
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-purple-banner::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 .hero-purple-banner h1 {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 900;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .hero-purple-banner p {
   margin: 0;
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 800;
   color: #ffd43b;
-  line-height: 1.3;
+  line-height: 1.25;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* ==========================================================================
-   7. Corrected 3x3 Age Grid (Ages 4 to 15)
+   7. Central Dynamic Stage (No scrolling, compact & vivid)
    ========================================================================== */
 .main-stage-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-height: 0; /* Prevents flex overflow */
+  padding-top: 8px;
 }
 
-.video-age-card {
+.prompt-card-avatar-view {
   background: #ffffff;
   border-radius: var(--radius-card);
-  border: 1.5px solid #e9ecef;
-  box-shadow: 0 8px 24px rgba(112, 72, 232, 0.08);
-  padding: 14px 16px;
+  border: 1.5px solid #dee2e6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  padding: 14px 14px 12px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
 }
 
-.age-card-title {
-  font-size: 0.95rem;
+.avatar-badge-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #e7f5ff;
+  border: 2.5px solid #74c0fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar-badge-wrap svg {
+  width: 44px;
+  height: 44px;
+}
+
+.avatar-check-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent-green);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.prompt-text-bold {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #212529;
+  margin: 2px 0 0;
+  line-height: 1.28;
+}
+
+.prompt-helper-text {
+  font-size: 0.8rem;
+  color: #868e96;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.bonus-card {
+  background: #f8f9fa;
+  border: 1.5px dashed #ced4da;
+  border-radius: 12px;
+  padding: 6px 10px;
+  width: 100%;
+}
+
+.bonus-title {
+  font-size: 0.72rem;
   font-weight: 800;
-  color: #343a40;
+  color: #868e96;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.bonus-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+}
+
+.chip {
+  background: #e5dbff;
+  color: var(--brand-purple);
+  padding: 3px 8px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+/* Action Buttons Row */
+.action-buttons-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  position: relative;
+}
+
+.btn-random-topic-main {
+  flex: 1.5;
+  background: linear-gradient(135deg, #ff922b, #f76707);
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 0.98rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(247, 103, 7, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 0.1s;
+}
+
+.btn-random-topic-main:active {
+  transform: scale(0.97);
+}
+
+.btn-random-topic-main:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btn-quick-word-alt {
+  flex: 1;
+  background: #ffffff;
+  border: 1.5px solid var(--border-subtle);
+  color: #495057;
+  border-radius: 50px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* ==========================================================================
+   8. Recording Dock & Mic Bar
+   ========================================================================== */
+.recording-bar {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: #fa5252;
+  padding: 6px;
+  border-radius: 12px;
+}
+
+.rec-pulse {
+  width: 7px;
+  height: 7px;
+  background: #ffffff;
+  border-radius: 50%;
+  animation: liveBlink 0.7s infinite alternate;
+}
+
+@keyframes liveBlink {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.3; transform: scale(0.7); }
+}
+
+.timer-dock {
+  background: #ffffff;
+  border: 1.5px solid #dee2e6;
+  border-radius: 18px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.duration-select {
+  border: 1.5px solid #dee2e6;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 6px 8px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.clock-display {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #212529;
+}
+
+.btn-record-start {
+  background: linear-gradient(135deg, #20c997, #12b886);
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 900;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(32, 201, 151, 0.35);
+}
+
+.btn-record-stop {
+  background: #fa5252;
+  color: #ffffff;
+  border: none;
+  padding: 9px 16px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 900;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(250, 82, 82, 0.35);
+}
+
+/* ==========================================================================
+   9. Age Selection Modal Popup
+   ========================================================================== */
+.age-modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(33, 37, 41, 0.65);
+  backdrop-filter: blur(5px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  z-index: 5000;
+}
+
+.age-modal-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 18px 16px;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 20px 45px rgba(112, 72, 232, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.age-modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #212529;
+}
+
+.age-modal-header p {
+  margin: 3px 0 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
 }
 
 .age-grid-3x3 {
@@ -441,10 +741,10 @@ body {
 .age-num-btn {
   background: #ffffff;
   border: 1.5px solid #dee2e6;
-  border-radius: 12px;
-  padding: 10px 0;
+  border-radius: 14px;
+  padding: 12px 0;
   font-family: inherit;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 900;
   color: #495057;
   cursor: pointer;
@@ -460,230 +760,21 @@ body {
   transform: translateY(-1px);
 }
 
-.btn-random-topic-main {
-  background: linear-gradient(135deg, #ff922b, #f76707);
+.btn-confirm-age {
+  background: linear-gradient(135deg, var(--brand-purple), var(--brand-purple-dark));
   color: #ffffff;
   border: none;
   border-radius: 50px;
-  padding: 13px 20px;
-  font-family: inherit;
-  font-size: 1.05rem;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(247, 103, 7, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: transform 0.1s ease, box-shadow 0.15s ease;
-}
-
-.btn-random-topic-main:active {
-  transform: scale(0.97);
-}
-
-.btn-random-topic-main:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-.btn-quick-word-alt {
-  background: #ffffff;
-  border: 1.5px solid var(--border-subtle);
-  color: #495057;
-  border-radius: 50px;
-  padding: 8px 16px;
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-/* ==========================================================================
-   8. Surprise Prompt Card with Avatar
-   ========================================================================== */
-.prompt-card-avatar-view {
-  background: #ffffff;
-  border-radius: var(--radius-card);
-  border: 1.5px solid #dee2e6;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
-  padding: 16px 14px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.avatar-badge-wrap {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: #e7f5ff;
-  border: 3px solid #74c0fc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.avatar-badge-wrap svg {
-  width: 50px;
-  height: 50px;
-}
-
-.avatar-check-badge {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 22px;
-  height: 22px;
-  background: var(--accent-green);
-  border: 2px solid #ffffff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 900;
-}
-
-.prompt-text-bold {
-  font-size: 1.45rem;
-  font-weight: 900;
-  color: #212529;
-  margin: 4px 0 0;
-  line-height: 1.3;
-}
-
-.prompt-helper-text {
-  font-size: 0.82rem;
-  color: #868e96;
-  font-weight: 700;
-  margin: 0;
-  line-height: 1.4;
-}
-
-.bonus-card {
-  background: #f8f9fa;
-  border: 1.5px dashed #ced4da;
-  border-radius: 14px;
-  padding: 8px 10px;
-  width: 100%;
-}
-
-.bonus-title {
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: #868e96;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.bonus-chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
-}
-
-.chip {
-  background: #e5dbff;
-  color: var(--brand-purple);
-  padding: 4px 10px;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 800;
-}
-
-/* ==========================================================================
-   9. Recording Dock & Timer
-   ========================================================================== */
-.recording-bar {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #ffffff;
-  background: #fa5252;
-  padding: 7px;
-  border-radius: 12px;
-}
-
-.rec-pulse {
-  width: 8px;
-  height: 8px;
-  background: #ffffff;
-  border-radius: 50%;
-  animation: liveBlink 0.7s infinite alternate;
-}
-
-@keyframes liveBlink {
-  0% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0.3; transform: scale(0.7); }
-}
-
-.timer-dock {
-  background: #ffffff;
-  border: 1.5px solid #dee2e6;
-  border-radius: 20px;
-  padding: 8px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-}
-
-.duration-select {
-  border: 1.5px solid #dee2e6;
-  background: #f8f9fa;
-  border-radius: 10px;
-  padding: 6px;
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.82rem;
-  outline: none;
-}
-
-.clock-display {
-  font-family: 'Nunito', sans-serif;
-  font-size: 1.55rem;
-  font-weight: 900;
-  color: #212529;
-}
-
-.btn-record-start {
-  background: linear-gradient(135deg, #20c997, #12b886);
-  color: #ffffff;
-  border: none;
-  padding: 9px 18px;
+  padding: 11px;
   font-family: inherit;
   font-size: 0.95rem;
   font-weight: 900;
-  border-radius: 50px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(32, 201, 151, 0.35);
-}
-
-.btn-record-stop {
-  background: #fa5252;
-  color: #ffffff;
-  border: none;
-  padding: 9px 16px;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 900;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(250, 82, 82, 0.35);
+  box-shadow: 0 4px 14px rgba(112, 72, 232, 0.35);
 }
 
 /* ==========================================================================
-   10. Evaluation Modal
+   10. Evaluation Modal Styles
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -702,11 +793,11 @@ body {
 .modal-sheet {
   background: #ffffff;
   color: var(--text-main);
-  padding: 18px 16px;
-  border-radius: 28px;
+  padding: 16px 14px;
+  border-radius: 26px;
   width: 100%;
-  max-width: 410px;
-  max-height: 92vh;
+  max-width: 400px;
+  max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -724,17 +815,17 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .stars-row {
-  font-size: 2.1rem;
+  font-size: 2rem;
   letter-spacing: 2px;
   margin: 0;
 }
 
 .modal-topic-title {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 900;
   color: #212529;
   margin: 0;
@@ -780,7 +871,7 @@ body {
 }
 
 .speech-summary-title {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 800;
   color: #495057;
   display: flex;
@@ -794,18 +885,18 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 800;
   color: #495057;
 }
 
 .metric-bar-item span:first-child {
-  width: 100px;
+  width: 95px;
 }
 
 .metric-track {
   flex: 1;
-  height: 8px;
+  height: 7px;
   background: #f1f3f5;
   border-radius: 10px;
   overflow: hidden;
@@ -822,9 +913,9 @@ body {
   border-radius: 14px;
   padding: 8px 10px;
   text-align: left;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: #495057;
-  max-height: 95px;
+  max-height: 90px;
   overflow-y: auto;
 }
 
@@ -837,7 +928,7 @@ body {
 .feedback-header-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 800;
   color: #868e96;
 }
@@ -860,17 +951,17 @@ body {
   font-family: inherit;
 }
 
-.reaction-emoji { font-size: 1.1rem; }
-.reaction-text { font-size: 0.7rem; font-weight: 800; color: #495057; }
+.reaction-emoji { font-size: 1.05rem; }
+.reaction-text { font-size: 0.68rem; font-weight: 800; color: #495057; }
 
 .btn-modal-close {
   background: linear-gradient(135deg, #ff922b, #f76707);
   color: #ffffff;
   border: none;
   width: 100%;
-  padding: 12px;
+  padding: 11px;
   font-family: inherit;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   font-weight: 900;
   border-radius: 50px;
   cursor: pointer;
@@ -885,9 +976,9 @@ body {
   z-index: 1500;
   background: #ffd43b;
   color: #212529;
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: 50px;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 900;
   white-space: nowrap;
   box-shadow: 0 4px 14px rgba(255, 212, 59, 0.5);
